@@ -1,0 +1,15 @@
+site_name: studies
+repo_url: https://github.com/jbcodeforce/openshift-studies
+nav:
+  - Introduction: index.md
+ 
+
+theme: 
+  name: material
+extra_css: ["extra.css"]
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
