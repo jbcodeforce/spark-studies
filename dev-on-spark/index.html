@@ -36,7 +36,7 @@
     
     
       
-        <title>Compendium - studies</title>
+        <title>Develop on Spark - studies</title>
       
     
     
@@ -96,7 +96,7 @@
     <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
     <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
     
-      <a href="#apache-sparks-interresting-articles-to-read" tabindex="1" class="md-skip">
+      <a href="#some-getting-started" tabindex="1" class="md-skip">
         Skip to content
       </a>
     
@@ -121,7 +121,7 @@
               studies
             </span>
             <span class="md-header-nav__topic">
-              Compendium
+              Develop on Spark
             </span>
           
         </div>
@@ -241,18 +241,6 @@
       
       
 
-
-  <li class="md-nav__item">
-    <a href="../dev-on-spark/" title="Develop on Spark" class="md-nav__link">
-      Develop on Spark
-    </a>
-  </li>
-
-    
-      
-      
-      
-
   
 
 
@@ -263,10 +251,65 @@
       
     
     
-    <a href="./" title="Compendium" class="md-nav__link md-nav__link--active">
-      Compendium
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Develop on Spark
+      </label>
+    
+    <a href="./" title="Develop on Spark" class="md-nav__link md-nav__link--active">
+      Develop on Spark
     </a>
     
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rdd-resilient-distributed-dataset" title="RDD: Resilient Distributed Dataset" class="md-nav__link">
+    RDD: Resilient Distributed Dataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transforming-rdds" title="Transforming RDDs" class="md-nav__link">
+    Transforming RDDs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataframes" title="DataFrames" class="md-nav__link">
+    DataFrames
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../compendium/" title="Compendium" class="md-nav__link">
+      Compendium
+    </a>
   </li>
 
     
@@ -287,6 +330,36 @@
     
   
   
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#rdd-resilient-distributed-dataset" title="RDD: Resilient Distributed Dataset" class="md-nav__link">
+    RDD: Resilient Distributed Dataset
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transforming-rdds" title="Transforming RDDs" class="md-nav__link">
+    Transforming RDDs
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dataframes" title="DataFrames" class="md-nav__link">
+    DataFrames
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -297,13 +370,46 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/jbcodeforce/openshift-studies/edit/master/docs/compendium.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/jbcodeforce/openshift-studies/edit/master/docs/dev-on-spark.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
-                <h1 id="apache-sparks-interresting-articles-to-read">Apache Sparks interresting articles to read</h1>
-<ul>
-<li><a href="">Main apache site</a></li>
-</ul>
+                <h1 id="some-getting-started">Some getting started</h1>
+<h2 id="rdd-resilient-distributed-dataset">RDD: Resilient Distributed Dataset</h2>
+<p>It is a dataset distributed against the cluster nodes. To create a RDD we use the spark context object and then one of it APIs depending of the data source (JDBC, Hive, HDFS, Cassandra, HBase, ElasticSearch, CSV, json,...):</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark</span> <span class="kn">import</span> <span class="n">SparkConf</span><span class="p">,</span> <span class="n">SparkContext</span>
+
+<span class="c1"># get spark session</span>
+<span class="n">sparkConfiguration</span> <span class="o">=</span> <span class="n">SparkConf</span><span class="p">()</span><span class="o">.</span><span class="n">setAppName</span><span class="p">(</span><span class="s2">&quot;WorseMovie&quot;</span><span class="p">)</span>
+<span class="n">sparkSession</span> <span class="o">=</span> <span class="n">SparkContext</span><span class="p">(</span><span class="n">conf</span> <span class="o">=</span> <span class="n">sparkConfiguration</span><span class="p">)</span>
+<span class="c1"># load movie ratings from a csv file as a RDD</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">sparkSession</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s1">&#39;../data/movielens/u.data&#39;</span><span class="p">)</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">take</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">result</span> <span class="ow">in</span> <span class="n">results</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+
+<p>This program is not launched by using python interpreter by the <code>spark-submit</code> tool. This tool is available in the Dockerfile we defined, with a python 3.6 interpreter.</p>
+<div class="codehilite"><pre><span></span>/spark/bin/spark-submit nameoftheprogram.py
+</pre></div>
+
+<h2 id="transforming-rdds">Transforming RDDs</h2>
+<p>Use Map, flatmap, filter, distinct, union, intersection, substract, ... functions, and then applies of one of action.</p>
+<p>Nothing actually happens in your drive program until an action is called.</p>
+<p>here is <a href="https://spark.apache.org/docs/latest/api/python/index.html">an python API documentation</a>.</p>
+<h2 id="dataframes">DataFrames</h2>
+<p>Spark 2.0 supports exposing data in RDD as data frames to apply SQL queries. DataFrames contain row Objects.</p>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">Row</span>
+<span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">functions</span>
+
+<span class="c1"># Create a SparkSession </span>
+<span class="n">spark</span> <span class="o">=</span> <span class="n">SparkSession</span><span class="o">.</span><span class="n">builder</span><span class="o">.</span><span class="n">appName</span><span class="p">(</span><span class="s2">&quot;PopularMovies&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">getOrCreate</span><span class="p">()</span>
+<span class="n">lines</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">sparkContext</span><span class="o">.</span><span class="n">textFile</span><span class="p">(</span><span class="s2">&quot;../data/movielens/u.data&quot;</span><span class="p">)</span>
+<span class="c1"># Convert it to a RDD of Row objects with (movieID, rating)</span>
+<span class="n">movies</span> <span class="o">=</span> <span class="n">lines</span><span class="o">.</span><span class="n">map</span><span class="p">(</span><span class="n">parseInput</span><span class="p">)</span>
+<span class="c1"># Convert that to a DataFrame</span>
+<span class="n">movieDataset</span> <span class="o">=</span> <span class="n">spark</span><span class="o">.</span><span class="n">createDataFrame</span><span class="p">(</span><span class="n">movies</span><span class="p">)</span>
+</pre></div>
                 
                   
                 
@@ -324,7 +430,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid">
         
-          <a href="../dev-on-spark/" title="Develop on Spark" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href=".." title="Introduction" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-flex__cell md-flex__cell--shrink">
               <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
             </div>
@@ -333,11 +439,25 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Develop on Spark
+                Introduction
               </span>
             </div>
           </a>
         
+        
+          <a href="../compendium/" title="Compendium" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Compendium
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
         
       </nav>
     </div>
