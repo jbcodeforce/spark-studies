@@ -1,0 +1,971 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.0.1">
+    
+    
+      
+        <title>Scala summary - studies</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.982221ab.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.1f0bcf2b.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+          <svg xmlns="http://www.w3.org/2000/svg" width="416" height="448"
+    viewBox="0 0 416 448" id="__github">
+  <path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19-18.125
+        8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19 18.125-8.5
+        18.125 8.5 10.75 19 3.125 20.5zM320 304q0 10-3.125 20.5t-10.75
+        19-18.125 8.5-18.125-8.5-10.75-19-3.125-20.5 3.125-20.5 10.75-19
+        18.125-8.5 18.125 8.5 10.75 19 3.125 20.5zM360
+        304q0-30-17.25-51t-46.75-21q-10.25 0-48.75 5.25-17.75 2.75-39.25
+        2.75t-39.25-2.75q-38-5.25-48.75-5.25-29.5 0-46.75 21t-17.25 51q0 22 8
+        38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0
+        37.25-1.75t35-7.375 30.5-15 20.25-25.75 8-38.375zM416 260q0 51.75-15.25
+        82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5-41.75
+        1.125q-19.5 0-35.5-0.75t-36.875-3.125-38.125-7.5-34.25-12.875-30.25-20.25-21.5-28.75q-15.5-30.75-15.5-82.75
+        0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25
+        30.875q36.75-8.75 77.25-8.75 37 0 70 8 26.25-20.5
+        46.75-30.25t47.25-9.75q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34
+        99.5z" />
+</svg>
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#scala-summary" tabindex="1" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="studies" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              studies
+            </span>
+            <span class="md-header-nav__topic">
+              Scala summary
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+        <div class="md-flex__cell md-flex__cell--shrink">
+          <div class="md-header-nav__source">
+            
+
+
+  
+
+<a href="https://github.com/jbcodeforce/spark-studies/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+          </div>
+        </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="studies" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    studies
+  </label>
+  
+    <div class="md-nav__source">
+      
+
+
+  
+
+<a href="https://github.com/jbcodeforce/spark-studies/" title="Go to repository" class="md-source" data-md-source="github">
+  
+    <div class="md-source__icon">
+      <svg viewBox="0 0 24 24" width="24" height="24">
+        <use xlink:href="#__github" width="24" height="24"></use>
+      </svg>
+    </div>
+  
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Introduction" class="md-nav__link">
+      Introduction
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../dev-on-spark/" title="Develop on Spark" class="md-nav__link">
+      Develop on Spark
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Scala summary
+      </label>
+    
+    <a href="./" title="Scala summary" class="md-nav__link md-nav__link--active">
+      Scala summary
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-scala" title="why scala?" class="md-nav__link">
+    why scala?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-constructs" title="language constructs" class="md-nav__link">
+    language constructs
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variables" title="Variables" class="md-nav__link">
+    Variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluation" title="Expression evaluation" class="md-nav__link">
+    Expression evaluation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operators-are-methods" title="Operators are methods" class="md-nav__link">
+    Operators are methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-control" title="Flow control" class="md-nav__link">
+    Flow control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function" title="Function" class="md-nav__link">
+    Function
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-java" title="Integration with java" class="md-nav__link">
+    Integration with java
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-readings" title="Further Readings" class="md-nav__link">
+    Further Readings
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../compendium/" title="Compendium" class="md-nav__link">
+      Compendium
+    </a>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-scala" title="why scala?" class="md-nav__link">
+    why scala?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-constructs" title="language constructs" class="md-nav__link">
+    language constructs
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variables" title="Variables" class="md-nav__link">
+    Variables
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluation" title="Expression evaluation" class="md-nav__link">
+    Expression evaluation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operators-are-methods" title="Operators are methods" class="md-nav__link">
+    Operators are methods
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-control" title="Flow control" class="md-nav__link">
+    Flow control
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function" title="Function" class="md-nav__link">
+    Function
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-java" title="Integration with java" class="md-nav__link">
+    Integration with java
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-readings" title="Further Readings" class="md-nav__link">
+    Further Readings
+  </a>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/jbcodeforce/spark-studies/edit/master/docs/scala_summary.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                
+                
+                <h1 id="scala-summary">Scala summary</h1>
+<p>Scala is a blend of object-oriented and functional programming concepts in a statically typed language. Everything is an object, including numbers or functions. Function types are classes that can be inherited by subclasses. It runs on the JVM.</p>
+<p>OOP is orthogonal from logic programming, functional or imperative programming.</p>
+<ul>
+<li>Run on the standard Java platform and interoperates seamlessly with all Java libraries</li>
+<li>It is also a scripting language with its own interpreter</li>
+<li>Support an "associative map" construct in the syntax of the language</li>
+<li>Scala allows users to grow and adapt the language in the directions they need by defining easy-to-use libraries that feel like native language support.</li>
+<li>Support enhanced parallel processing using actors: Actors are concurrency abstractions that can be implemented on top of threads. They communicate by sending messages to each other. An actor can perform two basic operations, message send and receive. The send operation, denoted by an exclamation point (!), sends a message to an actor. A send is asynchronous.</li>
+<li>Scala is an object-oriented language in pure form: every value is an object and every operation is a method call.</li>
+<li>It supports composing objects with the concept of Trait. Traits are like interfaces in Java, but they can also have method implementations and even fields. Objects are constructed by mixing composition, which takes the members of a class and adds the members of a number of traits to them. </li>
+<li>Traits are more "pluggable" than classes</li>
+<li>Functions that are first-class values provide a convenient means for abstracting over operations and creating new control structures</li>
+<li>The second main idea of functional programming is that the operations of a program should map input values to output values rather than change data in place</li>
+<li>Methods should not have any side effects. They should communicate with their environment only by taking arguments and returning results</li>
+</ul>
+<h2 id="why-scala">why scala?</h2>
+<ul>
+<li>Scala is compatible with java API</li>
+<li>Concise: quicker to write, easier to read, and most importantly, less error prone </li>
+<li>High level: scala lets developers raise the level of abstraction in the interfaces they design and use</li>
+<li>Scala's functional programming style also offers high-level reasoning principles for programming.</li>
+<li>Statically typed: very advanced static type system. Starting from a system of nested class types much like Java's, it allows you to parameterize types with generics, to combine types using intersections, and to hide details of types using abstract types. Verbosity is avoided through type inference and flexibility is gained through pattern matching and several new ways to write and compose types</li>
+<li>Static type systems can prove the absence of certain run-time errors</li>
+<li>A static type system provides a safety net that lets you make changes to a codebase with a high degree of confidence, by identifying change name, adding new parameters to functions...</li>
+</ul>
+<p>Scala has some innovations: abstract types provide a more object-oriented alternative to generic types, its traits allow for flexible component assembly, and its extractors provide a representation-independent way to do pattern matching.</p>
+<p>Scala has an interactive shell or REPL: Read-Eval-Print-Loop. Started by using &gt; scala or using the scala build tool, sbt, using &gt;sbt console.</p>
+<p>To read more about scala API: <a href="www.scala-lang.org/api">www.scala-lang.org/api</a></p>
+<h2 id="language-constructs">language constructs</h2>
+<h3 id="variables">Variables</h3>
+<p>Scala has two kinds of variables, vals and vars. A val is similar to a final variable in Java. Once initialized, a val can never be reassigned. A var, by contrast, is similar to a non-final variable in Java.
+Scala uses the type inference capability to figure out the types not specified at variable declaration:</p>
+<div class="codehilite"><pre><span></span><span class="k">val</span> <span class="n">msg</span> <span class="k">=</span> <span class="s">&quot;Hi&quot;</span>
+<span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">4</span>
+</pre></div>
+
+<p>See some first exercise in this code: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala1.sc">LeaningScala1.sc</a></p>
+<p>Primitive types are with uppercase because Scala is fully object oriented</p>
+<p>Object is for a class that is a single instance. there is no static concept in Scala. it is covered by the object concept</p>
+<h3 id="expression-evaluation">Expression evaluation</h3>
+<p>non-primitive expression is evaluated:</p>
+<ul>
+<li>take leftmost operator</li>
+<li>evaluate its operands left before right</li>
+<li>apply the operator to the operands </li>
+</ul>
+<h3 id="operators-are-methods">Operators are methods</h3>
+<p>1 + 2 really means the same thing as (1).+(2). The + symbol is an operator—an infix operator to be specific. Operator notation is not limited to methods like + that look like operators in other languages. You can use any method in operator notation. </p>
+<p>Scala also has two other operator notations: prefix and postfix. In prefix notation, you put the method name before the object on which you are invoking the method. prefix and postfix operators are unary: they take just one operand.
+The only identifiers that can be used as prefix operators are +, -, !, and ~</p>
+<p>The logical-and and logical-or operations are short-circuited as in Java: expressions built from these operators are only evaluated as far as needed to determine the result</p>
+<p>The operator precedence looks like:</p>
+<div class="codehilite"><pre><span></span>(all other special characters)
+* / %
++ -
+:
+=!
+&lt;&gt;
+&amp;
+^
+|
+(all letters)
+(all assignment operators)
+</pre></div>
+
+<h3 id="flow-control">Flow control</h3>
+<p>See the code example in: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala2.sc">LeaningScala2.sc</a></p>
+<h3 id="function">Function</h3>
+<p>Function declaration has the following form</p>
+<div class="codehilite"><pre><span></span><span class="n">def</span> <span class="n">functionName</span> <span class="p">([</span><span class="n">list</span> <span class="n">of</span> <span class="n">parameters</span><span class="p">])</span> <span class="o">:</span> <span class="p">[</span><span class="k">return</span> <span class="n">type</span><span class="p">]</span>
+<span class="n">def</span> <span class="n">constOne</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="o">=&gt;</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1">// y is passed by name</span>
+
+<span class="n">def</span> <span class="n">format</span> <span class="n">now</span>
+</pre></div>
+
+<p>A function can support using Type parameter, written in []  See polymorphism</p>
+<div class="codehilite"><pre><span></span>def singleton[T](elemen: T) : T 
+
+or
+ def encode[T](l : List[T]): List[(T,Int)]
+</pre></div>
+
+<p>Function evaluation for a function f(a1,...,an) is done by evaluating the expressions a1,...,an of the parameters resulting in the values v1,..,vn, then by replacing the application with the body of the function f in which the actual parameters are v1,..,vn</p>
+<p>function evaluation is done by <em>substitution model</em>: all evaluation done is by reducing an expression to a value.</p>
+<ul>
+<li>evaluate all function arguments from left to right</li>
+<li>replace function application by function right-hand side</li>
+<li>replace the formal parameters of the function by the actual arguments
+two evaluation models call by value, and call by name</li>
+</ul>
+<p>See the code example in: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala3.sc">LeaningScala3.sc</a></p>
+<p>a name is evaluate by replacing its right end definition</p>
+<p>Functions are objects. It is possible to pass functions as arguments, to store them in variables, and to return them from other functions. </p>
+<p>// function that uses a function as argument
+    // type () =&gt; Unit is for function taking no argument and return nothing
+     def oncePerSecond(callback: () =&gt; Unit) {
+          // call it
+          callback()
+     }
+// factorial example
+def factorial(n : Int): Int =
+   if (n == 0) 1 else n * factorial (n-1)</p>
+<p>// greatest common denominator using the Euclid algorithm
+def gcd(a: Int, b: Int) : Int = 
+   if (b == 0) a else gcd(b,a % b)</p>
+<p>// sum of integers between a and b with function as argument
+  // f is a function as A=&gt;B is a type of a function that takes an argument
+  // of type A and returns a result of type B
+  def sum(f : Int =&gt; Int, a: Int, b: Int) : Int =
+    if (a &gt; b) 0
+    else f(a) + sum(f,a+ 1,b)</p>
+<p>def sumInts(a : Int,b: Int) = sum(id,a,b)
+ def id(x: Int): Int = x</p>
+<p>The sum function is a linear recursion
+Tail recursion: if a function calls itself as its last action, the functions stack frame can be used. It is iterative. (gcd above is a tail recursive function)</p>
+<p>Anonymous function</p>
+<p>// Declared like:  (x1 : T1,.... , xn :Tn) =&gt; E</p>
+<p>(x:Int) =&gt; x<em>x</em>x
+// using anonymous function to compute the sum of the cubes using the sum function defined above
+def sumCubes(a : Int,b: Int) = sum(x =&gt; x <em>x </em>x,a,b)</p>
+<p>// another simplification by using function as return result
+// sum return a function that takes to int as argument and return a int
+def sum(f: Int =&gt; Int): (Int, Int) =&gt; Int = {
+         def sumF(a:Int, b:Int) : Int =
+           if (a &gt; b)  0
+           else f(a) + sumF(a+1 ,b)
+         sumF
+    }</p>
+<p>def sumCubes = sum(x =&gt; x<em>x</em>x)
+println(sumCubes(1,10))</p>
+<p>When doing functional programming, you try to avoid side effect and uses vars. When your function need to modify its parameters, use the Unit result type.
+Function values are treated as objects in Scala</p>
+<p>Class</p>
+<p>The class declaration includes the parameters of the constructor</p>
+<p>class Tweet(val user: String, val text: String, val retweets: Int) { ...</p>
+<p>parameters are always pass by-value, they become fields of the class</p>
+<p>val a = new Tweet("gizmodo"," some text", 20)
+a.user </p>
+<p>Classes in Scala cannot have static members. So there is the concept of singleton object: the definition looks like a class definition, except instead of the keyword class you use the keyword object. When a singleton object shares the same name with a class, it is called that class's companion object. They cannot take parameters. A singleton object that does not share the same name with a companion class is called a standalone object.</p>
+<p>It is possible to define precondition of the primary constructor of a class. For example for the Rational class we can enforce that the denominator is never 0 using require expression</p>
+<p>class Rational(n: Int, d: Int) {
+    require(d != 0)
+    override def toString = n +"/"+ d
+  }</p>
+<p>Class can use type parameter to support polymorphism</p>
+<p>trait List[T] {
+  def isEmpty : Boolean
+  def head : T
+  def tail : List[T]
+}</p>
+<p>class Cons<a href="val head : T, tail: List[T]">T</a> extends List[T] {
+  def isEmpty = false
+}</p>
+<p>class Nil[T] extends List[T] {
+ def isEmpty = true
+ def head :Nothing =  throw new NoSuchElementException("Nil head")
+ def tail :Nothing = throw new NoSuchElementException("Nil tail")
+}</p>
+<p>Immutable objects offer several advantages over mutable objects
+- easier to reason about than mutable ones, because they do not have complex state spaces that change over time
+- pass immutable objects around quite freely, whereas you may need to make defensive copies of mutable objects before passing them to other code
+- there is no way for two threads concurrently accessing an immutable to corrupt its state once it has been properly constructed, because no thread can change the state of an immutable
+-  immutable objects make safe hashtable keys
+- main disadvantage of immutable objects is that they sometimes require that a large object graph be copied where otherwise an update could be done in place</p>
+<p>scala.Any is the root of all classes in scala. scala.AnyVal is base type of all primitive types. scala.AnyRef the base type of reference types, it is an alias to java.lang.Object</p>
+<p>scala.Nothing is at bottom of type hierarchy. there is no value of type Nothing. it is used to signal abnormal termination or as an element type of an empty collection. Set[Nothing]</p>
+<p>As the function throw and exception, the return type of the function is set to Nothing.
+scala&gt; def error(msg : String) = throw new Error(msg)
+error: (msg: String)Nothing</p>
+<p>scala.Null, is subclass of all the classes in AnyRef, and it is the type of null value. Null is incompatible with subtypes of AnyVal.</p>
+<p>scala&gt; val x = null
+x: Null = null</p>
+<p>One important characteristic of method parameters in Scala is that they are vals, not vars</p>
+<p>Unit 
+Methods with a result type of Unit, are executed for their side effect.  A side effect is generally defined as mutating state somewhere external to the method or performing an I/O action.</p>
+<p>Trait
+Declared like an abstract class. They contains fields and concrete methods. A class can inherit one unique class but can have many traits.
+Trait do not have parameters as part of the constructor.</p>
+<p>Pattern matching
+When using a pure OO implementation, adding a new method to a class you may add this method in multiple classes and subclasses.  Scala offers the pattern matching capability to support simple function extension</p>
+<p>case classes are like class but the case keyword let them participate in pattern matching. Implicitly scala compiler will add object for case class with a factory method apply.
+Pattern matching is a generalization of switch. 
+The syntax looks like:  expr match { case pattern =&gt; expr ... case pn =&gt; en}
+in case of not matching there is a MatchError exception </p>
+<p>if a pattern match the whole right hand side is used 
+patterns are constructed from constructors, variables, wildcard patterns, constants</p>
+<p>case and pattern matching is also helpful for tree-like recursive data
+variable start by lowercase, where constant starts by Uppercase</p>
+<p>Control 
+Almost all of Scala's control structures result in some value. This is the approach taken by functional languages, in which programs are viewed as computing a value, thus the components of a program should also compute values.</p>
+<p>val filename =
+      if (!args.isEmpty) args(0)
+      else "default.txt"
+// while and do while: are loops not expression</p>
+<p>var line = ""
+    do {
+      line = readLine()
+      println("Read: "+ line)
+    } while (line != "")</p>
+<p>// for 
+The while and do-while constructs are called "loops," not expressions, because they don't result in an interesting value. The type of the result is Unit</p>
+<p>For is simply uses to iterate through a sequence of integers. But has more advanced expressions to iterate over multiple collections of different kinds, to filter out elements based on arbitrary conditions, and to produce new collections. The notation " &lt;- "  is called a generator,</p>
+<p>for (s) yield e
+s is a sequence of generators and filters,   e is an expression whose value is returned by an iteration
+generator is of the form p &lt;- c   :   c is a collection and p is a pattern
+filter is a boolean expression
+if there are several generators in sequence the last ones vary faster than the first</p>
+<p>// list the file in the current directory
+val filesHere = (new java.io.File(".")).listFiles</p>
+<div class="codehilite"><pre><span></span>for (file &amp;lt;- filesHere)
+  println(file)
+</pre></div>
+
+
+<p>for (i &lt;- 1 to 4)  // could be 1 until 4
+          println("Iteration "+ i)</p>
+<p>// For supports filter to build subset
+for (file &lt;- filesHere if file.getName.endsWith(".scala"))</p>
+<p>// filter can be combined, and separated by ;
+for (
+      file &lt;- filesHere
+      if file.isFile;
+      if file.getName.endsWith(".scala")
+    )</p>
+<p>// If you add multiple &lt;- clauses, you will get nested "loops."
+// for like a SQL query
+for (b &lt;- books; a &lt;- b.authors if a startsWith "Bird") yield b.title</p>
+<p>For is closely related to higher order functions. For example the following three functions can be written with for</p>
+<p>def mapFunction[T,U] (xs : List[T], f: T =&gt; U) : List[U] =
+   for (x &lt;- xs) yield f(x)</p>
+<p>def flatMap [T,U] (xs : List[T], f: T =&gt; Iterable[U]) : List[U] =
+   for (x &lt;- xs; y&lt;- f(x)) yield y</p>
+<p>def filter2[T] (xs : List[T], f: T =&gt; Boolean) : List[T] =
+   for (x &lt;- xs; if f(x)) yield x                 //</p>
+<p>val l=List( 2, 3, 4, 5)                    &gt; l  : List[Int] = List(2, 3, 4, 5)
+// to avoid missing parameter type, we need to add [Int] 
+val r=filter2<a href="l,(x =&gt; x% 2 == 0)">Int</a>    &gt; r  : List[Int] = List(2, 4)</p>
+<p>Expressing for with HOF
+for (b &lt;- books; a &lt;- b.authors if a startsWith "Bird") yield b.title   is the same as
+  books flatMap (b =&gt; for (a &lt;- b.authors if a startsWith "Bird") yield b.title)   or
+  books flatMap (b =&gt; for (a &lt;- b.authors withFilter (a=&gt; a startsWith "Bird")) yield b.title)   or
+  books flatMap (b =&gt; b.authors withFilter (a=&gt; a startsWith "Bird") map (y =&gt; y.title)</p>
+<p>List</p>
+<p>Lists are immutable, and recursive and linear: access to the first element is much faster than accessing to the middle of end of the list
+lists are constructed from empty list Nil and the cons operation :: </p>
+<p>val empty = List()
+val fruit = List("apple","banana","pear")
+val matrix = List(List(1,0,0),List(0,1,0),List(0,0,1))
+// equivalent to 
+val fruit = "apple" :: ("banana" :: ("pear" :: Nil))
+val fruit = "apple" :: "banana" :: "pear" :: Nil</p>
+<p>in scala there is a convention the operators ending with : associate to the right operand. They could be seen as method calls of the right hand operand
+Three list operations are important, head, tail, isEmpty</p>
+<p>xs.length
+xs.last
+xs.init         // build a new list from xs without the last one
+xs take n    // return a new list of the n first elements of xs
+xs drop n    //the rest of the collection after position n 
+xs(n)         // element at n position
+xs splitAt n   // return a pair of two sub lists from list xs one up to index n and one from position n</p>
+<p>val alist = "aba".toList
+alist groupBy(c =&gt; c)         Partitions a collection into a map of collections according to a discriminator function (here is Identity)
+Map[Char,List[Char]] = Map(b -&gt; List(b), a -&gt; List(a, a))</p>
+<p>It is possible to decompose a list with pattern matching:</p>
+<p>Nil constant
+p :: ps is a pattern that matches a list with a head and a tail
+List(a,b,c,) to match a complete list</p>
+<p>Here are examples of list using recursion and pattern matching</p>
+<p>def last[T] (xs : List[T]) : T = xs match {
+   case List() =&gt; throw new Error("Last of empty list is not possible" )
+   case List(x) =&gt; x
+   case y :: ys =&gt; last(ys)
+   }                                              //&gt; last: <a href="xs: List[T]">T</a>T</p>
+<p>def init[T] (xs : List[T]) : List[T] = xs match {
+   case List() =&gt; throw new Error("init of empty list is not possible" )
+   case List(x) =&gt; List()
+   case y :: ys =&gt; y :: init(ys)
+  }   </p>
+<p>def concat<a href="l1: List[T],l2 : List[T]">T</a> : List[T] =
+  l1 match {
+    case List() =&gt; l2
+    case y :: ys =&gt; y :: concat(ys,l2)
+  } </p>
+<p>http://www.scala-lang.org/api/2.11.1/index.html#scala.collection.immutable.List</p>
+<p>Other collections:
+Vector has a more evenly balanced structure using 32 word array. when it is more than 32 elements a next level is added as array of pointer so covering 2** 10 elements. 
+The access is in log 32(n)
+it supports the same operations as on List as List and Vector are Seq, the class of all sequences which itself is a Iterable. Exception is on concatenation. </p>
+<p>val nums= Vector( 1, 2, 3, 44)         &gt; nums  : scala.collection.immutable.Vector[Int] = Vector(1, 2, 3, 44)
+ val n2 = 10 +: nums                  &gt; n2  : scala.collection.immutable.Vector[Int] = Vector(10, 1, 2, 3, 44)
+ val n3 = nums :+ 15</p>
+<p>Arrays and String are Seq too</p>
+<p>val a = Array( 1, 2, 3, 44)                &gt; a  : Array[Int] = Array(1, 2, 3, 44)
+  a map (x =&gt; x* 2)                         res0: Array[Int] = Array(2, 4, 6, 88)
+  val s = "Hello World"                   &gt; s  : String = Hello World
+  s filter (c =&gt; c.isUpper)/               &gt; res1: String = HW</p>
+<p>range represents a sequence of evenly spaced integers.
+Some operations on Seq</p>
+<p>val s = "Hello World"<br />
+s exists ( c =&gt; c == 'e') true if there is an element in s the p(x) holds</p>
+<p>xs forall p   true if p(x) holds for all elements x of xs</p>
+<p>xs zip ys     build a sequence of pairs drawn from corresponding elements of sequence xs and ys
+val z=s zip nums      //&gt; z  : scala.collection.immutable.IndexedSeq[(Char, Int)] = Vector((H,1), (e,2), (l,3), (l,44))
+  z.unzip               &gt; res3: (scala.collection.immutable.IndexedSeq[Char], scala.collection.immutable.IndexedSeq[Int]) = (Vector(H, e, l, l),Vector(1, 2, 3, 44))
+// other example using a range
+val q = List( 2, 0, 3)  //&gt; q  : List[Int] = List(2, 0, 3)
+(2 to 0 by -1) zip q /&gt; res0: scala.collection.immutable.IndexedSeq[(Int, Int)] = Vector((2,2), (1,0), (0,3))</p>
+<p>xs.unzip        Splits a sequence of pairs into two sequences consisting of the first and second halves of all pairs 
+xs.flatMap f    applies collection-valued function f to all elements of x and concatenates the results</p>
+<p>// for example build a list of all combinations of number x for 1..M and y 1..N
+(1 to 5) flatMap ( x =&gt; ( 1 to 6) map (y =&gt; (x,y)))</p>
+<blockquote>
+<p>Vector((1,1), (1,2), (1,3), (1,4), (1,5), (1,6), (2,1), (2,2), (2,3), (2,4), (2,5), (2,6),</p>
+</blockquote>
+<p>Example of scalar product function: sum xi * yi</p>
+<p>def scalarProduct(xs : Vector[Double], ys : Vector[Double]): Double =
+   (xs zip ys).map(xy =&gt; xy._1 * xy._2).sum     </p>
+<p>scalarProduct(Vector(2,3,4),Vector(3,5,8)) </p>
+<p>// compute if n is prime: if only divisors of n is 1 and n
+def isPrime(n : Int) : Boolean =
+   (2 until n) forall (x =&gt; n % x != 0) </p>
+<p>Getting a dictionary of word </p>
+<p>// the following will get each word (one per line in the input stream), transform it to a list and then filter out any word that does not contain
+// a letter.  Filter apply a function to each member of the collection, forall apply for each element of the list a function f and return the matching elements.
+ val words = in.getLines.toList filter (word =&gt; word forall (c =&gt; c.isLetter))</p>
+<p>Set
+Is a sequence that does not have duplicate elements, elements are unordered, it includes the operation contains</p>
+<p>// return all the ways to encode a number to a set of strings
+  def encode(number: String) : Set[List[String]] =
+     if (number.isEmpty) Set(List())
+     else {
+       for {
+          split &lt;- 1 to number.length                      // from 1 to length
+          word &lt;- wordsForNum(number take split)           // cut the string number from 0 to split
+          rest &lt;- encode(number drop split)                // recursion on the rest of the number string
+       } yield word :: rest                                // the 
+       }.toSet 
+// returns  Set[List[String]]  ... List(Scala, is, fun), List(sack, bird, to)</p>
+<p>// following code also illustrates that a function can be assigned to a variable</p>
+<p>// it is a map of digit strings to the words that represent them. words is list of words of a given dictionary
+val wordsForNum : Map [String,Seq[String]] =
+    words groupBy wordCode withDefaultValue Seq()</p>
+<p>// wordsForNum  : Map[String,Seq[String]] = Map(63972278 -&gt; List(newscast),37638427 -&gt; List(cybernetics)</p>
+<p>Map
+maps are iterable and functional.</p>
+<p>val roman = Map( "I" -&gt; 1 , "II" -&gt; 2 , "V" -&gt; 5 )   //&gt; roman  : scala.collection.immutable.Map[String,Int] = Map(I -&gt; 1, II -&gt; 2, V
+                                                  //|  -&gt; 5)
+ roman("V")                                       //&gt; res5: Int = 5
+ roman get ("II")                                 //&gt; res6: Option[Int] = Some(2)</p>
+<p>The Some is a class extending the trait Option type and takes a unique value. When a map does not contains a key it returns None which is declared as:
+object None extends Option[Nothing]</p>
+<p>veggie groupBy (_.head)     &gt; res8: scala.collection.immutable.Map[Char,List[String]] = Map(b -&gt; List(brocoli), t -&gt; List(tom), c -&gt; List(carrot), o -&gt; List(olive))</p>
+<p>// mapValues Transforms a map by applying a function to every retrieved value
+veggie.groupBy(<em>.head).mapValues(</em>.length) </p>
+<p>maps were partial functions this means that applying a map to a key value could lead to an exception if the key is not stored in the map. There is a function to set a default value if the key is not present</p>
+<p>val c = veggie withDefaultValue "Unknown"
+c("x")       // returns Unknown </p>
+<p>Stream
+Similar to lists but their tail is evaluate only on demand. they are defined from a constant Stream.empty and a constructor Stream.cons. The following example illustrates that the interpreter does not build the full Stream</p>
+<p>Stream.cons( 1,Stream.cons(2 ,Stream.Empty))      //&gt; res0: scala.collection.immutable.Stream.Cons[Int] = Stream(1, ?)
+ Stream(1, 2,3 ,4)                                 //&gt; res1: scala.collection.immutable.Stream[Int] = Stream(1, ?)</p>
+<p>Example of interesting use case. Compute the prime number from 1000 to 10000 but takes the second prime only. With a List the approach will compute all the prime while with Stream only the 2 first elements.</p>
+<p>def isPrime(i: Int) : Boolean =
+    (2 until i) forall ( x =&gt; i % x != 0)         //&gt; isPrime: (i: Int)Boolean</p>
+<p>((1000 to 10000).toStream filter isPrime)( 1)   &gt; 1013</p>
+<p>// :: is not producing a Stream but..
+x #:: xs  == Stream.cons(x,xs)</p>
+<p>Scala Build Test
+Using Scala Build Test. First start it in the folder with the project sub-folder, and eclipse .project</p>
+<blockquote>
+<p>sbt
+styleCheck
+compile
+test
+run
+submit jerome.boyer@gmail.com  <pwd>  5Tz7bNHph7
+console
+scala &gt;</p>
+</blockquote>
+<p>Scala program
+To run a Scala program, you must supply the name of a standalone singleton object with a main method that takes one parameter, an Array[String], and has a result type of Unit</p>
+<p>object ThisIsAnApp {
+      def main(args: Array[String]) {
+        for (arg &lt;- args)
+          println(arg +": "+ calculate(arg))
+      }
+}
+Scala provides a trait, scala.Application, to run an application without main function
+ object AnotherApp extends Application {</p>
+<div class="codehilite"><pre><span></span>  for (season &amp;lt;- List(&quot;fall&quot;, &quot;winter&quot;, &quot;spring&quot;))
+    println(season +&quot;: &quot;+ calculate(season))
+</pre></div>
+
+
+<p>}
+ The code between the curly braces is collected into a primary constructor of the singleton object, and is executed when the class is initialized</p>
+<p>compile:</p>
+<p>scalac  -d target/scala-2.10/classes </p>
+<p>or use sbt &gt; compile</p>
+<p>// run unit test in sbt</p>
+<blockquote>
+<p>test</p>
+</blockquote>
+<p>execute a program: scala </p>
+<h2 id="integration-with-java">Integration with java</h2>
+<p>scala can access java classes, extends java class and implement java interface. All classes from the java.lang package are imported by default, while others need to be imported explicitly.</p>
+<h2 id="further-readings">Further Readings</h2>
+<ul>
+<li><a href="http://docs.scala-lang.org/cheatsheets/">Cheat sheets</a></li>
+</ul>
+                
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../dev-on-spark/" title="Develop on Spark" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Develop on Spark
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../compendium/" title="Compendium" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Compendium
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.b806dc00.js"></script>
+      
+      <script>app.initialize({version:"1.0.4",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>

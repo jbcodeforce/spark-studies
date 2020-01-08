@@ -162,7 +162,7 @@
 
   
 
-<a href="https://github.com/jbcodeforce/openshift-studies/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/jbcodeforce/spark-studies/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -209,7 +209,7 @@
 
   
 
-<a href="https://github.com/jbcodeforce/openshift-studies/" title="Go to repository" class="md-source" data-md-source="github">
+<a href="https://github.com/jbcodeforce/spark-studies/" title="Go to repository" class="md-source" data-md-source="github">
   
     <div class="md-source__icon">
       <svg viewBox="0 0 24 24" width="24" height="24">
@@ -342,6 +342,18 @@
 
 
   <li class="md-nav__item">
+    <a href="scala_summary/" title="Scala summary" class="md-nav__link">
+      Scala summary
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="compendium/" title="Compendium" class="md-nav__link">
       Compendium
     </a>
@@ -440,7 +452,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/jbcodeforce/openshift-studies/edit/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
+                  <a href="https://github.com/jbcodeforce/spark-studies/edit/master/docs/index.md" title="Edit this page" class="md-icon md-content__icon">&#xE3C9;</a>
                 
                 
                 <h1 id="spark-studies">Spark studies</h1>
@@ -492,10 +504,22 @@ The driver and executor pod scheduling is handled by Kubernetes.</p>
 <div class="codehilite"><pre><span></span>    docker network create spark_network
 </pre></div>
 
-<p>The Dockerfile, in this repository, is using a openjdk base image and install Spark 2.4.4, so here are the command to build the images and then start it with a shell.</p>
+<p>The Dockerfile, in this repository, is using a openjdk base image and install Spark 3.0.0, so here are the commands to build the images and then start it with a shell.</p>
 <div class="codehilite"><pre><span></span>    docker build -t jbcodeforce/spark .
     docker run --rm -it --name spark-master --hostname spark-master <span class="se">\</span>
         -p <span class="m">7077</span>:7077 -p <span class="m">8085</span>:8085 --network spark_network jbcodeforce/spark bash
+</pre></div>
+
+<p>To simply validate the installation, use the spark-shell as:</p>
+<div class="codehilite"><pre><span></span>bash-4.4# spark-shell
+
+Using Scala version <span class="m">2</span>.12.10 <span class="o">(</span>OpenJDK <span class="m">64</span>-Bit Server VM, Java <span class="m">1</span>.8.0_212<span class="o">)</span>
+Type in expressions to have them evaluated.
+Type :help <span class="k">for</span> more information.
+
+scala&gt; val <span class="nv">rdd</span> <span class="o">=</span> sc.textFile<span class="o">(</span><span class="s2">&quot;README.md&quot;</span><span class="o">)</span>
+rdd: org.apache.spark.rdd.RDD<span class="o">[</span>String<span class="o">]</span> <span class="o">=</span> README.md MapPartitionsRDD<span class="o">[</span><span class="m">1</span><span class="o">]</span> at textFile at &lt;console&gt;:24
+scala&gt; rdd.count<span class="o">()</span>
 </pre></div>
 
 <ul>
