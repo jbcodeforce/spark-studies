@@ -1,8 +1,9 @@
 site_name: studies
-repo_url: https://github.com/jbcodeforce/openshift-studies
+repo_url: https://github.com/jbcodeforce/spark-studies
 nav:
   - Introduction: index.md
   - Develop on Spark: dev-on-spark.md
+  - Scala summary: scala_summary.md
   - Compendium: compendium.md
  
 

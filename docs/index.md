@@ -50,12 +50,26 @@ When running locally to avoid some complex host to docker containers communicati
     docker network create spark_network
 ```
 
-The Dockerfile, in this repository, is using a openjdk base image and install Spark 2.4.4, so here are the command to build the images and then start it with a shell.
+The Dockerfile, in this repository, is using a openjdk base image and install Spark 3.0.0, so here are the commands to build the images and then start it with a shell.
 
 ```shell
     docker build -t jbcodeforce/spark .
     docker run --rm -it --name spark-master --hostname spark-master \
         -p 7077:7077 -p 8085:8085 --network spark_network jbcodeforce/spark bash
+```
+
+To simply validate the installation, use the spark-shell as:
+
+```shell
+bash-4.4# spark-shell
+
+Using Scala version 2.12.10 (OpenJDK 64-Bit Server VM, Java 1.8.0_212)
+Type in expressions to have them evaluated.
+Type :help for more information.
+
+scala> val rdd = sc.textFile("README.md")
+rdd: org.apache.spark.rdd.RDD[String] = README.md MapPartitionsRDD[1] at textFile at <console>:24
+scala> rdd.count()
 ```
 
 * Start the Spark Master node:

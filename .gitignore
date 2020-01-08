@@ -1,1 +1,7 @@
 site/
+src/SparkStreaming/twitter.txt
+src/SparkStreaming/SparkStreamingSamples/jars/
+src/SparkStreaming/SparkStreamingSamples/bin/
+src/SparkStreaming/jars/
+src/SparkStreaming/LearningScala/bin/
+src/SparkStreaming/LearningScala/.worksheet/

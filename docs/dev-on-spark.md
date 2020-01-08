@@ -48,3 +48,9 @@ movies = lines.map(parseInput)
 # Convert that to a DataFrame
 movieDataset = spark.createDataFrame(movies)
 ```
+
+## Spark Streaming
+
+### Environment setup
+
+I used the Spark 3.0 preview 2 from december 2019 release, and Eclipse Scala IDE from [here](http://scala-ide.org/download/sdk.html). See also [those instructions](https://sundog-education.com/spark-streaming).
