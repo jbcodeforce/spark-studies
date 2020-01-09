@@ -462,11 +462,13 @@
 <ul>
 <li>Data is expensive to move so Spark focuses on performing computations over the data, no matter where it resides</li>
 <li>Provide a unified API for common data analysis tasks</li>
+<li>It provides a cluster with a manager node and executors. It can scale horizontally.</li>
 <li>Spark includes libraries for SQL and structured data (Spark SQL), machine learning (MLlib), stream processing (Spark Streaming and the newer Structured Streaming), and graph analytics (GraphX)</li>
 <li>support large-scale machine learning using iterative algorithms that need to make multiple passes over the data.</li>
-<li>It uses a directed acyclic graph, or DAG, to define the workflow.</li>
+<li>It uses a directed acyclic graph, or DAG, to define the workflow, that is optimize by a DAG engine.</li>
 <li>It is built around the Resilient Distributed Dataset (RDD), and Dataset.</li>
 <li>It is written in Scala, and it is recommended to develop spark apps with scala, even if Python is a viable soluton for POC and prototype.</li>
+<li>It fast, 100x faster than hadoop MapReduce. </li>
 </ul>
 <h2 id="concepts">Concepts</h2>
 <ul>
@@ -605,6 +607,8 @@ Beyond Bedlam (1993) 1.0
 Falling in Love Again (1980) 1.0
 T-Men (1947) 1.0
 </pre></div>
+
+<p><a href="dev-on-spark/">Next develop on spark...</a></p>
                 
                   
                 

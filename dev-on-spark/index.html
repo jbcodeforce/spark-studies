@@ -277,6 +277,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#spark-context" title="Spark context" class="md-nav__link">
+    Spark context
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#transforming-rdds" title="Transforming RDDs" class="md-nav__link">
     Transforming RDDs
   </a>
@@ -301,6 +308,13 @@
           <li class="md-nav__item">
   <a href="#environment-setup" title="Environment setup" class="md-nav__link">
     Environment setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-streaming-program" title="First streaming program" class="md-nav__link">
+    First streaming program
   </a>
   
 </li>
@@ -373,6 +387,13 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#spark-context" title="Spark context" class="md-nav__link">
+    Spark context
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#transforming-rdds" title="Transforming RDDs" class="md-nav__link">
     Transforming RDDs
   </a>
@@ -397,6 +418,13 @@
           <li class="md-nav__item">
   <a href="#environment-setup" title="Environment setup" class="md-nav__link">
     Environment setup
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#first-streaming-program" title="First streaming program" class="md-nav__link">
+    First streaming program
   </a>
   
 </li>
@@ -444,10 +472,25 @@
 <div class="codehilite"><pre><span></span>/spark/bin/spark-submit nameoftheprogram.py
 </pre></div>
 
+<p>Creating a RDD can be done from different data source, text file, csv, database, Hive, Cassandra ...</p>
+<h2 id="spark-context">Spark context</h2>
+<p>Created by the driver program, it is responsible for makng the RDD, resilient and distributed. Here is an example of a special context creation for Spark Streaming, using local server with one executor per core, and using a batch size of 1 second.</p>
+<div class="codehilite"><pre><span></span><span class="k">val</span> <span class="n">scc</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StreamingContext</span><span class="o">(</span><span class="s">&quot;local[*]&quot;</span><span class="o">,</span> <span class="s">&quot;TelemetryAlarmer&quot;</span><span class="o">,</span> <span class="nc">Seconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+</pre></div>
+
 <h2 id="transforming-rdds">Transforming RDDs</h2>
 <p>Use Map, flatmap, filter, distinct, union, intersection, substract, ... functions, and then applies of one of action.</p>
 <p>Nothing actually happens in your drive program until an action is called.</p>
 <p>here is <a href="https://spark.apache.org/docs/latest/api/python/index.html">an python API documentation</a>.</p>
+<p>In <a href="https://github.com/jbcodeforce/spark-studies/blob/master/src/SparkStreaming/SparkStreamingSamples/src/jbcodeforce/rdd/samples/wordscale.scala">this code</a> there is a documented example of to use RDD to count word occurence in a text.
+To be able to get an executor running the code, the scala program needs to be an object and have a main function:</p>
+<div class="codehilite"><pre><span></span>object wordcount {
+
+  def main(args: Array[String]) {
+  }
+}
+</pre></div>
+
 <h2 id="dataframes">DataFrames</h2>
 <p>Spark 2.0 supports exposing data in RDD as data frames to apply SQL queries. DataFrames contain row Objects.</p>
 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
@@ -464,8 +507,39 @@
 </pre></div>
 
 <h2 id="spark-streaming">Spark Streaming</h2>
+<p>Big data never stops, so there is a need to continuously analyze data streams in real time. Some nice use cases: clickstream, real time sensor data from IoT. </p>
+<p><img alt="" src="../images/spark-streaming.png" /></p>
+<p>The RDD processing is distributed on different worker nodes to process data in parallel.</p>
+<p>It also use the DStreams, or Discretized Streams, which generates the RDDs for each time step, and may produce output at each time step too. It acts as a RDD at the global level or we can access the underlying RDDs. We can apply stateless transformations on Dstreams, like map... or we can use stateful data to maintain long-lived state. This is used for aggregate.</p>
+<p>Spark streaming supports windowed transformation, to compute results across a longer time perido than your batch interval. Can be used for example to compute the total product sell over a 1 hour time window. The windows slides as time goes one, to represent batches within the window interval. 
+In fact there are three intervals:</p>
+<ul>
+<li>the batch interval is how ofthen data is captured into a DStream. it is specified when defining the spark streaming context. </li>
+<li>the slide interval is how often a windowed transformation is computer</li>
+<li>the window interval is how far back in time the windowed transformation goes. </li>
+</ul>
+<p>To ensure fault tolerance incoming data is replicated to at least 3 worker nodes. For stateful operation, a checkpoint directory can be used to store states in case of failure and node restarts. </p>
+<p>The architecture of the receiver impacts the fault tolerance, for example if the receiver is a single point of failure. If a Twitter receiver fails, you loose data.</p>
+<p>The drive code can be also a SPOF. But there are ways to design and implement a more reliable driver, by using StreamingContext.getOrCreate() API and use checkpoint directory on distributed filesystem, to be used when the driver restart, to pickup from the checkpoint directory.   </p>
 <h3 id="environment-setup">Environment setup</h3>
 <p>I used the Spark 3.0 preview 2 from december 2019 release, and Eclipse Scala IDE from <a href="http://scala-ide.org/download/sdk.html">here</a>. See also <a href="https://sundog-education.com/spark-streaming">those instructions</a>.</p>
+<p>Running the code in Eclipse uses a local jars file for spark.</p>
+<p>See also <a href="http://localhost:8000/#using-docker-compose">the explanations</a> to run it with docker compose. </p>
+<h3 id="first-streaming-program">First streaming program</h3>
+<div class="codehilite"><pre><span></span><span class="k">object</span> <span class="nc">PrintTweets</span> <span class="o">{</span>
+  <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
+       <span class="k">val</span> <span class="n">ssc</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StreamingContext</span><span class="o">(</span><span class="s">&quot;local[*]&quot;</span><span class="o">,</span> <span class="s">&quot;PrintTweets&quot;</span><span class="o">,</span> <span class="nc">Seconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+       <span class="c1">// Create a DStream from Twitter using our streaming context</span>
+       <span class="k">val</span> <span class="n">tweets</span> <span class="k">=</span> <span class="nc">TwitterUtils</span><span class="o">.</span><span class="n">createStream</span><span class="o">(</span><span class="n">ssc</span><span class="o">,</span> <span class="nc">None</span><span class="o">)</span>
+        <span class="c1">// Now extract the text of each status update into RDD&#39;s using map()</span>
+        <span class="k">val</span> <span class="n">statuses</span> <span class="k">=</span> <span class="n">tweets</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">status</span> <span class="k">=&gt;</span> <span class="n">status</span><span class="o">.</span><span class="n">getText</span><span class="o">())</span>
+        <span class="c1">// Print out the first ten</span>
+        <span class="n">statuses</span><span class="o">.</span><span class="n">print</span><span class="o">()</span>
+        <span class="c1">// Kick it all off</span>
+        <span class="n">ssc</span><span class="o">.</span><span class="n">start</span><span class="o">()</span>
+        <span class="n">ssc</span><span class="o">.</span><span class="n">awaitTermination</span><span class="o">()</span>
+  <span class="o">}</span>
+</pre></div>
                 
                   
                 
