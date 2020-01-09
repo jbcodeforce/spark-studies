@@ -8,15 +8,18 @@ The goal of Spark is to offer an **unified** platform for writing big data appli
 
 * Data is expensive to move so Spark focuses on performing computations over the data, no matter where it resides
 * Provide a unified API for common data analysis tasks
+* It provides a cluster with a manager node and executors. It can scale horizontally.
 * Spark includes libraries for SQL and structured data (Spark SQL), machine learning (MLlib), stream processing (Spark Streaming and the newer Structured Streaming), and graph analytics (GraphX)
 * support large-scale machine learning using iterative algorithms that need to make multiple passes over the data.
-* It uses a directed acyclic graph, or DAG, to define the workflow.
+* It uses a directed acyclic graph, or DAG, to define the workflow, that is optimize by a DAG engine.
 * It is built around the Resilient Distributed Dataset (RDD), and Dataset.
 * It is written in Scala, and it is recommended to develop spark apps with scala, even if Python is a viable soluton for POC and prototype.
+* It fast, 100x faster than hadoop MapReduce. 
 
 ## Concepts
 
 * Spark Applications consist of a driver process and a set of executor processes. The driver process runs your main() function, sits on a node in the cluster, and is responsible for three things: 
+
     * maintaining information about the Spark Application
     * responding to a user’s program or input
     * analyzing, distributing, and scheduling work across the executors.
@@ -173,3 +176,5 @@ Beyond Bedlam (1993) 1.0
 Falling in Love Again (1980) 1.0
 T-Men (1947) 1.0
 ```
+
+[Next develop on spark...](dev-on-spark.md)

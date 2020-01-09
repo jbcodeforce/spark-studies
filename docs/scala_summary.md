@@ -69,7 +69,7 @@ The logical-and and logical-or operations are short-circuited as in Java: expres
 
 The operator precedence looks like:
 
-```
+```scala
 (all other special characters)
 * / %
 + -
@@ -82,10 +82,6 @@ The operator precedence looks like:
 (all letters)
 (all assignment operators)
 ```
-
-### Flow control
-
-See the code example in: [LeaningScala2.sc](https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala2.sc)
 
 ### Function  
 
@@ -123,7 +119,7 @@ a name is evaluate by replacing its right end definition
 
 Functions are objects. It is possible to pass functions as arguments, to store them in variables, and to return them from other functions. 
 
-
+```scala
  // function that uses a function as argument
     // type () => Unit is for function taking no argument and return nothing
      def oncePerSecond(callback: () => Unit) {
@@ -147,12 +143,14 @@ def gcd(a: Int, b: Int) : Int =
 
  def sumInts(a : Int,b: Int) = sum(id,a,b)
  def id(x: Int): Int = x
+```
 
-The sum function is a linear recursion
+The sum function is a linear recursion.
 Tail recursion: if a function calls itself as its last action, the functions stack frame can be used. It is iterative. (gcd above is a tail recursive function)
 
-Anonymous function
+Anonymous function:
 
+```scala
 // Declared like:  (x1 : T1,.... , xn :Tn) => E
 
 (x:Int) => x*x*x
@@ -170,32 +168,40 @@ def sum(f: Int => Int): (Int, Int) => Int = {
 
 def sumCubes = sum(x => x*x*x)
 println(sumCubes(1,10))
+```
 
 When doing functional programming, you try to avoid side effect and uses vars. When your function need to modify its parameters, use the Unit result type.
 Function values are treated as objects in Scala
 
-Class
+### Class
 
-The class declaration includes the parameters of the constructor
+The class declaration includes the parameters of the constructor:
 
+```scala
 class Tweet(val user: String, val text: String, val retweets: Int) { ...
+```
 
 parameters are always pass by-value, they become fields of the class
 
+```scala
 val a = new Tweet("gizmodo"," some text", 20)
 a.user 
+```
 
-Classes in Scala cannot have static members. So there is the concept of singleton object: the definition looks like a class definition, except instead of the keyword class you use the keyword object. When a singleton object shares the same name with a class, it is called that class's companion object. They cannot take parameters. A singleton object that does not share the same name with a companion class is called a standalone object.
+Classes in Scala cannot have static members. So there is the concept of singleton object: the definition looks like a class definition, except instead of the keyword `class` you use the keyword `object`. When a singleton object shares the same name with a class, it is called that class's companion object. They cannot take parameters. A singleton object that does not share the same name with a companion class is called a standalone object.
 
 It is possible to define precondition of the primary constructor of a class. For example for the Rational class we can enforce that the denominator is never 0 using require expression
 
+```scala
 class Rational(n: Int, d: Int) {
     require(d != 0)
     override def toString = n +"/"+ d
   }
+```
 
 Class can use type parameter to support polymorphism
 
+```scala
 trait List[T] {
   def isEmpty : Boolean
   def head : T
@@ -211,45 +217,54 @@ class Nil[T] extends List[T] {
  def head :Nothing =  throw new NoSuchElementException("Nil head")
  def tail :Nothing = throw new NoSuchElementException("Nil tail")
 }
+```
 
-Immutable objects offer several advantages over mutable objects
-- easier to reason about than mutable ones, because they do not have complex state spaces that change over time
-- pass immutable objects around quite freely, whereas you may need to make defensive copies of mutable objects before passing them to other code
-- there is no way for two threads concurrently accessing an immutable to corrupt its state once it has been properly constructed, because no thread can change the state of an immutable
--  immutable objects make safe hashtable keys
-- main disadvantage of immutable objects is that they sometimes require that a large object graph be copied where otherwise an update could be done in place
+Immutable objects offer several advantages over mutable objects:
 
-scala.Any is the root of all classes in scala. scala.AnyVal is base type of all primitive types. scala.AnyRef the base type of reference types, it is an alias to java.lang.Object
+* easier to reason about than mutable ones, because they do not have complex state spaces that change over time
+* pass immutable objects around quite freely, whereas you may need to make defensive copies of mutable objects before passing them to other code
+* there is no way for two threads concurrently accessing an immutable to corrupt its state once it has been properly constructed, because no thread can change the state of an immutable
+*  immutable objects make safe hashtable keys
+* main disadvantage of immutable objects is that they sometimes require that a large object graph be copied where otherwise an update could be done in place.
 
-scala.Nothing is at bottom of type hierarchy. there is no value of type Nothing. it is used to signal abnormal termination or as an element type of an empty collection. Set[Nothing]
+`scala.Any` is the root of all classes in scala. `scala.AnyVal` is base type of all primitive types. `scala.AnyRef` the base type of reference types, it is an alias to java.lang.Object.
+
+`scala.Nothing` is at bottom of type hierarchy. there is no value of type Nothing. it is used to signal abnormal termination or as an element type of an empty collection. Set[Nothing]
 
 As the function throw and exception, the return type of the function is set to Nothing.
+
+```
 scala> def error(msg : String) = throw new Error(msg)
 error: (msg: String)Nothing
+```
 
+`scala.Null`, is subclass of all the classes in AnyRef, and it is the type of null value. Null is incompatible with subtypes of `AnyVal`.
 
-scala.Null, is subclass of all the classes in AnyRef, and it is the type of null value. Null is incompatible with subtypes of AnyVal.
-
+```
 scala> val x = null
 x: Null = null
+```
 
 One important characteristic of method parameters in Scala is that they are vals, not vars
 
-Unit 
+### Unit
+
 Methods with a result type of Unit, are executed for their side effect.  A side effect is generally defined as mutating state somewhere external to the method or performing an I/O action.
 
-Trait
+### Trait
+
 Declared like an abstract class. They contains fields and concrete methods. A class can inherit one unique class but can have many traits.
 Trait do not have parameters as part of the constructor.
 
-Pattern matching
-When using a pure OO implementation, adding a new method to a class you may add this method in multiple classes and subclasses.  Scala offers the pattern matching capability to support simple function extension
+### Pattern matching
 
-case classes are like class but the case keyword let them participate in pattern matching. Implicitly scala compiler will add object for case class with a factory method apply.
+When using a pure OO implementation, adding a new method to a class you may add this method in multiple classes and subclasses.  Scala offers the pattern matching capability to support simple function extension.
+
+`case` classes are like `class` but the case keyword let them participate in pattern matching. Implicitly scala compiler will add object for case class with a factory method apply.
 Pattern matching is a generalization of switch. 
-The syntax looks like:  expr match { case pattern => expr ... case pn => en}
-in case of not matching there is a MatchError exception 
 
+The syntax looks like:  `expr match { case pattern => expr ... case pn => en}`
+in case of not matching there is a MatchError exception 
 
 if a pattern match the whole right hand side is used 
 patterns are constructed from constructors, variables, wildcard patterns, constants
@@ -257,10 +272,14 @@ patterns are constructed from constructors, variables, wildcard patterns, consta
 case and pattern matching is also helpful for tree-like recursive data
 variable start by lowercase, where constant starts by Uppercase
 
-Control 
+
+### Flow control
+
+See the code example in: [LeaningScala2.sc](https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala2.sc)
+
 Almost all of Scala's control structures result in some value. This is the approach taken by functional languages, in which programs are viewed as computing a value, thus the components of a program should also compute values.
 
-
+```scala
 val filename =
       if (!args.isEmpty) args(0)
       else "default.txt"
@@ -272,25 +291,30 @@ val filename =
       println("Read: "+ line)
     } while (line != "")
 
+```
 
-// for 
 The while and do-while constructs are called "loops," not expressions, because they don't result in an interesting value. The type of the result is Unit
 
 For is simply uses to iterate through a sequence of integers. But has more advanced expressions to iterate over multiple collections of different kinds, to filter out elements based on arbitrary conditions, and to produce new collections. The notation " <- "  is called a generator,
- 
+
+```scala
 for (s) yield e
+```
+
 s is a sequence of generators and filters,   e is an expression whose value is returned by an iteration
 generator is of the form p <- c   :   c is a collection and p is a pattern
 filter is a boolean expression
 if there are several generators in sequence the last ones vary faster than the first
 
+```scala
 // list the file in the current directory
 val filesHere = (new java.io.File(".")).listFiles
   
-    for (file <- filesHere)
-      println(file)
+for (file <- filesHere)
+  println(file)
+
 for (i <- 1 to 4)  // could be 1 until 4
-          println("Iteration "+ i)
+  println("Iteration "+ i)
 
 // For supports filter to build subset
 for (file <- filesHere if file.getName.endsWith(".scala"))
@@ -305,10 +329,11 @@ for (
 // If you add multiple <- clauses, you will get nested "loops."
 // for like a SQL query
 for (b <- books; a <- b.authors if a startsWith "Bird") yield b.title
+```
 
 For is closely related to higher order functions. For example the following three functions can be written with for
 
-
+```scala
 def mapFunction[T,U] (xs : List[T], f: T => U) : List[U] =
    for (x <- xs) yield f(x)
 
@@ -321,29 +346,41 @@ def filter2[T] (xs : List[T], f: T => Boolean) : List[T] =
 val l=List( 2, 3, 4, 5)                    > l  : List[Int] = List(2, 3, 4, 5)
 // to avoid missing parameter type, we need to add [Int] 
 val r=filter2[Int](l,(x => x% 2 == 0))    > r  : List[Int] = List(2, 4)
+```
 
 Expressing for with HOF
+
+```scala
 for (b <- books; a <- b.authors if a startsWith "Bird") yield b.title   is the same as
   books flatMap (b => for (a <- b.authors if a startsWith "Bird") yield b.title)   or
   books flatMap (b => for (a <- b.authors withFilter (a=> a startsWith "Bird")) yield b.title)   or
   books flatMap (b => b.authors withFilter (a=> a startsWith "Bird") map (y => y.title)
- 
+```
 
-List
+### Data Structure
 
-Lists are immutable, and recursive and linear: access to the first element is much faster than accessing to the middle of end of the list
-lists are constructed from empty list Nil and the cons operation :: 
+See the code example in: [LeaningScala4.sc](https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala4.sc)
 
+#### List
+
+Lists are immutable, and recursive and linear: access to the first element is much faster than accessing to the middle of end of the list.
+Lists are constructed from empty list Nil and the cons operation `:: `
+
+```scala
 val empty = List()
 val fruit = List("apple","banana","pear")
 val matrix = List(List(1,0,0),List(0,1,0),List(0,0,1))
 // equivalent to 
 val fruit = "apple" :: ("banana" :: ("pear" :: Nil))
 val fruit = "apple" :: "banana" :: "pear" :: Nil
+// concat
+val fruits = fruit ++ List("strawberry")
+```
 
 in scala there is a convention the operators ending with : associate to the right operand. They could be seen as method calls of the right hand operand
 Three list operations are important, head, tail, isEmpty
 
+```scala
 xs.length
 xs.last
 xs.init         // build a new list from xs without the last one
@@ -353,18 +390,28 @@ xs(n)         // element at n position
 xs splitAt n   // return a pair of two sub lists from list xs one up to index n and one from position n
 
 val alist = "aba".toList
-alist groupBy(c => c)         Partitions a collection into a map of collections according to a discriminator function (here is Identity)
-Map[Char,List[Char]] = Map(b -> List(b), a -> List(a, a))
+alist groupBy(c => c)         
+```
+ap
 
+Partitions a collection into a map of collections according to a discriminator function (here is Identity)
+
+```scala
+Map[Char,List[Char]] = Map(b -> List(b), a -> List(a, a))
+val m = Map("kirk" -> "Enterprise","joe" -> "Voyager")
+println(m["kirk"])
+```
 
 It is possible to decompose a list with pattern matching:
 
-Nil constant
+#### Nil constant
+
 p :: ps is a pattern that matches a list with a head and a tail
 List(a,b,c,) to match a complete list
 
 Here are examples of list using recursion and pattern matching
 
+```scala
  def last[T] (xs : List[T]) : T = xs match {
    case List() => throw new Error("Last of empty list is not possible" )
    case List(x) => x
@@ -383,28 +430,35 @@ def concat[T](l1: List[T],l2 : List[T]) : List[T] =
     case List() => l2
     case y :: ys => y :: concat(ys,l2)
   } 
+```
 
 http://www.scala-lang.org/api/2.11.1/index.html#scala.collection.immutable.List
 
-Other collections:
+#### Other collections
+
 Vector has a more evenly balanced structure using 32 word array. when it is more than 32 elements a next level is added as array of pointer so covering 2** 10 elements. 
 The access is in log 32(n)
 it supports the same operations as on List as List and Vector are Seq, the class of all sequences which itself is a Iterable. Exception is on concatenation. 
 
+```scala
  val nums= Vector( 1, 2, 3, 44)         > nums  : scala.collection.immutable.Vector[Int] = Vector(1, 2, 3, 44)
  val n2 = 10 +: nums                  > n2  : scala.collection.immutable.Vector[Int] = Vector(10, 1, 2, 3, 44)
  val n3 = nums :+ 15
+```
 
-Arrays and String are Seq too
+#### Arrays and String are Seq too
 
+```scala
   val a = Array( 1, 2, 3, 44)                > a  : Array[Int] = Array(1, 2, 3, 44)
   a map (x => x* 2)                         res0: Array[Int] = Array(2, 4, 6, 88)
   val s = "Hello World"                   > s  : String = Hello World
   s filter (c => c.isUpper)/               > res1: String = HW
+```
 
 range represents a sequence of evenly spaced integers.
 Some operations on Seq
 
+```scala
 val s = "Hello World"  
 s exists ( c => c == 'e') true if there is an element in s the p(x) holds
 
@@ -434,18 +488,21 @@ scalarProduct(Vector(2,3,4),Vector(3,5,8))
 // compute if n is prime: if only divisors of n is 1 and n
 def isPrime(n : Int) : Boolean =
    (2 until n) forall (x => n % x != 0) 
+```
 
+#### Getting a dictionary of word 
 
-Getting a dictionary of word 
+The following will get each word (one per line in the input stream), transform it to a list and then filter out any word that does not contain a letter.  Filter apply a function to each member of the collection, forall apply for each element of the list a function f and return the matching elements.
 
-// the following will get each word (one per line in the input stream), transform it to a list and then filter out any word that does not contain
-// a letter.  Filter apply a function to each member of the collection, forall apply for each element of the list a function f and return the matching elements.
+```scala
  val words = in.getLines.toList filter (word => word forall (c => c.isLetter))
+```
 
-Set
+#### Set
+
 Is a sequence that does not have duplicate elements, elements are unordered, it includes the operation contains
 
-
+```scala
   // return all the ways to encode a number to a set of strings
   def encode(number: String) : Set[List[String]] =
      if (number.isEmpty) Set(List())
@@ -457,46 +514,58 @@ Is a sequence that does not have duplicate elements, elements are unordered, it 
        } yield word :: rest                                // the 
        }.toSet 
 // returns  Set[List[String]]  ... List(Scala, is, fun), List(sack, bird, to)
+```
 
-// following code also illustrates that a function can be assigned to a variable
+Following code also illustrates that a function can be assigned to a variable. it is a map of digit strings to the words that represent them. words is list of words of a given dictionary
 
-// it is a map of digit strings to the words that represent them. words is list of words of a given dictionary
+```scala
 val wordsForNum : Map [String,Seq[String]] =
     words groupBy wordCode withDefaultValue Seq()
 
 // wordsForNum  : Map[String,Seq[String]] = Map(63972278 -> List(newscast),37638427 -> List(cybernetics)
+```
 
+#### Map
 
-Map
 maps are iterable and functional.
 
+```scala
  val roman = Map( "I" -> 1 , "II" -> 2 , "V" -> 5 )   //> roman  : scala.collection.immutable.Map[String,Int] = Map(I -> 1, II -> 2, V
                                                   //|  -> 5)
  roman("V")                                       //> res5: Int = 5
  roman get ("II")                                 //> res6: Option[Int] = Some(2)
+```
 
 The Some is a class extending the trait Option type and takes a unique value. When a map does not contains a key it returns None which is declared as:
+
+```scala
 object None extends Option[Nothing]
  
 veggie groupBy (_.head)     > res8: scala.collection.immutable.Map[Char,List[String]] = Map(b -> List(brocoli), t -> List(tom), c -> List(carrot), o -> List(olive))
 
 // mapValues Transforms a map by applying a function to every retrieved value
 veggie.groupBy(_.head).mapValues(_.length) 
+```
 
 maps were partial functions this means that applying a map to a key value could lead to an exception if the key is not stored in the map. There is a function to set a default value if the key is not present
 
+```scala
 val c = veggie withDefaultValue "Unknown"
 c("x")       // returns Unknown 
+```
 
-Stream
-Similar to lists but their tail is evaluate only on demand. they are defined from a constant Stream.empty and a constructor Stream.cons. The following example illustrates that the interpreter does not build the full Stream
+#### Stream
 
+Similar to lists but their tail is evaluate only on demand. they are defined from a constant `Stream.empty` and a constructor `Stream.cons`. The following example illustrates that the interpreter does not build the full Stream
 
+```scala
  Stream.cons( 1,Stream.cons(2 ,Stream.Empty))      //> res0: scala.collection.immutable.Stream.Cons[Int] = Stream(1, ?)
  Stream(1, 2,3 ,4)                                 //> res1: scala.collection.immutable.Stream[Int] = Stream(1, ?)
+```
 
 Example of interesting use case. Compute the prime number from 1000 to 10000 but takes the second prime only. With a List the approach will compute all the prime while with Stream only the 2 first elements.
 
+```scala
 def isPrime(i: Int) : Boolean =
     (2 until i) forall ( x => i % x != 0)         //> isPrime: (i: Int)Boolean
    
@@ -504,12 +573,14 @@ def isPrime(i: Int) : Boolean =
 
 // :: is not producing a Stream but..
 x #:: xs  == Stream.cons(x,xs)
+```
 
 
+### Scala Build Test
 
-Scala Build Test
 Using Scala Build Test. First start it in the folder with the project sub-folder, and eclipse .project
 
+```
 > sbt
 >styleCheck
 >compile
@@ -518,27 +589,38 @@ Using Scala Build Test. First start it in the folder with the project sub-folder
 >submit jerome.boyer@gmail.com  <pwd>  5Tz7bNHph7
 >console
 scala >
+```
 
-Scala program
+### Scala program
+
 To run a Scala program, you must supply the name of a standalone singleton object with a main method that takes one parameter, an Array[String], and has a result type of Unit
 
+```scala
 object ThisIsAnApp {
       def main(args: Array[String]) {
         for (arg <- args)
           println(arg +": "+ calculate(arg))
       }
 }
+```
+
 Scala provides a trait, scala.Application, to run an application without main function
+
+```scala
  object AnotherApp extends Application {
   
       for (season <- List("fall", "winter", "spring"))
         println(season +": "+ calculate(season))
  }
+ ```
+
  The code between the curly braces is collected into a primary constructor of the singleton object, and is executed when the class is initialized
 
 compile:
 
+```
 scalac  -d target/scala-2.10/classes 
+```
 
 or use sbt > compile
 
@@ -547,8 +629,8 @@ or use sbt > compile
 
 execute a program: scala 
 
-
 ## Integration with java
+
 scala can access java classes, extends java class and implement java interface. All classes from the java.lang package are imported by default, while others need to be imported explicitly.
  
 
