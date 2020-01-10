@@ -95,11 +95,11 @@ The drive code can be also a SPOF. But there are ways to design and implement a 
 
 ### Environment setup
 
-I used the Spark 3.0 preview 2 from december 2019 release, and Eclipse Scala IDE from [here](http://scala-ide.org/download/sdk.html). See also [those instructions](https://sundog-education.com/spark-streaming).
+I used the Spark 3.0 preview 2 from december 2019 release within docker image, and Eclipse Scala IDE from [here](http://scala-ide.org/download/sdk.html). See also [some instructions from Sundog education](https://sundog-education.com/spark-streaming).
 
-Running the code in Eclipse uses a local jars file for spark.
+Running the code in Eclipse uses Spark jar files, so there is no connection to remote cluster.
 
-See also [the explanations](http://localhost:8000/#using-docker-compose) to run it with docker compose. 
+See also [the explanations](http://jbcodeforce.github.io/spark-studies/#using-docker-compose) to run it with docker compose. 
 
 ### First streaming program
 

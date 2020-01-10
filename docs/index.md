@@ -130,7 +130,7 @@ Start a 3nd container instance to run the `spark-submit` command to compute the 
 /spark/bin/spark-submit --master spark://spark-master:7077 --class     org.apache.spark.examples.SparkPi  /spark/examples/jars/spark-examples_2.11-2.4.4.jar 1000
 ```
 
-## Using Docker compose
+## Using Docker Compose
 
 To manage workers and master and spark submit container, the best is to use docker-compose. The docker compose file is in the root directory of this repository.
 
