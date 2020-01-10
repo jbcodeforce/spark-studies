@@ -293,8 +293,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-docker-compose" title="Using Docker compose" class="md-nav__link">
-    Using Docker compose
+  <a href="#using-docker-compose" title="Using Docker Compose" class="md-nav__link">
+    Using Docker Compose
   </a>
   
 </li>
@@ -416,8 +416,8 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#using-docker-compose" title="Using Docker compose" class="md-nav__link">
-    Using Docker compose
+  <a href="#using-docker-compose" title="Using Docker Compose" class="md-nav__link">
+    Using Docker Compose
   </a>
   
 </li>
@@ -570,7 +570,7 @@ scala&gt; rdd.count<span class="o">()</span>
 <div class="codehilite"><pre><span></span>/spark/bin/spark-submit --master spark://spark-master:7077 --class     org.apache.spark.examples.SparkPi  /spark/examples/jars/spark-examples_2.11-2.4.4.jar 1000
 </pre></div>
 
-<h2 id="using-docker-compose">Using Docker compose</h2>
+<h2 id="using-docker-compose">Using Docker Compose</h2>
 <p>To manage workers and master and spark submit container, the best is to use docker-compose. The docker compose file is in the root directory of this repository.</p>
 <p>It uses two scripts to start the master or worker automatically. The environment variables to parametrize the WEB UI port, master node URL, and master port are set in the docker compose file. Start the cluster with 3 workers.</p>
 <div class="codehilite"><pre><span></span>    docker-compose up --scale spark-worker<span class="o">=</span><span class="m">3</span>

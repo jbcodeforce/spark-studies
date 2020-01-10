@@ -522,9 +522,9 @@ In fact there are three intervals:</p>
 <p>The architecture of the receiver impacts the fault tolerance, for example if the receiver is a single point of failure. If a Twitter receiver fails, you loose data.</p>
 <p>The drive code can be also a SPOF. But there are ways to design and implement a more reliable driver, by using StreamingContext.getOrCreate() API and use checkpoint directory on distributed filesystem, to be used when the driver restart, to pickup from the checkpoint directory.   </p>
 <h3 id="environment-setup">Environment setup</h3>
-<p>I used the Spark 3.0 preview 2 from december 2019 release, and Eclipse Scala IDE from <a href="http://scala-ide.org/download/sdk.html">here</a>. See also <a href="https://sundog-education.com/spark-streaming">those instructions</a>.</p>
-<p>Running the code in Eclipse uses a local jars file for spark.</p>
-<p>See also <a href="http://localhost:8000/#using-docker-compose">the explanations</a> to run it with docker compose. </p>
+<p>I used the Spark 3.0 preview 2 from december 2019 release within docker image, and Eclipse Scala IDE from <a href="http://scala-ide.org/download/sdk.html">here</a>. See also <a href="https://sundog-education.com/spark-streaming">some instructions from Sundog education</a>.</p>
+<p>Running the code in Eclipse uses Spark jar files, so there is no connection to remote cluster.</p>
+<p>See also <a href="http://jbcodeforce.github.io/spark-studies/#using-docker-compose">the explanations</a> to run it with docker compose. </p>
 <h3 id="first-streaming-program">First streaming program</h3>
 <div class="codehilite"><pre><span></span><span class="k">object</span> <span class="nc">PrintTweets</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
