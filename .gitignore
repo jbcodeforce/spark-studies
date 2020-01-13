@@ -1,4 +1,5 @@
 site/
+checkpoints/
 src/SparkStreaming/twitter.txt
 src/SparkStreaming/SparkStreamingSamples/jars/
 src/SparkStreaming/SparkStreamingSamples/bin/

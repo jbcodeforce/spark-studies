@@ -44,12 +44,44 @@ here is [an python API documentation](https://spark.apache.org/docs/latest/api/p
 In [this code](https://github.com/jbcodeforce/spark-studies/blob/master/src/SparkStreaming/SparkStreamingSamples/src/jbcodeforce/rdd/samples/wordscale.scala) there is a documented example of to use RDD to count word occurence in a text.
 To be able to get an executor running the code, the scala program needs to be an object and have a main function:
 
-```
+```scala
 object wordcount {
   
   def main(args: Array[String]) {
   }
 }
+```
+
+Map transform one row into another row:
+
+```scala
+ // Now extract the text of each tweeter status update into DStreams:
+ val statuses = tweets.map(status => status.getText())
+```
+
+while mapFlat transforms one row into multiple ones:
+
+```scala
+ // Blow out each word into a new DStream
+    val tweetwords = statuses.flatMap(tweetText => tweetText.split(" "))
+```
+
+filter helps to remove row not matching a condition:
+
+```scala
+    // Now eliminate anything that's not a hashtag
+    val hashtags = tweetwords.filter(word => word.startsWith("#"))
+```
+
+A classical transformation  it to create key value pair to count occurence of something like words using a reduce approach. reduce(f,l) applies the function f to elements of the list by pair: (i,j) where i is the result of f(i-1,j-1).
+
+
+
+```scala
+// Map each hashtag to a key/value pair of (hashtag, 1) so we can count them up by adding up the values
+val hashtagKeyValues = hashtags.map(hashtag => (hashtag, 1))
+
+val counts = hashtagKeyValues.reduceByKey()
 ```
 
 ## DataFrames
@@ -78,12 +110,17 @@ Big data never stops, so there is a need to continuously analyze data streams in
 
 The RDD processing is distributed on different worker nodes to process data in parallel.
 
-It also use the DStreams, or Discretized Streams, which generates the RDDs for each time step, and may produce output at each time step too. It acts as a RDD at the global level or we can access the underlying RDDs. We can apply stateless transformations on Dstreams, like map... or we can use stateful data to maintain long-lived state. This is used for aggregate.
+It also use the DStreams, or Discretized Streams, which is a continuous stream of data that receives input from various sources like Kafka, Flume, Kinesis, or TCP sockets.
+DStreams is a collection of many RDD RDDs for each time step, and may produce output at each time step too. It acts as a RDD at the global level but we can also access the underlying RDDs. We can apply stateless transformations on Dstreams, like map, filter, reduceByKey... or we can use stateful data to maintain long-lived state. This is used for aggregate.
+
+Stateless transformations are capable of combining data from many DStreams within each time step.
+
+While Stateful transformation uses data or intermediate results from previous batches and computes the result of the current batch. They track data across time.
 
 Spark streaming supports windowed transformation, to compute results across a longer time perido than your batch interval. Can be used for example to compute the total product sell over a 1 hour time window. The windows slides as time goes one, to represent batches within the window interval. 
 In fact there are three intervals:
 
-* the batch interval is how ofthen data is captured into a DStream. it is specified when defining the spark streaming context. 
+* the batch interval is how often data is captured into a DStream. it is specified when defining the spark streaming context. 
 * the slide interval is how often a windowed transformation is computer
 * the window interval is how far back in time the windowed transformation goes. 
 
@@ -91,7 +128,7 @@ To ensure fault tolerance incoming data is replicated to at least 3 worker nodes
 
 The architecture of the receiver impacts the fault tolerance, for example if the receiver is a single point of failure. If a Twitter receiver fails, you loose data.
 
-The drive code can be also a SPOF. But there are ways to design and implement a more reliable driver, by using StreamingContext.getOrCreate() API and use checkpoint directory on distributed filesystem, to be used when the driver restart, to pickup from the checkpoint directory.   
+The drive code can be also a SPOF. But there are ways to design and implement a more reliable driver, by using StreamingContext.getOrCreate() API and use checkpoint directory on distributed filesystem, to be used when the driver restart, to pickup from the checkpoint directory.
 
 ### Environment setup
 
@@ -117,4 +154,19 @@ object PrintTweets {
         ssc.start()
         ssc.awaitTermination()
   }
+```
+
+### Assess the Tweeter popular Hashtags
+
+The goal is to compute the most popular hashtag over a time window of 5 minutes and a slide interval of 1 seconds. See the solution in [PopularHashtags.scala]()
+
+As seen previously, the approach is to get the tweet text, split it by words, and then generating key value pair for "(word, 1)" tuples, then use a specific reduce operation using time window:
+
+```scala
+// Map each hashtag to a key/value pair of (hashtag, 1) so we can count them up by adding up the values
+val hashtagKeyValues = hashtags.map(hashtag => (hashtag, 1))
+  
+// Now count them up over a 5 minute window sliding every one second
+val hashtagCounts = hashtagKeyValues.reduceByKeyAndWindow( (x,y) => x + y, (x,y) => x - y, Seconds(300), Seconds(1))
+  
 ```
