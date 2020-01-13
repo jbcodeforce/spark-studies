@@ -319,6 +319,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#assess-the-tweeter-popular-hashtags" title="Assess the Tweeter popular Hashtags" class="md-nav__link">
+    Assess the Tweeter popular Hashtags
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -429,6 +436,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#assess-the-tweeter-popular-hashtags" title="Assess the Tweeter popular Hashtags" class="md-nav__link">
+    Assess the Tweeter popular Hashtags
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -491,6 +505,28 @@ To be able to get an executor running the code, the scala program needs to be an
 <span class="o">}</span>
 </pre></div>
 
+<p>Map transform one row into another row:</p>
+<div class="codehilite"><pre><span></span> <span class="c1">// Now extract the text of each tweeter status update into DStreams:</span>
+ <span class="k">val</span> <span class="n">statuses</span> <span class="k">=</span> <span class="n">tweets</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">status</span> <span class="k">=&gt;</span> <span class="n">status</span><span class="o">.</span><span class="n">getText</span><span class="o">())</span>
+</pre></div>
+
+<p>while mapFlat transforms one row into multiple ones:</p>
+<div class="codehilite"><pre><span></span> <span class="c1">// Blow out each word into a new DStream</span>
+    <span class="k">val</span> <span class="n">tweetwords</span> <span class="k">=</span> <span class="n">statuses</span><span class="o">.</span><span class="n">flatMap</span><span class="o">(</span><span class="n">tweetText</span> <span class="k">=&gt;</span> <span class="n">tweetText</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">))</span>
+</pre></div>
+
+<p>filter helps to remove row not matching a condition:</p>
+<div class="codehilite"><pre><span></span>    <span class="c1">// Now eliminate anything that&#39;s not a hashtag</span>
+    <span class="k">val</span> <span class="n">hashtags</span> <span class="k">=</span> <span class="n">tweetwords</span><span class="o">.</span><span class="n">filter</span><span class="o">(</span><span class="n">word</span> <span class="k">=&gt;</span> <span class="n">word</span><span class="o">.</span><span class="n">startsWith</span><span class="o">(</span><span class="s">&quot;#&quot;</span><span class="o">))</span>
+</pre></div>
+
+<p>A classical transformation  it to create key value pair to count occurence of something like words using a reduce approach. reduce(f,l) applies the function f to elements of the list by pair: (i,j) where i is the result of f(i-1,j-1).</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Map each hashtag to a key/value pair of (hashtag, 1) so we can count them up by adding up the values</span>
+<span class="k">val</span> <span class="n">hashtagKeyValues</span> <span class="k">=</span> <span class="n">hashtags</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">hashtag</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">hashtag</span><span class="o">,</span> <span class="mi">1</span><span class="o">))</span>
+
+<span class="k">val</span> <span class="n">counts</span> <span class="k">=</span> <span class="n">hashtagKeyValues</span><span class="o">.</span><span class="n">reduceByKey</span><span class="o">()</span>
+</pre></div>
+
 <h2 id="dataframes">DataFrames</h2>
 <p>Spark 2.0 supports exposing data in RDD as data frames to apply SQL queries. DataFrames contain row Objects.</p>
 <div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">pyspark.sql</span> <span class="kn">import</span> <span class="n">SparkSession</span>
@@ -544,7 +580,15 @@ In fact there are three intervals:</p>
   <span class="o">}</span>
 </pre></div>
 
-<h3 id="_1"></h3>
+<h3 id="assess-the-tweeter-popular-hashtags">Assess the Tweeter popular Hashtags</h3>
+<p>The goal is to compute the most popular hashtag over a time window of 5 minutes and a slide interval of 1 seconds. See the solution in <a href="">PopularHashtags.scala</a></p>
+<p>As seen previously, the approach is to get the tweet text, split it by words, and then generating key value pair for "(word, 1)" tuples, then use a specific reduce operation using time window:</p>
+<div class="codehilite"><pre><span></span><span class="c1">// Map each hashtag to a key/value pair of (hashtag, 1) so we can count them up by adding up the values</span>
+<span class="k">val</span> <span class="n">hashtagKeyValues</span> <span class="k">=</span> <span class="n">hashtags</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">hashtag</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">hashtag</span><span class="o">,</span> <span class="mi">1</span><span class="o">))</span>
+
+<span class="c1">// Now count them up over a 5 minute window sliding every one second</span>
+<span class="k">val</span> <span class="n">hashtagCounts</span> <span class="k">=</span> <span class="n">hashtagKeyValues</span><span class="o">.</span><span class="n">reduceByKeyAndWindow</span><span class="o">(</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="o">,</span> <span class="o">(</span><span class="n">x</span><span class="o">,</span><span class="n">y</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="n">x</span> <span class="o">-</span> <span class="n">y</span><span class="o">,</span> <span class="nc">Seconds</span><span class="o">(</span><span class="mi">300</span><span class="o">),</span> <span class="nc">Seconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+</pre></div>
                 
                   
                 
