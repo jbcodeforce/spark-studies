@@ -265,37 +265,56 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#concepts" title="Concepts" class="md-nav__link">
-    Concepts
+  <a href="#architecture" title="Architecture" class="md-nav__link">
+    Architecture
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#deployment" title="Deployment" class="md-nav__link">
+    Deployment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#installation-on-k8s-or-openshift-cluster" title="Installation on k8s or openshift cluster" class="md-nav__link">
     Installation on k8s or openshift cluster
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#run-locally-in-docker" title="Run locally in docker" class="md-nav__link">
-    Run locally in docker
+        
+          <li class="md-nav__item">
+  <a href="#run-locally-with-docker" title="Run locally with Docker" class="md-nav__link">
+    Run locally with Docker
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#smoke-test-the-cluster" title="Smoke test the cluster" class="md-nav__link">
     Smoke test the cluster
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#using-docker-compose" title="Using Docker Compose" class="md-nav__link">
     Using Docker Compose
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -388,37 +407,56 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#concepts" title="Concepts" class="md-nav__link">
-    Concepts
+  <a href="#architecture" title="Architecture" class="md-nav__link">
+    Architecture
   </a>
   
 </li>
       
         <li class="md-nav__item">
+  <a href="#deployment" title="Deployment" class="md-nav__link">
+    Deployment
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#installation-on-k8s-or-openshift-cluster" title="Installation on k8s or openshift cluster" class="md-nav__link">
     Installation on k8s or openshift cluster
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#run-locally-in-docker" title="Run locally in docker" class="md-nav__link">
-    Run locally in docker
+        
+          <li class="md-nav__item">
+  <a href="#run-locally-with-docker" title="Run locally with Docker" class="md-nav__link">
+    Run locally with Docker
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
   <a href="#smoke-test-the-cluster" title="Smoke test the cluster" class="md-nav__link">
     Smoke test the cluster
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#using-docker-compose" title="Using Docker Compose" class="md-nav__link">
     Using Docker Compose
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -456,21 +494,21 @@
                 
                 
                 <h1 id="spark-studies">Spark studies</h1>
-<p>Started at UC Berkeley in 2009.</p>
+<p>Spark started at UC Berkeley in 2009, and it is now the product to run parallel data processing on distributed computers.</p>
 <p>The goal of Spark is to offer an <strong>unified</strong> platform for writing big data application: this means consistent APIs to do data loading, SQL, streaming, machine learning... It provides an unified engine for <strong>parallel data processing</strong> on distributed systems to process large-scale data.</p>
 <h2 id="characteristics">Characteristics</h2>
 <ul>
-<li>Data is expensive to move so Spark focuses on performing computations over the data, no matter where it resides</li>
+<li>Data is expensive to move so Spark focuses on performing computations over the data, no matter where they reside.</li>
 <li>Provide a unified API for common data analysis tasks</li>
-<li>It provides a cluster with a manager node and executors. It can scale horizontally.</li>
+<li>It provides a cluster with a manager node and executor nodes. It can scale horizontally by adding executor nodes.</li>
 <li>Spark includes libraries for SQL and structured data (Spark SQL), machine learning (MLlib), stream processing (Spark Streaming and the newer Structured Streaming), and graph analytics (GraphX)</li>
-<li>support large-scale machine learning using iterative algorithms that need to make multiple passes over the data.</li>
-<li>It uses a directed acyclic graph, or DAG, to define the workflow, that is optimize by a DAG engine.</li>
-<li>It is built around the Resilient Distributed Dataset (RDD), and Dataset.</li>
+<li>It supports large-scale machine learning using iterative algorithms that need to make multiple passes over the data.</li>
+<li>It uses a directed acyclic graph, or DAG, to define the workflow to perform on the executor nodes. It is optimized by a DAG engine.</li>
+<li>Spark main data element id the  is Resilient Distributed Dataset (RDD), and its newest version the <strong>Dataset</strong>. It is the abstraction to manage distribed data in spark cluster.</li>
 <li>It is written in Scala, and it is recommended to develop spark apps with scala, even if Python is a viable soluton for POC and prototype.</li>
-<li>It fast, 100x faster than hadoop MapReduce. </li>
+<li>It is fast, 100x faster than hadoop Map Reduce. </li>
 </ul>
-<h2 id="concepts">Concepts</h2>
+<h2 id="architecture">Architecture</h2>
 <ul>
 <li>
 <p>Spark Applications consist of a driver process and a set of executor processes. The driver process runs your main() function, sits on a node in the cluster, and is responsible for three things: </p>
@@ -481,10 +519,9 @@
 </ul>
 </li>
 <li>
-<p>each executor is responsible for only two things: executing code assigned to it by the driver, and reporting the state of the computation on that executor back to the driver node</p>
+<p>Each executor is responsible for only two things: executing code assigned to it by the driver, and reporting the state of the computation on that executor back to the driver node</p>
 </li>
 <li>Spark employs a cluster manager that keeps track of the resources available</li>
-<li>RDD, Resilient Distributed Dataset, is the abstraction to manage distribed data in spark cluster.</li>
 </ul>
 <p><img alt="" src="images/app-arch.png" /></p>
 <ul>
@@ -494,11 +531,36 @@
 <ul>
 <li>There is a SparkSession object available to the user, which is the entry point to running Spark code.</li>
 </ul>
-<h2 id="installation-on-k8s-or-openshift-cluster">Installation on k8s or openshift cluster</h2>
+<h2 id="deployment">Deployment</h2>
+<h3 id="installation-on-k8s-or-openshift-cluster">Installation on k8s or openshift cluster</h3>
 <p>The spark driver runs as pod. The driver creates executors which are also running within Kubernetes pods and connects to them, and executes application code.
 The driver and executor pod scheduling is handled by Kubernetes.</p>
-<p>See the product documentation <a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html">here</a></p>
-<h2 id="run-locally-in-docker">Run locally in docker</h2>
+<p>See the product documentation <a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html">here</a> or use a <a href="https://github.com/radanalyticsio/spark-operator">Spark operator</a> to deploy to k8s or openshift. The steps are:</p>
+<ol>
+<li>Use a namespace like <code>jb-sparks</code>. Modify the cluster and operator yaml files to use this namespace.</li>
+<li>
+<p>Start the operator if it's not running</p>
+<div class="codehilite"><pre><span></span>oc apply -f k8s-operators/operator.yaml
+</pre></div>
+
+</li>
+<li>
+<p>Add cluster: edit the file <code>k8s-operators/cluster.yaml</code> to configure your number of workers</p>
+<div class="codehilite"><pre><span></span>oc apply -f k8s-operators/cluster.yaml
+</pre></div>
+
+</li>
+<li>
+<p>To verify the cluster runs do the following command on one of the worker pod to start a spark shell environment:</p>
+<div class="codehilite"><pre><span></span> oc get pods
+ <span class="c1"># select one of the work pod</span>
+ oc <span class="nb">exec</span> -ti my-spark-cluster-w-5pcqw  bash
+ bash-4.2$ spark-shell
+</pre></div>
+
+</li>
+</ol>
+<h3 id="run-locally-with-docker">Run locally with Docker</h3>
 <ul>
 <li>1<sup>st</sup> define docker network</li>
 </ul>
@@ -512,7 +574,7 @@ The driver and executor pod scheduling is handled by Kubernetes.</p>
         -p <span class="m">7077</span>:7077 -p <span class="m">8085</span>:8085 --network spark_network jbcodeforce/spark bash
 </pre></div>
 
-<p>To simply validate the installation, use the spark-shell as:</p>
+<p>To simply validate the installation, use the <code>spark-shell</code> inside the docker container as:</p>
 <div class="codehilite"><pre><span></span>bash-4.4# spark-shell
 
 Using Scala version <span class="m">2</span>.12.10 <span class="o">(</span>OpenJDK <span class="m">64</span>-Bit Server VM, Java <span class="m">1</span>.8.0_212<span class="o">)</span>
@@ -565,14 +627,18 @@ scala&gt; rdd.count<span class="o">()</span>
 
 <p>On the Spark console we can see the worker added:</p>
 <p><img alt="" src="images/spark-console.png" /></p>
-<h2 id="smoke-test-the-cluster">Smoke test the cluster</h2>
+<div class="admonition note">
+<p class="admonition-title">Note<p>The docker image includes a script to start the master and one to start workers. The docker compose file uses those commands to propose a simple spark cluser with one worker and one master.</p>
+</p>
+</div>
+<h4 id="smoke-test-the-cluster">Smoke test the cluster</h4>
 <p>Start a 3nd container instance to run the <code>spark-submit</code> command to compute the value of Pi:</p>
 <div class="codehilite"><pre><span></span>/spark/bin/spark-submit --master spark://spark-master:7077 --class     org.apache.spark.examples.SparkPi  /spark/examples/jars/spark-examples_2.11-2.4.4.jar 1000
 </pre></div>
 
-<h2 id="using-docker-compose">Using Docker Compose</h2>
+<h3 id="using-docker-compose">Using Docker Compose</h3>
 <p>To manage workers and master and spark submit container, the best is to use docker-compose. The docker compose file is in the root directory of this repository.</p>
-<p>It uses two scripts to start the master or worker automatically. The environment variables to parametrize the WEB UI port, master node URL, and master port are set in the docker compose file. Start the cluster with 3 workers.</p>
+<p>It uses two scripts to start the master or worker automatically. The environment variables to parameterize the WEB UI port, master node URL, and master port are set in the docker compose file. Start the cluster with 3 workers.</p>
 <div class="codehilite"><pre><span></span>    docker-compose up --scale spark-worker<span class="o">=</span><span class="m">3</span>
 
     spark-master    <span class="p">|</span> <span class="m">19</span>/12/31 <span class="m">22</span>:48:22 INFO Master: Registering worker <span class="m">172</span>.19.0.4:39193 with <span class="m">3</span> cores, <span class="m">4</span>.8 GB RAM
@@ -589,26 +655,26 @@ scala&gt; rdd.count<span class="o">()</span>
 <li>But RDD helps to compensate for pod failure</li>
 </ul>
 <h2 id="run-a-sample-python-program">Run a sample python program</h2>
-<p>The source code is in [src/samples/FirstSparkProgram.py] that get the worse rated movie from the movie ratings in the <code>data</code> folder. To be able to run program as job on spark cluster we need to connect to the cluster and use spark-submit command. For that we are using another container instance, with the source code mounted to <code>/home</code>:</p>
+<p>The source code <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/samples/FirstSparkProgram.py">src/samples/FirstSparkProgram.py</a> that get the worse rated movie from the movie ratings in the <code>data</code> folder. To be able to run program as job on spark cluster we need to connect to the cluster and use spark-submit command. For that we are using another container instance, with the source code mounted to <code>/home</code>:</p>
 <div class="codehilite"><pre><span></span>    docker run --rm -it --network spark_network -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/home jbcodeforce/spark bash
 </pre></div>
 
 <p>In the shell within this container runs:</p>
 <div class="codehilite"><pre><span></span>bash-4.4# spark-submit samples/FirstSparkProgram.py 
 
-Amityville: Dollhouse (1996) 1.0
-Somebody to Love (1994) 1.0
-Every Other Weekend (1990) 1.0
-Homage (1995) 1.0
-3 Ninjas: High Noon At Mega Mountain (1998) 1.0
-Bird of Prey (1996) 1.0
-Power 98 (1995) 1.0
-Beyond Bedlam (1993) 1.0
-Falling in Love Again (1980) 1.0
-T-Men (1947) 1.0
+Amityville: Dollhouse <span class="o">(</span><span class="m">1996</span><span class="o">)</span> <span class="m">1</span>.0
+Somebody to Love <span class="o">(</span><span class="m">1994</span><span class="o">)</span> <span class="m">1</span>.0
+Every Other Weekend <span class="o">(</span><span class="m">1990</span><span class="o">)</span> <span class="m">1</span>.0
+Homage <span class="o">(</span><span class="m">1995</span><span class="o">)</span> <span class="m">1</span>.0
+<span class="m">3</span> Ninjas: High Noon At Mega Mountain <span class="o">(</span><span class="m">1998</span><span class="o">)</span> <span class="m">1</span>.0
+Bird of Prey <span class="o">(</span><span class="m">1996</span><span class="o">)</span> <span class="m">1</span>.0
+Power <span class="m">98</span> <span class="o">(</span><span class="m">1995</span><span class="o">)</span> <span class="m">1</span>.0
+Beyond Bedlam <span class="o">(</span><span class="m">1993</span><span class="o">)</span> <span class="m">1</span>.0
+Falling in Love Again <span class="o">(</span><span class="m">1980</span><span class="o">)</span> <span class="m">1</span>.0
+T-Men <span class="o">(</span><span class="m">1947</span><span class="o">)</span> <span class="m">1</span>.0
 </pre></div>
 
-<p><a href="dev-on-spark/">Next develop on spark...</a></p>
+<p><a href="dev-on-spark/">Next step... develop on spark &gt;&gt;&gt;</a></p>
                 
                   
                 
