@@ -10,7 +10,18 @@ See [this article](https://docs.scala-lang.org/tutorials/scala-with-maven.html) 
 
 [Scala SBT](http://scala-sbt.org) is a tool to manage library dependencies for Scala development. It also helps to package all dependencies in a single jar.
 
-See [sbt by example](https://www.scala-sbt.org/1.x/docs/sbt-by-example.html) note and [this tutorial](https://www.scalawilliam.com/essential-sbt/).
+See [sbt by examples](https://www.scala-sbt.org/1.x/docs/sbt-by-example.html) note and [this SBT essential tutorial](https://www.scalawilliam.com/essential-sbt/).
+
+Example to create a project template: `sbt create scala/helloworld.g8`.
+
+Once code and unit tests done, package the scala program and then submit it to spark cluster:
+
+```shell
+# In spark-studies/src/scala-wordcount
+sbt package
+# start a docker container with spark image (see previous environment notes)
+spark-submit target/scala-2.12/wordcount_2.12-1.0.jar
+```
 
 ## Basic programming concepts
 

@@ -1,5 +1,5 @@
 name := "wordcount"
-
+pwd
 version := "1.0"
 
 organization := "jbcodeforce"

@@ -1,6 +1,6 @@
 # Spark studies
 
-Spark started at UC Berkeley in 2009, and it is now the product to run parallel data processing on distributed computers.
+Spark started at UC Berkeley in 2009, and it is one of the most adopted open source solution to run parallel data processing on distributed computers.
 
 The goal of Spark is to offer an **unified** platform for writing big data application: this means consistent APIs to do data loading, SQL, streaming, machine learning... It provides an unified engine for **parallel data processing** on distributed systems to process large-scale data.
 
@@ -11,9 +11,9 @@ The goal of Spark is to offer an **unified** platform for writing big data appli
 * It provides a cluster with a manager node and executor nodes. It can scale horizontally by adding executor nodes.
 * Spark includes libraries for SQL and structured data (Spark SQL), machine learning (MLlib), stream processing (Spark Streaming and the newer Structured Streaming), and graph analytics (GraphX)
 * It supports large-scale machine learning using iterative algorithms that need to make multiple passes over the data.
-* It uses a directed acyclic graph, or DAG, to define the workflow to perform on the executor nodes. It is optimized by a DAG engine.
-* Spark main data element id the  is Resilient Distributed Dataset (RDD), and its newest version the **Dataset**. It is the abstraction to manage distribed data in spark cluster.
-* It is written in Scala, and it is recommended to develop spark apps with scala, even if Python is a viable soluton for POC and prototype.
+* It uses a directed acyclic graph, or DAG, to define the workflow to perform on the executor nodes. It is optimized by a DAG engine. Developers write code to will be mapped to DAG.
+* Spark main data element is the Resilient Distributed Dataset (RDD), or its newest version: the **Dataset**. It is the abstraction to manage distributed data in spark cluster.
+* It is written in [Scala](scala_summary.md), and it is recommended to develop spark apps with Scala, even if Python is a viable soluton for POC and prototype.
 * It is fast, 100x faster than hadoop Map Reduce. 
 
 ## Architecture
@@ -34,6 +34,12 @@ The goal of Spark is to offer an **unified** platform for writing big data appli
 ![](images/spark-components.png)
 
 * There is a SparkSession object available to the user, which is the entry point to running Spark code.
+
+```python
+spark = SparkSession.builder.appName("PopularMovies").getOrCreate()
+
+lines = spark.sparkContext.textFile("../data/movielens/u.data")
+```
 
 ## Deployment
 
@@ -152,7 +158,7 @@ On the Spark console we can see the worker added:
 
 Start a 3nd container instance to run the `spark-submit` command to compute the value of Pi:
 
-```
+```shell
 /spark/bin/spark-submit --master spark://spark-master:7077 --class     org.apache.spark.examples.SparkPi  /spark/examples/jars/spark-examples_2.11-2.4.4.jar 1000
 ```
 
@@ -180,6 +186,8 @@ It uses two scripts to start the master or worker automatically. The environment
 
 ## Run a sample python program
 
+The most common way to launch spark applications on the cluster is to use the shell command `spark-submit`.
+
 The source code [src/samples/FirstSparkProgram.py](https://github.com/jbcodeforce/spark-studies/tree/master/src/samples/FirstSparkProgram.py) that get the worse rated movie from the movie ratings in the `data` folder. To be able to run program as job on spark cluster we need to connect to the cluster and use spark-submit command. For that we are using another container instance, with the source code mounted to `/home`:
 
 ```shell
@@ -189,7 +197,8 @@ The source code [src/samples/FirstSparkProgram.py](https://github.com/jbcodeforc
 In the shell within this container runs:
 
 ```shell
-bash-4.4# spark-submit samples/FirstSparkProgram.py 
+bash-4.4# cd /home/src
+bash-4.4# spark-submit samples/FirstSparkProgram.py
 
 Amityville: Dollhouse (1996) 1.0
 Somebody to Love (1994) 1.0

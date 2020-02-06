@@ -4,6 +4,7 @@ nav:
   - Introduction: index.md
   - Develop on Spark: dev-on-spark.md
   - Scala summary: scala_summary.md
+  - Cloud object storage: cloud-storage.md
   - Compendium: compendium.md
  
 

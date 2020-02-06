@@ -3,9 +3,12 @@ checkpoints/
 src/SparkStreaming/twitter.txt
 src/SparkStreaming/SparkStreamingSamples/jars/
 src/SparkStreaming/SparkStreamingSamples/bin/
+src/SparkStreaming/SparkStreamingSamples/target/
 src/SparkStreaming/jars/
 src/SparkStreaming/.metadata/
 src/SparkStreaming/LearningScala/bin/
 src/SparkStreaming/LearningScala/.worksheet/
 src/kafka-spark/setenv.sh
 src/kafka-spark/target/
+src/scala-wordcount/target/
+src/scala-wordcount/project/target/
