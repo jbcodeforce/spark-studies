@@ -387,6 +387,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../cloud-storage/" title="Cloud object storage" class="md-nav__link">
+      Cloud object storage
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../compendium/" title="Compendium" class="md-nav__link">
       Compendium
     </a>
@@ -527,7 +539,22 @@
 <p>See <a href="https://docs.scala-lang.org/tutorials/scala-with-maven.html">this article</a> to create a maven project for scala project.</p>
 <h2 id="sbt-the-scala-cli">SBT the scala CLI</h2>
 <p><a href="http://scala-sbt.org">Scala SBT</a> is a tool to manage library dependencies for Scala development. It also helps to package all dependencies in a single jar.</p>
-<p>See <a href="https://www.scala-sbt.org/1.x/docs/sbt-by-example.html">sbt by example</a> note and <a href="https://www.scalawilliam.com/essential-sbt/">this tutorial</a>.</p>
+<p>See <a href="https://www.scala-sbt.org/1.x/docs/sbt-by-example.html">sbt by examples</a> note and <a href="https://www.scalawilliam.com/essential-sbt/">this SBT essential tutorial</a>.</p>
+<p>Example to create a project template: <code>sbt create scala/helloworld.g8</code>.</p>
+<p>Once code and unit tests done, package the scala program and then submit it to spark cluster:</p>
+<div class="codehilite"><pre><span></span><span class="c1"># In spark-studies/src/scala-wordcount</span>
+sbt package
+<span class="c1"># start a docker container with spark image (see previous environment notes)</span>
+docker run --rm -it --network spark_network -v <span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/home jbcodeforce/spark bash
+<span class="c1"># in the shell within the container</span>
+<span class="nb">cd</span> /home
+spark-submit target/scala-2.12/wordcount_2.12-1.0.jar
+</pre></div>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The set of commands work well with spark cluster running on local host via docker compose. If you want to access a remote cluster, for example running on IKS OCP see <a href="#remote-spark">this section</a>. </p>
+</div>
 <h2 id="basic-programming-concepts">Basic programming concepts</h2>
 <h3 id="rdd-resilient-distributed-dataset">RDD: Resilient Distributed Dataset</h3>
 <p>It is a dataset distributed against the cluster nodes. To create a RDD we use the spark context object and then one of it APIs depending of the data source (JDBC, Hive, HDFS, Cassandra, HBase, ElasticSearch, CSV, json,...):</p>

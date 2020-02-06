@@ -282,8 +282,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-scala" title="why scala?" class="md-nav__link">
-    why scala?
+  <a href="#why-scala" title="why scala ?" class="md-nav__link">
+    why scala ?
   </a>
   
 </li>
@@ -478,6 +478,18 @@
 
 
   <li class="md-nav__item">
+    <a href="../cloud-storage/" title="Cloud object storage" class="md-nav__link">
+      Cloud object storage
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
     <a href="../compendium/" title="Compendium" class="md-nav__link">
       Compendium
     </a>
@@ -505,8 +517,8 @@
     <ul class="md-nav__list" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#why-scala" title="why scala?" class="md-nav__link">
-    why scala?
+  <a href="#why-scala" title="why scala ?" class="md-nav__link">
+    why scala ?
   </a>
   
 </li>
@@ -713,16 +725,16 @@
 <li>Scala allows users to grow and adapt the language in the directions they need by defining easy-to-use libraries that feel like native language support.</li>
 <li>Support enhanced parallel processing using actors: Actors are concurrency abstractions that can be implemented on top of threads. They communicate by sending messages to each other. An actor can perform two basic operations, message send and receive. The send operation, denoted by an exclamation point (!), sends a message to an actor. A send is asynchronous.</li>
 <li>Scala is an object-oriented language in pure form: every value is an object and every operation is a method call.</li>
-<li>It supports composing objects with the concept of Trait. Traits are like interfaces in Java, but they can also have method implementations and even fields. Objects are constructed by mixing composition, which takes the members of a class and adds the members of a number of traits to them. </li>
+<li>It supports composing objects with the concept of Trait. Traits are like interfaces in Java, but they can also have method implementations and even fields. Objects are constructed by mixing composition, which takes the members of a class and adds the members of a number of traits to them.</li>
 <li>Traits are more "pluggable" than classes</li>
 <li>Functions that are first-class values provide a convenient means for abstracting over operations and creating new control structures</li>
 <li>The second main idea of functional programming is that the operations of a program should map input values to output values rather than change data in place</li>
 <li>Methods should not have any side effects. They should communicate with their environment only by taking arguments and returning results</li>
 </ul>
-<h2 id="why-scala">why scala?</h2>
+<h2 id="why-scala">why scala ?</h2>
 <ul>
 <li>Scala is compatible with java API</li>
-<li>Concise: quicker to write, easier to read, and most importantly, less error prone </li>
+<li>Concise: quicker to write, easier to read, and most importantly, less error prone</li>
 <li>High level: scala lets developers raise the level of abstraction in the interfaces they design and use</li>
 <li>Scala's functional programming style also offers high-level reasoning principles for programming.</li>
 <li>Statically typed: very advanced static type system. Starting from a system of nested class types much like Java's, it allows you to parameterize types with generics, to combine types using intersections, and to hide details of types using abstract types. Verbosity is avoided through type inference and flexibility is gained through pattern matching and several new ways to write and compose types</li>
@@ -748,10 +760,10 @@ Scala uses the type inference capability to figure out the types not specified a
 <ul>
 <li>take leftmost operator</li>
 <li>evaluate its operands left before right</li>
-<li>apply the operator to the operands </li>
+<li>apply the operator to the operands</li>
 </ul>
 <h3 id="operators-are-methods">Operators are methods</h3>
-<p>1 + 2 really means the same thing as (1).+(2). The + symbol is an operator—an infix operator to be specific. Operator notation is not limited to methods like + that look like operators in other languages. You can use any method in operator notation. </p>
+<p>1 + 2 really means the same thing as (1).+(2). The + symbol is an operator—an infix operator to be specific. Operator notation is not limited to methods like + that look like operators in other languages. You can use any method in operator notation.</p>
 <p>Scala also has two other operator notations: prefix and postfix. In prefix notation, you put the method name before the object on which you are invoking the method. prefix and postfix operators are unary: they take just one operand.
 The only identifiers that can be used as prefix operators are +, -, !, and ~</p>
 <p>The logical-and and logical-or operations are short-circuited as in Java: expressions built from these operators are only evaluated as far as needed to determine the result</p>
@@ -771,18 +783,18 @@ The only identifiers that can be used as prefix operators are +, -, !, and ~</p>
 
 <h3 id="function">Function</h3>
 <p>Function declaration has the following form</p>
-<div class="codehilite"><pre><span></span><span class="n">def</span> <span class="n">functionName</span> <span class="p">([</span><span class="n">list</span> <span class="n">of</span> <span class="n">parameters</span><span class="p">])</span> <span class="o">:</span> <span class="p">[</span><span class="k">return</span> <span class="n">type</span><span class="p">]</span>
-<span class="n">def</span> <span class="n">constOne</span><span class="p">(</span><span class="nl">x</span><span class="p">:</span> <span class="n">Int</span><span class="p">,</span> <span class="nl">y</span><span class="p">:</span> <span class="o">=&gt;</span> <span class="n">Int</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="n">functionName</span> <span class="o">([</span><span class="kt">list</span> <span class="kt">of</span> <span class="kt">parameters</span><span class="o">])</span> <span class="k">:</span> <span class="err">[</span><span class="kt">return</span> <span class="k">type</span><span class="err">]</span>
+<span class="kt">def</span> <span class="kt">constOne</span><span class="o">(</span><span class="kt">x:</span> <span class="kt">Int</span><span class="o">,</span> <span class="kt">y:</span> <span class="o">=&gt;</span> <span class="nc">Int</span> <span class="k">=</span> <span class="mi">1</span>
 <span class="c1">// y is passed by name</span>
 
-<span class="n">def</span> <span class="n">format</span> <span class="n">now</span>
+<span class="k">def</span> <span class="n">format</span> <span class="n">now</span>
 </pre></div>
 
 <p>A function can support using Type parameter, written in []  See polymorphism</p>
-<div class="codehilite"><pre><span></span>def singleton[T](elemen: T) : T 
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="n">singleton</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">elemen</span><span class="k">:</span> <span class="kt">T</span><span class="o">)</span> <span class="k">:</span> <span class="kt">T</span>
 
-or
- def encode[T](l : List[T]): List[(T,Int)]
+<span class="n">or</span>
+ <span class="k">def</span> <span class="n">encode</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">l</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span><span class="k">:</span> <span class="kt">List</span><span class="o">[(</span><span class="kt">T</span>,<span class="kt">Int</span><span class="o">)]</span>
 </pre></div>
 
 <p>Function evaluation for a function f(a1,...,an) is done by evaluating the expressions a1,...,an of the parameters resulting in the values v1,..,vn, then by replacing the application with the body of the function f in which the actual parameters are v1,..,vn</p>
@@ -790,12 +802,12 @@ or
 <ul>
 <li>evaluate all function arguments from left to right</li>
 <li>replace function application by function right-hand side</li>
-<li>replace the formal parameters of the function by the actual arguments
-two evaluation models call by value, and call by name</li>
+<li>replace the formal parameters of the function by the actual arguments</li>
+<li>two evaluation models: call by value, and call by name</li>
 </ul>
 <p>See the code example in: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala3.sc">LeaningScala3.sc</a></p>
-<p>a name is evaluate by replacing its right end definition</p>
-<p>Functions are objects. It is possible to pass functions as arguments, to store them in variables, and to return them from other functions. </p>
+<p>A name is evaluate by replacing its right end definition.</p>
+<p>Functions are objects. It is possible to pass functions as arguments, to store them in variables, and to return them from other functions.</p>
 <div class="codehilite"><pre><span></span> <span class="c1">// function that uses a function as argument</span>
     <span class="c1">// type () =&gt; Unit is for function taking no argument and return nothing</span>
      <span class="k">def</span> <span class="n">oncePerSecond</span><span class="o">(</span><span class="n">callback</span><span class="k">:</span> <span class="o">()</span> <span class="o">=&gt;</span> <span class="nc">Unit</span><span class="o">)</span> <span class="o">{</span>
@@ -843,8 +855,7 @@ Tail recursion: if a function calls itself as its last action, the functions sta
 <span class="n">println</span><span class="o">(</span><span class="n">sumCubes</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span><span class="mi">10</span><span class="o">))</span>
 </pre></div>
 
-<p>When doing functional programming, you try to avoid side effect and uses vars. When your function need to modify its parameters, use the Unit result type.
-Function values are treated as objects in Scala</p>
+<p>When doing functional programming, you try to avoid side effect, by using vars. When your function need to modify its parameters, use the Unit result type. Function values are treated as objects in Scala.</p>
 <h3 id="class">Class</h3>
 <p>The class declaration includes the parameters of the constructor:</p>
 <div class="codehilite"><pre><span></span><span class="k">class</span> <span class="nc">Tweet</span><span class="o">(</span><span class="k">val</span> <span class="n">user</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">val</span> <span class="n">text</span><span class="k">:</span> <span class="kt">String</span><span class="o">,</span> <span class="k">val</span> <span class="n">retweets</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="o">{</span> <span class="o">...</span>
@@ -852,7 +863,7 @@ Function values are treated as objects in Scala</p>
 
 <p>parameters are always pass by-value, they become fields of the class</p>
 <div class="codehilite"><pre><span></span><span class="k">val</span> <span class="n">a</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">Tweet</span><span class="o">(</span><span class="s">&quot;gizmodo&quot;</span><span class="o">,</span><span class="s">&quot; some text&quot;</span><span class="o">,</span> <span class="mi">20</span><span class="o">)</span>
-<span class="n">a</span><span class="o">.</span><span class="n">user</span> 
+<span class="n">a</span><span class="o">.</span><span class="n">user</span>
 </pre></div>
 
 <p>Classes in Scala cannot have static members. So there is the concept of singleton object: the definition looks like a class definition, except instead of the keyword <code>class</code> you use the keyword <code>object</code>. When a singleton object shares the same name with a class, it is called that class's companion object. They cannot take parameters. A singleton object that does not share the same name with a companion class is called a standalone object.</p>
@@ -885,20 +896,20 @@ Function values are treated as objects in Scala</p>
 <ul>
 <li>easier to reason about than mutable ones, because they do not have complex state spaces that change over time</li>
 <li>pass immutable objects around quite freely, whereas you may need to make defensive copies of mutable objects before passing them to other code</li>
-<li>there is no way for two threads concurrently accessing an immutable to corrupt its state once it has been properly constructed, because no thread can change the state of an immutable</li>
+<li>there is no way for two threads concurrently accessing an immutable to corrupt its state once it has been properly constructed, because no thread can change the state of an immutable!</li>
 <li>immutable objects make safe hashtable keys</li>
 <li>main disadvantage of immutable objects is that they sometimes require that a large object graph be copied where otherwise an update could be done in place.</li>
 </ul>
 <p><code>scala.Any</code> is the root of all classes in scala. <code>scala.AnyVal</code> is base type of all primitive types. <code>scala.AnyRef</code> the base type of reference types, it is an alias to java.lang.Object.</p>
-<p><code>scala.Nothing</code> is at bottom of type hierarchy. there is no value of type Nothing. it is used to signal abnormal termination or as an element type of an empty collection. Set[Nothing]</p>
+<p><code>scala.Nothing</code> is at bottom of type hierarchy. There is no value of type Nothing. it is used to signal abnormal termination or as an element type of an empty collection. <code>Set[Nothing]</code></p>
 <p>As the function throw and exception, the return type of the function is set to Nothing.</p>
-<div class="codehilite"><pre><span></span>scala&gt; def error(msg : String) = throw new Error(msg)
-error: (msg: String)Nothing
+<div class="codehilite"><pre><span></span><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">error</span><span class="o">(</span><span class="n">msg</span> <span class="k">:</span> <span class="kt">String</span><span class="o">)</span> <span class="k">=</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="o">(</span><span class="n">msg</span><span class="o">)</span>
+<span class="n">error</span><span class="k">:</span> <span class="o">(</span><span class="kt">msg:</span> <span class="kt">String</span><span class="o">)</span><span class="kt">Nothing</span>
 </pre></div>
 
 <p><code>scala.Null</code>, is subclass of all the classes in AnyRef, and it is the type of null value. Null is incompatible with subtypes of <code>AnyVal</code>.</p>
-<div class="codehilite"><pre><span></span>scala&gt; val x = null
-x: Null = null
+<div class="codehilite"><pre><span></span><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="kc">null</span>
+<span class="n">x</span><span class="k">:</span> <span class="kt">Null</span> <span class="o">=</span> <span class="kc">null</span>
 </pre></div>
 
 <p>One important characteristic of method parameters in Scala is that they are vals, not vars</p>
@@ -910,13 +921,15 @@ Trait do not have parameters as part of the constructor.</p>
 <h3 id="pattern-matching">Pattern matching</h3>
 <p>When using a pure OO implementation, adding a new method to a class you may add this method in multiple classes and subclasses.  Scala offers the pattern matching capability to support simple function extension.</p>
 <p><code>case</code> classes are like <code>class</code> but the case keyword let them participate in pattern matching. Implicitly scala compiler will add object for case class with a factory method apply.
-Pattern matching is a generalization of switch. </p>
-<p>The syntax looks like:  <code>expr match { case pattern =&gt; expr ... case pn =&gt; en}</code>
-in case of not matching there is a MatchError exception </p>
-<p>if a pattern match the whole right hand side is used 
-patterns are constructed from constructors, variables, wildcard patterns, constants</p>
-<p>case and pattern matching is also helpful for tree-like recursive data
-variable start by lowercase, where constant starts by Uppercase</p>
+Pattern matching is a generalization of switch of Java.</p>
+<p>The syntax looks like:  <code>expr match { case pattern =&gt; expr ... case pn =&gt; en}</code></p>
+<ul>
+<li>in case of not matching there is a MatchError exception.</li>
+<li>If a pattern matches the whole right hand side is used.</li>
+<li>patterns are constructed from constructors, variables, wildcard patterns, constants</li>
+<li>case and pattern matching is also helpful for tree-like recursive data</li>
+<li>variable start by lowercase, where constant starts by Uppercase</li>
+</ul>
 <h3 id="flow-control">Flow control</h3>
 <p>See the code example in: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala2.sc">LeaningScala2.sc</a></p>
 <p>Almost all of Scala's control structures result in some value. This is the approach taken by functional languages, in which programs are viewed as computing a value, thus the components of a program should also compute values.</p>
@@ -932,13 +945,13 @@ variable start by lowercase, where constant starts by Uppercase</p>
     <span class="o">}</span> <span class="k">while</span> <span class="o">(</span><span class="n">line</span> <span class="o">!=</span> <span class="s">&quot;&quot;</span><span class="o">)</span>
 </pre></div>
 
-<p>The while and do-while constructs are called "loops," not expressions, because they don't result in an interesting value. The type of the result is Unit</p>
-<p>For is simply uses to iterate through a sequence of integers. But has more advanced expressions to iterate over multiple collections of different kinds, to filter out elements based on arbitrary conditions, and to produce new collections. The notation " &lt;- "  is called a generator,</p>
+<p>The <code>while</code> and <code>do-while</code> constructs are called "loops," not expressions, because they don't result in an interesting value. The type of the result is Unit.</p>
+<p><code>For</code> is simply used to iterate through a sequence of integers. But has more advanced expressions to iterate over multiple collections of different kinds, to filter out elements based on arbitrary conditions, and to produce new collections. The notation " &lt;- "  is called a generator,</p>
 <div class="codehilite"><pre><span></span><span class="k">for</span> <span class="o">(</span><span class="n">s</span><span class="o">)</span> <span class="k">yield</span> <span class="n">e</span>
 </pre></div>
 
-<p>s is a sequence of generators and filters,   e is an expression whose value is returned by an iteration
-generator is of the form p &lt;- c   :   c is a collection and p is a pattern
+<p><code>s</code> is a sequence of generators and filters, <code>e</code> is an expression whose value is returned by an iteration
+generator of the form p &lt;- c   :  c is a collection and p is a pattern
 filter is a boolean expression
 if there are several generators in sequence the last ones vary faster than the first</p>
 <div class="codehilite"><pre><span></span><span class="c1">// list the file in the current directory</span>
@@ -965,7 +978,7 @@ if there are several generators in sequence the last ones vary faster than the f
 <span class="k">for</span> <span class="o">(</span><span class="n">b</span> <span class="k">&lt;-</span> <span class="n">books</span><span class="o">;</span> <span class="n">a</span> <span class="k">&lt;-</span> <span class="n">b</span><span class="o">.</span><span class="n">authors</span> <span class="k">if</span> <span class="n">a</span> <span class="n">startsWith</span> <span class="s">&quot;Bird&quot;</span><span class="o">)</span> <span class="k">yield</span> <span class="n">b</span><span class="o">.</span><span class="n">title</span>
 </pre></div>
 
-<p>For is closely related to higher order functions. For example the following three functions can be written with for</p>
+<p><code>For</code> is closely related to higher order functions. For example the following three functions can be written with <code>for</code>:</p>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="n">mapFunction</span><span class="o">[</span><span class="kt">T</span>,<span class="kt">U</span><span class="o">]</span> <span class="o">(</span><span class="n">xs</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">T</span><span class="o">],</span> <span class="n">f</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=&gt;</span> <span class="n">U</span><span class="o">)</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">U</span><span class="o">]</span> <span class="k">=</span>
    <span class="k">for</span> <span class="o">(</span><span class="n">x</span> <span class="k">&lt;-</span> <span class="n">xs</span><span class="o">)</span> <span class="k">yield</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">)</span>
 
@@ -973,10 +986,10 @@ if there are several generators in sequence the last ones vary faster than the f
    <span class="k">for</span> <span class="o">(</span><span class="n">x</span> <span class="k">&lt;-</span> <span class="n">xs</span><span class="o">;</span> <span class="n">y</span><span class="k">&lt;-</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="k">yield</span> <span class="n">y</span>
 
 <span class="k">def</span> <span class="n">filter2</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="o">(</span><span class="n">xs</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">T</span><span class="o">],</span> <span class="n">f</span><span class="k">:</span> <span class="kt">T</span> <span class="o">=&gt;</span> <span class="nc">Boolean</span><span class="o">)</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span>
-   <span class="k">for</span> <span class="o">(</span><span class="n">x</span> <span class="k">&lt;-</span> <span class="n">xs</span><span class="o">;</span> <span class="k">if</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="k">yield</span> <span class="n">x</span>                 <span class="c1">//</span>
+   <span class="k">for</span> <span class="o">(</span><span class="n">x</span> <span class="k">&lt;-</span> <span class="n">xs</span><span class="o">;</span> <span class="k">if</span> <span class="n">f</span><span class="o">(</span><span class="n">x</span><span class="o">))</span> <span class="k">yield</span> <span class="n">x</span>
 
 <span class="k">val</span> <span class="n">l</span><span class="k">=</span><span class="nc">List</span><span class="o">(</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>                    <span class="o">&gt;</span> <span class="n">l</span>  <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">4</span><span class="o">,</span> <span class="mi">5</span><span class="o">)</span>
-<span class="c1">// to avoid missing parameter type, we need to add [Int] </span>
+<span class="c1">// to avoid missing parameter type, we need to add [Int]</span>
 <span class="k">val</span> <span class="n">r</span><span class="k">=</span><span class="n">filter2</span><span class="o">[</span><span class="kt">Int</span><span class="o">](</span><span class="n">l</span><span class="o">,(</span><span class="n">x</span> <span class="k">=&gt;</span> <span class="n">x</span><span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="o">))</span>    <span class="o">&gt;</span> <span class="n">r</span>  <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">Int</span><span class="o">]</span> <span class="k">=</span> <span class="nc">List</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">4</span><span class="o">)</span>
 </pre></div>
 
@@ -1004,18 +1017,18 @@ Lists are constructed from empty list Nil and the cons operation <code>::</code>
 
 <p>in scala there is a convention the operators ending with : associate to the right operand. They could be seen as method calls of the right hand operand
 Three list operations are important, head, tail, isEmpty</p>
-<p><div class="codehilite"><pre><span></span><span class="n">xs</span><span class="o">.</span><span class="n">length</span>
+<div class="codehilite"><pre><span></span><span class="n">xs</span><span class="o">.</span><span class="n">length</span>
 <span class="n">xs</span><span class="o">.</span><span class="n">last</span>
 <span class="n">xs</span><span class="o">.</span><span class="n">init</span>         <span class="c1">// build a new list from xs without the last one</span>
 <span class="n">xs</span> <span class="n">take</span> <span class="n">n</span>    <span class="c1">// return a new list of the n first elements of xs</span>
-<span class="n">xs</span> <span class="n">drop</span> <span class="n">n</span>    <span class="c1">//the rest of the collection after position n </span>
+<span class="n">xs</span> <span class="n">drop</span> <span class="n">n</span>    <span class="c1">//the rest of the collection after position n</span>
 <span class="n">xs</span><span class="o">(</span><span class="n">n</span><span class="o">)</span>         <span class="c1">// element at n position</span>
 <span class="n">xs</span> <span class="n">splitAt</span> <span class="n">n</span>   <span class="c1">// return a pair of two sub lists from list xs one up to index n and one from position n</span>
 
 <span class="k">val</span> <span class="n">alist</span> <span class="k">=</span> <span class="s">&quot;aba&quot;</span><span class="o">.</span><span class="n">toList</span>
-<span class="n">alist</span> <span class="n">groupBy</span><span class="o">(</span><span class="n">c</span> <span class="k">=&gt;</span> <span class="n">c</span><span class="o">)</span>         
+<span class="n">alist</span> <span class="n">groupBy</span><span class="o">(</span><span class="n">c</span> <span class="k">=&gt;</span> <span class="n">c</span><span class="o">)</span>
 </pre></div>
-ap</p>
+
 <p>Partitions a collection into a map of collections according to a discriminator function (here is Identity)</p>
 <div class="codehilite"><pre><span></span><span class="nc">Map</span><span class="o">[</span><span class="kt">Char</span>,<span class="kt">List</span><span class="o">[</span><span class="kt">Char</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="n">b</span> <span class="o">-&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="n">b</span><span class="o">),</span> <span class="n">a</span> <span class="o">-&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="n">a</span><span class="o">,</span> <span class="n">a</span><span class="o">))</span>
 <span class="k">val</span> <span class="n">m</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="s">&quot;kirk&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;Enterprise&quot;</span><span class="o">,</span><span class="s">&quot;joe&quot;</span> <span class="o">-&gt;</span> <span class="s">&quot;Voyager&quot;</span><span class="o">)</span>
@@ -1038,16 +1051,16 @@ List(a,b,c,) to match a complete list</p>
    <span class="k">case</span> <span class="nc">List</span><span class="o">()</span> <span class="k">=&gt;</span> <span class="k">throw</span> <span class="k">new</span> <span class="nc">Error</span><span class="o">(</span><span class="s">&quot;init of empty list is not possible&quot;</span> <span class="o">)</span>
    <span class="k">case</span> <span class="nc">List</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="k">=&gt;</span> <span class="nc">List</span><span class="o">()</span>
    <span class="k">case</span> <span class="n">y</span> <span class="o">::</span> <span class="n">ys</span> <span class="k">=&gt;</span> <span class="n">y</span> <span class="o">::</span> <span class="n">init</span><span class="o">(</span><span class="n">ys</span><span class="o">)</span>
-  <span class="o">}</span>   
+  <span class="o">}</span>
 
 <span class="k">def</span> <span class="n">concat</span><span class="o">[</span><span class="kt">T</span><span class="o">](</span><span class="n">l1</span><span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">T</span><span class="o">],</span><span class="n">l2</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">T</span><span class="o">])</span> <span class="k">:</span> <span class="kt">List</span><span class="o">[</span><span class="kt">T</span><span class="o">]</span> <span class="k">=</span>
   <span class="n">l1</span> <span class="k">match</span> <span class="o">{</span>
     <span class="k">case</span> <span class="nc">List</span><span class="o">()</span> <span class="k">=&gt;</span> <span class="n">l2</span>
     <span class="k">case</span> <span class="n">y</span> <span class="o">::</span> <span class="n">ys</span> <span class="k">=&gt;</span> <span class="n">y</span> <span class="o">::</span> <span class="n">concat</span><span class="o">(</span><span class="n">ys</span><span class="o">,</span><span class="n">l2</span><span class="o">)</span>
-  <span class="o">}</span> 
+  <span class="o">}</span>
 </pre></div>
 
-<p>http://www.scala-lang.org/api/2.11.1/index.html#scala.collection.immutable.List</p>
+<p><a href="http://www.scala-lang.org/api/2.11.1/index.html#scala.collection.immutable.List">See the scala.collection.immutable.List documentation</a></p>
 <h4 id="other-collections">Other collections</h4>
 <p>Vector has a more evenly balanced structure using 32 word array. when it is more than 32 elements a next level is added as array of pointer so covering 2** 10 elements. 
 The access is in log 32(n)
@@ -1112,8 +1125,8 @@ Some operations on Seq</p>
           <span class="n">split</span> <span class="k">&lt;-</span> <span class="mi">1</span> <span class="n">to</span> <span class="n">number</span><span class="o">.</span><span class="n">length</span>                      <span class="c1">// from 1 to length</span>
           <span class="n">word</span> <span class="k">&lt;-</span> <span class="n">wordsForNum</span><span class="o">(</span><span class="n">number</span> <span class="n">take</span> <span class="n">split</span><span class="o">)</span>           <span class="c1">// cut the string number from 0 to split</span>
           <span class="n">rest</span> <span class="k">&lt;-</span> <span class="n">encode</span><span class="o">(</span><span class="n">number</span> <span class="n">drop</span> <span class="n">split</span><span class="o">)</span>                <span class="c1">// recursion on the rest of the number string</span>
-       <span class="o">}</span> <span class="k">yield</span> <span class="n">word</span> <span class="o">::</span> <span class="n">rest</span>                                <span class="c1">// the </span>
-       <span class="o">}.</span><span class="n">toSet</span> 
+       <span class="o">}</span> <span class="k">yield</span> <span class="n">word</span> <span class="o">::</span> <span class="n">rest</span>
+       <span class="o">}.</span><span class="n">toSet</span>
 <span class="c1">// returns  Set[List[String]]  ... List(Scala, is, fun), List(sack, bird, to)</span>
 </pre></div>
 
@@ -1138,12 +1151,12 @@ Some operations on Seq</p>
 <span class="n">veggie</span> <span class="n">groupBy</span> <span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">head</span><span class="o">)</span>     <span class="o">&gt;</span> <span class="n">res8</span><span class="k">:</span> <span class="kt">scala.collection.immutable.Map</span><span class="o">[</span><span class="kt">Char</span>,<span class="kt">List</span><span class="o">[</span><span class="kt">String</span><span class="o">]]</span> <span class="k">=</span> <span class="nc">Map</span><span class="o">(</span><span class="n">b</span> <span class="o">-&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="n">brocoli</span><span class="o">),</span> <span class="n">t</span> <span class="o">-&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="n">tom</span><span class="o">),</span> <span class="n">c</span> <span class="o">-&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="n">carrot</span><span class="o">),</span> <span class="n">o</span> <span class="o">-&gt;</span> <span class="nc">List</span><span class="o">(</span><span class="n">olive</span><span class="o">))</span>
 
 <span class="c1">// mapValues Transforms a map by applying a function to every retrieved value</span>
-<span class="n">veggie</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">head</span><span class="o">).</span><span class="n">mapValues</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">length</span><span class="o">)</span> 
+<span class="n">veggie</span><span class="o">.</span><span class="n">groupBy</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">head</span><span class="o">).</span><span class="n">mapValues</span><span class="o">(</span><span class="k">_</span><span class="o">.</span><span class="n">length</span><span class="o">)</span>
 </pre></div>
 
 <p>maps were partial functions this means that applying a map to a key value could lead to an exception if the key is not stored in the map. There is a function to set a default value if the key is not present</p>
 <div class="codehilite"><pre><span></span><span class="k">val</span> <span class="n">c</span> <span class="k">=</span> <span class="n">veggie</span> <span class="n">withDefaultValue</span> <span class="s">&quot;Unknown&quot;</span>
-<span class="n">c</span><span class="o">(</span><span class="s">&quot;x&quot;</span><span class="o">)</span>       <span class="c1">// returns Unknown </span>
+<span class="n">c</span><span class="o">(</span><span class="s">&quot;x&quot;</span><span class="o">)</span>       <span class="c1">// returns Unknown</span>
 </pre></div>
 
 <h4 id="stream">Stream</h4>
@@ -1155,7 +1168,6 @@ Some operations on Seq</p>
 <p>Example of interesting use case. Compute the prime number from 1000 to 10000 but takes the second prime only. With a List the approach will compute all the prime while with Stream only the 2 first elements.</p>
 <div class="codehilite"><pre><span></span><span class="k">def</span> <span class="n">isPrime</span><span class="o">(</span><span class="n">i</span><span class="k">:</span> <span class="kt">Int</span><span class="o">)</span> <span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span>
     <span class="o">(</span><span class="mi">2</span> <span class="n">until</span> <span class="n">i</span><span class="o">)</span> <span class="n">forall</span> <span class="o">(</span> <span class="n">x</span> <span class="k">=&gt;</span> <span class="n">i</span> <span class="o">%</span> <span class="n">x</span> <span class="o">!=</span> <span class="mi">0</span><span class="o">)</span>         <span class="c1">//&gt; isPrime: (i: Int)Boolean</span>
-
   <span class="o">((</span><span class="mi">1000</span> <span class="n">to</span> <span class="mi">10000</span><span class="o">).</span><span class="n">toStream</span> <span class="n">filter</span> <span class="n">isPrime</span><span class="o">)(</span> <span class="mi">1</span><span class="o">)</span>   <span class="o">&gt;</span> <span class="mi">1013</span>
 
 <span class="c1">// :: is not producing a Stream but..</span>
@@ -1185,25 +1197,27 @@ scala &gt;
 </pre></div>
 
 <p>Scala provides a trait, scala.Application, to run an application without main function</p>
-<p><div class="codehilite"><pre><span></span> <span class="k">object</span> <span class="nc">AnotherApp</span> <span class="k">extends</span> <span class="nc">Application</span> <span class="o">{</span>
+<div class="codehilite"><pre><span></span> <span class="k">object</span> <span class="nc">AnotherApp</span> <span class="k">extends</span> <span class="nc">Application</span> <span class="o">{</span>
 
       <span class="k">for</span> <span class="o">(</span><span class="n">season</span> <span class="k">&lt;-</span> <span class="nc">List</span><span class="o">(</span><span class="s">&quot;fall&quot;</span><span class="o">,</span> <span class="s">&quot;winter&quot;</span><span class="o">,</span> <span class="s">&quot;spring&quot;</span><span class="o">))</span>
         <span class="n">println</span><span class="o">(</span><span class="n">season</span> <span class="o">+</span><span class="s">&quot;: &quot;</span><span class="o">+</span> <span class="n">calculate</span><span class="o">(</span><span class="n">season</span><span class="o">))</span>
  <span class="o">}</span>
- <span class="err">```</span>
+ <span class="err">``</span><span class="n">`</span>
 
- <span class="nc">The</span> <span class="n">code</span> <span class="n">between</span> <span class="n">the</span> <span class="n">curly</span> <span class="n">braces</span> <span class="n">is</span> <span class="n">collected</span> <span class="n">into</span> <span class="n">a</span> <span class="n">primary</span> <span class="n">constructor</span> <span class="n">of</span> <span class="n">the</span> <span class="n">singleton</span> <span class="n">object</span><span class="o">,</span> <span class="n">and</span> <span class="n">is</span> <span class="n">executed</span> <span class="n">when</span> <span class="n">the</span> <span class="k">class</span> <span class="nc">is</span> <span class="n">initialized</span>
+<span class="n"> The code between the curly braces is collected into a primary constructor of the singleton object, and is executed when the class is initialized</span>
 
-<span class="n">compile</span><span class="k">:</span>
+<span class="n">compile:</span>
+
+<span class="n">`</span><span class="err">``</span><span class="n">shell</span>
+<span class="n">scalac</span>  <span class="o">-</span><span class="n">d</span> <span class="n">target</span><span class="o">/</span><span class="n">scala</span><span class="o">-</span><span class="mf">2.10</span><span class="o">/</span><span class="n">classes</span>
 </pre></div>
-scalac  -d target/scala-2.10/classes 
-```</p>
+
 <p>or use sbt &gt; compile</p>
-<p>// run unit test in sbt</p>
-<blockquote>
-<p>test</p>
-</blockquote>
-<p>execute a program: scala </p>
+<div class="codehilite"><pre><span></span><span class="c1"># run unit test in sbt</span>
+&gt; <span class="nb">test</span>
+</pre></div>
+
+<p>execute a program: <code>scala</code></p>
 <h2 id="integration-with-java">Integration with java</h2>
 <p>scala can access java classes, extends java class and implement java interface. All classes from the java.lang package are imported by default, while others need to be imported explicitly.</p>
 <h2 id="further-readings">Further Readings</h2>
@@ -1245,13 +1259,13 @@ scalac  -d target/scala-2.10/classes
           </a>
         
         
-          <a href="../compendium/" title="Compendium" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../cloud-storage/" title="Cloud object storage" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
               <span class="md-flex__ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Compendium
+                Cloud object storage
               </span>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
