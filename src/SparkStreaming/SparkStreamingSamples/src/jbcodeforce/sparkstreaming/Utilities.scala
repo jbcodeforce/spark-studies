@@ -12,7 +12,7 @@ object Utilities {
     rootLogger.setLevel(Level.ERROR)   
   }
   
-  /** Configures Twitter service credentials using twiter.txt in the main workspace directory */
+  /** Configures Twitter service credentials using twitter.txt in the main workspace directory */
   def setupTwitter() = {
     import scala.io.Source
     

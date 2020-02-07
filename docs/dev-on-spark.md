@@ -4,7 +4,7 @@ There are different way to do spark app: using python, scala or java.
 
 ## Create scala project with maven
 
-See [this article](https://docs.scala-lang.org/tutorials/scala-with-maven.html) to create a maven project for scala project.
+See [this article](https://docs.scala-lang.org/tutorials/scala-with-maven.html) to create a maven project for scala project, and package it. 
 
 ## SBT the scala CLI
 
@@ -20,8 +20,14 @@ Once code and unit tests done, package the scala program and then submit it to s
 # In spark-studies/src/scala-wordcount
 sbt package
 # start a docker container with spark image (see previous environment notes)
+docker run --rm -it --network spark_network -v $(pwd):/home jbcodeforce/spark bash
+# in the shell within the container
+cd /home
 spark-submit target/scala-2.12/wordcount_2.12-1.0.jar
 ```
+
+!!! note
+    The set of commands work well with spark cluster running on local host via docker compose. If you want to access a remote cluster, for example running on IKS OCP see [this section](#remote-spark). 
 
 ## Basic programming concepts
 
@@ -164,13 +170,36 @@ I used the Spark 3.0 preview 2 from december 2019 release within docker image, a
 
 Running the code in Eclipse uses Spark jar files, so there is no connection to remote cluster.
 
-See also [those explanations](http://jbcodeforce.github.io/spark-studies/#using-docker-compose) to run it with docker compose. 
+See also [those explanations](http://jbcodeforce.github.io/spark-studies/#using-docker-compose) to run it with docker compose.
 
 ### First streaming program
 
-Print tweets from twitter. You need a twitter account and API access.
+Print tweets from twitter feed. You need a twitter account and API access, then populate the credential in a twitter.txt file.
+
+```
+consumerKey Zk6zkTS..
+consumerSecret WIyK..
+accessToken 13...
+accessTokenSecret VhT..
+```
+
+Then in scala define a function to load such credentials as properties
 
 ```scala
+def setupTwitter() = {
+    import scala.io.Source
+    for (line <- Source.fromFile("../twitter.txt").getLines) {
+      val fields = line.split(" ")
+      if (fields.length == 2) {
+        System.setProperty("twitter4j.oauth." + fields(0), fields(1))
+      }
+    }
+  }
+```
+
+```scala
+import org.apache.spark.streaming.twitter._
+
 object PrintTweets {
   def main(args: Array[String]) {
        val ssc = new StreamingContext("local[*]", "PrintTweets", Seconds(1))
@@ -188,9 +217,9 @@ object PrintTweets {
 
 ### Assess the Tweeter popular Hashtags
 
-The goal is to compute the most popular hashtag over a time window of 5 minutes and a slide interval of 1 seconds. See the solution in [PopularHashtags.scala]()
+The goal is to compute the most popular hashtag over a time window of 5 minutes and a slide interval of 1 seconds. See the solution in [PopularHashtags.scala](https://github.com/jbcodeforce/spark-studies/blob/master/src/SparkStreaming/SparkStreamingSamples/src/jbcodeforce/sparkstreaming/PopularHashtags.scala)
 
-As seen previously, the approach is to get the tweet text, split it by words, and then generating key value pair for "(word, 1)" tuples, then use a specific reduce operation using time window:
+As seen previously, the approach is to get the tweet text, split it by words, and then generating key value pair for "(word, 1)" tuples, then use a specific reduce operation (`educeByKeyAndWindow`) using time window:
 
 ```scala
 // Map each hashtag to a key/value pair of (hashtag, 1) so we can count them up by adding up the values
@@ -200,3 +229,4 @@ val hashtagKeyValues = hashtags.map(hashtag => (hashtag, 1))
 val hashtagCounts = hashtagKeyValues.reduceByKeyAndWindow( (x,y) => x + y, (x,y) => x - y, Seconds(300), Seconds(1))
   
 ```
+
