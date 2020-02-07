@@ -315,6 +315,33 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#accessing-files-from-cloud-object-storage-from-app" title="Accessing files from cloud object storage from app" class="md-nav__link">
+    Accessing files from cloud object storage from app
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-using-http-request-and-pandas-dataframe" title="Python using HTTP request and pandas dataframe" class="md-nav__link">
+    Python using HTTP request and pandas dataframe
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spark-specifics" title="Spark specifics" class="md-nav__link">
+    Spark specifics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#fearther-readings" title="Fearther readings" class="md-nav__link">
     Fearther readings
   </a>
@@ -382,6 +409,33 @@
   <a href="#access-via-api" title="Access via API" class="md-nav__link">
     Access via API
   </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#accessing-files-from-cloud-object-storage-from-app" title="Accessing files from cloud object storage from app" class="md-nav__link">
+    Accessing files from cloud object storage from app
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#python-using-http-request-and-pandas-dataframe" title="Python using HTTP request and pandas dataframe" class="md-nav__link">
+    Python using HTTP request and pandas dataframe
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spark-specifics" title="Spark specifics" class="md-nav__link">
+    Spark specifics
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -465,9 +519,16 @@ ID:                    crn:v1:bluemix:public:cloud-object-storage:global:a/98010
 <li>Download a file: <code>curl -X GET https://s3.us-south.cloud-object-storage.appdomain.cloud/cloud-object-storage-eda-folders/access_log.txt -H "Authorization: Bearer $COS_ADMIN_TOKEN"  -H "x-amz-acl: public-read" -H "ibm-service-instance-id: $COS_GUID"</code></li>
 <li>Other <a href="https://cloud.ibm.com/docs/services/cloud-object-storage/cli?topic=cloud-object-storage-curl">curl commands</a>.</li>
 </ul>
+<h2 id="accessing-files-from-cloud-object-storage-from-app">Accessing files from cloud object storage from app</h2>
+<h3 id="python-using-http-request-and-pandas-dataframe">Python using HTTP request and pandas dataframe</h3>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+</pre></div>
+
+<h3 id="spark-specifics">Spark specifics</h3>
 <h2 id="fearther-readings">Fearther readings</h2>
 <ul>
 <li><a href="https://cloud.ibm.com/docs/cloud-object-storage?topic=cloud-object-storage-getting-started">Getting started</a></li>
+<li><a href="https://developer.ibm.com/technologies/object-storage/tutorials/analyze-data-faster-using-spark-and-ibm-cloud-object-storage-s3-vs-swift-api/">Analyze data faster using Spark and Cloud Object Storage tutorial</a></li>
 </ul>
                 
                   

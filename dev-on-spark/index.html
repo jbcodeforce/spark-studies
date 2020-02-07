@@ -536,7 +536,7 @@
                 <h1 id="some-getting-started">Some getting started</h1>
 <p>There are different way to do spark app: using python, scala or java.</p>
 <h2 id="create-scala-project-with-maven">Create scala project with maven</h2>
-<p>See <a href="https://docs.scala-lang.org/tutorials/scala-with-maven.html">this article</a> to create a maven project for scala project.</p>
+<p>See <a href="https://docs.scala-lang.org/tutorials/scala-with-maven.html">this article</a> to create a maven project for scala project, and package it. </p>
 <h2 id="sbt-the-scala-cli">SBT the scala CLI</h2>
 <p><a href="http://scala-sbt.org">Scala SBT</a> is a tool to manage library dependencies for Scala development. It also helps to package all dependencies in a single jar.</p>
 <p>See <a href="https://www.scala-sbt.org/1.x/docs/sbt-by-example.html">sbt by examples</a> note and <a href="https://www.scalawilliam.com/essential-sbt/">this SBT essential tutorial</a>.</p>
@@ -654,10 +654,30 @@ DStreams is a collection of many RDDs, one for each time step, and may produce o
 <h3 id="environment-setup">Environment setup</h3>
 <p>I used the Spark 3.0 preview 2 from december 2019 release within docker image, and Eclipse Scala IDE from <a href="http://scala-ide.org/download/sdk.html">here</a>. See also <a href="https://sundog-education.com/spark-streaming">some instructions from Sundog education</a>.</p>
 <p>Running the code in Eclipse uses Spark jar files, so there is no connection to remote cluster.</p>
-<p>See also <a href="http://jbcodeforce.github.io/spark-studies/#using-docker-compose">those explanations</a> to run it with docker compose. </p>
+<p>See also <a href="http://jbcodeforce.github.io/spark-studies/#using-docker-compose">those explanations</a> to run it with docker compose.</p>
 <h3 id="first-streaming-program">First streaming program</h3>
-<p>Print tweets from twitter. You need a twitter account and API access.</p>
-<div class="codehilite"><pre><span></span><span class="k">object</span> <span class="nc">PrintTweets</span> <span class="o">{</span>
+<p>Print tweets from twitter feed. You need a twitter account and API access, then populate the credential in a twitter.txt file.</p>
+<div class="codehilite"><pre><span></span>consumerKey Zk6zkTS..
+consumerSecret WIyK..
+accessToken 13...
+accessTokenSecret VhT..
+</pre></div>
+
+<p>Then in scala define a function to load such credentials as properties</p>
+<div class="codehilite"><pre><span></span><span class="k">def</span> <span class="n">setupTwitter</span><span class="o">()</span> <span class="k">=</span> <span class="o">{</span>
+    <span class="k">import</span> <span class="nn">scala.io.Source</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">line</span> <span class="k">&lt;-</span> <span class="nc">Source</span><span class="o">.</span><span class="n">fromFile</span><span class="o">(</span><span class="s">&quot;../twitter.txt&quot;</span><span class="o">).</span><span class="n">getLines</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">val</span> <span class="n">fields</span> <span class="k">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="o">(</span><span class="s">&quot; &quot;</span><span class="o">)</span>
+      <span class="k">if</span> <span class="o">(</span><span class="n">fields</span><span class="o">.</span><span class="n">length</span> <span class="o">==</span> <span class="mi">2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">System</span><span class="o">.</span><span class="n">setProperty</span><span class="o">(</span><span class="s">&quot;twitter4j.oauth.&quot;</span> <span class="o">+</span> <span class="n">fields</span><span class="o">(</span><span class="mi">0</span><span class="o">),</span> <span class="n">fields</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
+      <span class="o">}</span>
+    <span class="o">}</span>
+  <span class="o">}</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="k">import</span> <span class="nn">org.apache.spark.streaming.twitter._</span>
+
+<span class="k">object</span> <span class="nc">PrintTweets</span> <span class="o">{</span>
   <span class="k">def</span> <span class="n">main</span><span class="o">(</span><span class="n">args</span><span class="k">:</span> <span class="kt">Array</span><span class="o">[</span><span class="kt">String</span><span class="o">])</span> <span class="o">{</span>
        <span class="k">val</span> <span class="n">ssc</span> <span class="k">=</span> <span class="k">new</span> <span class="nc">StreamingContext</span><span class="o">(</span><span class="s">&quot;local[*]&quot;</span><span class="o">,</span> <span class="s">&quot;PrintTweets&quot;</span><span class="o">,</span> <span class="nc">Seconds</span><span class="o">(</span><span class="mi">1</span><span class="o">))</span>
        <span class="c1">// Create a DStream from Twitter using our streaming context</span>
@@ -673,8 +693,8 @@ DStreams is a collection of many RDDs, one for each time step, and may produce o
 </pre></div>
 
 <h3 id="assess-the-tweeter-popular-hashtags">Assess the Tweeter popular Hashtags</h3>
-<p>The goal is to compute the most popular hashtag over a time window of 5 minutes and a slide interval of 1 seconds. See the solution in <a href="">PopularHashtags.scala</a></p>
-<p>As seen previously, the approach is to get the tweet text, split it by words, and then generating key value pair for "(word, 1)" tuples, then use a specific reduce operation using time window:</p>
+<p>The goal is to compute the most popular hashtag over a time window of 5 minutes and a slide interval of 1 seconds. See the solution in <a href="https://github.com/jbcodeforce/spark-studies/blob/master/src/SparkStreaming/SparkStreamingSamples/src/jbcodeforce/sparkstreaming/PopularHashtags.scala">PopularHashtags.scala</a></p>
+<p>As seen previously, the approach is to get the tweet text, split it by words, and then generating key value pair for "(word, 1)" tuples, then use a specific reduce operation (<code>educeByKeyAndWindow</code>) using time window:</p>
 <div class="codehilite"><pre><span></span><span class="c1">// Map each hashtag to a key/value pair of (hashtag, 1) so we can count them up by adding up the values</span>
 <span class="k">val</span> <span class="n">hashtagKeyValues</span> <span class="k">=</span> <span class="n">hashtags</span><span class="o">.</span><span class="n">map</span><span class="o">(</span><span class="n">hashtag</span> <span class="k">=&gt;</span> <span class="o">(</span><span class="n">hashtag</span><span class="o">,</span> <span class="mi">1</span><span class="o">))</span>
 
