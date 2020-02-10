@@ -466,58 +466,60 @@
                 
                 
                 <h1 id="ibm-cloud-object-storage">IBM Cloud Object Storage</h1>
-<p><a href="https://www.ibm.com/cloud/object-storage">IBM Cloud Object Storage</a> is a cloud based storage for backup, application data files, persistence storage for analytics. </p>
+<p><a href="https://www.ibm.com/cloud/object-storage">IBM Cloud Object Storage</a> is a cloud based storage for backup, application data files, persistence storage for analytics.</p>
 <h2 id="characteristics">Characteristics</h2>
 <ul>
 <li>Cloud Object Storage is a multi-tenant system, and all instances of Object Storage share physical infrastructure</li>
 <li>Available with three types of resiliency: Cross Region (EU, AP, US), Regional (multiple availability one in a region), and Single Data Center (multiple servers)</li>
-<li>API to access data</li>
-<li>Bucket is the container of the data and defines metadata about the storage: resiliency type, scale</li>
+<li>COS offers REST-based API for reading and writing objects: each storage location has its own set of URLs.</li>
+<li><code>Bucket</code> is the container of the data and defines metadata about the storage: resiliency type, scale factor..</li>
 </ul>
-<p><img alt="" src="../images/cos-bucket.png" /></p>
+<p><img alt="Bucket" src="../images/cos-bucket.png" /></p>
 <ul>
 <li>All buckets in all regions across the globe share a single namespace.</li>
-<li>Bucket configuration defines role based (writer, reader, manager) control access per user</li>
-<li>To get access to the content of a bucket using a application, define a <code>ServiceID</code>, under the bucket configuration and Access policies, or link an existing service ID to the bocket with some access role.</li>
-<li>REST-based API for reading and writing objects: each storage location has its own set of URLs.</li>
+<li>Bucket configuration defines role based (writer, reader, manager) to control access per user</li>
+<li>To get access to the content of a bucket using a application, define a <code>ServiceID</code>, under the bucket configuration and the <code>Access policies</code> to control the access rules, or link an existing service ID to the bucket.</li>
 </ul>
 <h2 id="access-via-cli">Access via CLI</h2>
 <ul>
 <li>Login to IBM Cloud: <code>ibmcloud login -u .... --sso</code></li>
-<li>Install cloud object storage plugin if done done before, or to update version: <code>ibmcloud plugin install cloud-object-storage</code></li>
-<li>To use the COS plugin, we need to configure it with our region and objectstore‘s unique number, known as a CRN. To get the CRN do the folliwing command using the name of the COS service: <code>ibmcloud resource service-instance "Cloud Object Storage-yj"</code>
-    <div class="codehilite"><pre><span></span>Retrieving service instance Cloud Object Storage-yj in all resource groups under account Cloud Client Engagement Team&#39;s Account as boyerje@us.ibm.com...
-OK
+<li>Install cloud object storage plugin if not done before, or if you need to update existing version: <code>ibmcloud plugin install cloud-object-storage</code></li>
+<li>To use the COS plugin, we need to configure it with the region to use and the objectstore‘s unique number, known as a CRN. To get the CRN do the following command using the name of the COS service: <code>ibmcloud resource service-instance "Cloud Object Storage-yj"</code></li>
+</ul>
+<div class="codehilite"><pre><span></span>  Retrieving service instance Cloud Object Storage-yj in all resource groups under account Cloud Client Engagement Team&#39;s Account as boyerje@us.ibm.com...
+    OK
 
-Name:                  Cloud Object Storage-yj   
-ID:                    crn:v1:bluemix:public:cloud-object-storage:global:a/98010327e7....   
-</pre></div></li>
+    Name:                  Cloud Object Storage-yj   
+    ID:                    crn:v1:bluemix:public:cloud-object-storage:global:a/98010327e7....   
+</pre></div>
+
+<ul>
 <li><code>ibmcloud cos config crn</code> then enter the crn from previous command in the prompt.</li>
 <li>Get the list of buckets: <code>ibmcloud cos list-buckets</code></li>
 <li>Creating a bucket (name needs to be globally unique): <code>ibmcloud cos create-bucket --bucket mybucket</code></li>
 </ul>
 <h2 id="access-via-api">Access via API</h2>
 <ul>
-<li>
-<p>Get the API bearer token</p>
-<div class="codehilite"><pre><span></span><span class="nb">export</span> <span class="nv">COS_ADMIN_TOKEN</span><span class="o">=</span><span class="sb">`</span>ibmcloud iam oauth-tokens <span class="p">|</span> grep IAM <span class="p">|</span> awk <span class="s1">&#39;{printf(&quot;%s&quot;, $4)}&#39;</span><span class="sb">`</span>
+<li>Get the API bearer token</li>
+</ul>
+<div class="codehilite"><pre><span></span> <span class="nb">export</span> <span class="nv">COS_ADMIN_TOKEN</span><span class="o">=</span><span class="sb">`</span>ibmcloud iam oauth-tokens <span class="p">|</span> grep IAM <span class="p">|</span> awk <span class="s1">&#39;{printf(&quot;%s&quot;, $4)}&#39;</span><span class="sb">`</span>
 </pre></div>
 
-</li>
+<ul>
 <li>
-<p>Get service instance ID (replace with your service id): <code>export COS_GUID=$(ibmcloud resource service-instance "Cloud Object Storage-yj" | grep GUID | awk '{printf("%s", $2)}')</code></p>
+<p>Get service instance ID (replace "Cloud Object Storage-yj" with your service instance name): <code>export COS_GUID=$(ibmcloud resource service-instance "Cloud Object Storage-yj" | grep GUID | awk '{printf("%s", $2)}')</code></p>
 </li>
 <li>
 <p>Using curl to access the content of a bucket:</p>
-<div class="codehilite"><pre><span></span>curl https://s3.us-south.cloud-object-storage.appdomain.cloud/cloud-object-storage-eda-folders -H <span class="s2">&quot;Authorization: Bearer </span><span class="nv">$COS_ADMIN_TOKEN</span><span class="s2">&quot;</span>  -H <span class="s2">&quot;x-amz-acl: public-read&quot;</span> -H <span class="s2">&quot;ibm-service-instance-id: </span><span class="nv">$COS_GUID</span><span class="s2">&quot;</span>
-</pre></div>
-
 </li>
 </ul>
-<p><img alt="" src="../images/get-bucket-content.png" /></p>
+<div class="codehilite"><pre><span></span>    curl https://s3.us-south.cloud-object-storage.appdomain.cloud/cloud-object-storage-eda-folders -H <span class="s2">&quot;Authorization: Bearer </span><span class="nv">$COS_ADMIN_TOKEN</span><span class="s2">&quot;</span>  -H <span class="s2">&quot;x-amz-acl: public-read&quot;</span> -H <span class="s2">&quot;ibm-service-instance-id: </span><span class="nv">$COS_GUID</span><span class="s2">&quot;</span>
+</pre></div>
+
+<p><img alt="Bucket content" src="../images/get-bucket-content.png" /></p>
 <ul>
-<li>Download a file: <code>curl -X GET https://s3.us-south.cloud-object-storage.appdomain.cloud/cloud-object-storage-eda-folders/access_log.txt -H "Authorization: Bearer $COS_ADMIN_TOKEN"  -H "x-amz-acl: public-read" -H "ibm-service-instance-id: $COS_GUID"</code></li>
-<li>Other <a href="https://cloud.ibm.com/docs/services/cloud-object-storage/cli?topic=cloud-object-storage-curl">curl commands</a>.</li>
+<li>Download a file (like access_log.txt): <code>curl -X GET https://s3.us-south.cloud-object-storage.appdomain.cloud/cloud-object-storage-eda-folders/access_log.txt -H "Authorization: Bearer $COS_ADMIN_TOKEN"  -H "x-amz-acl: public-read" -H "ibm-service-instance-id: $COS_GUID"</code></li>
+<li>Other <a href="https://cloud.ibm.com/docs/services/cloud-object-storage/cli?topic=cloud-object-storage-curl">curl commands explanation</a>.</li>
 </ul>
 <h2 id="accessing-files-from-cloud-object-storage-from-app">Accessing files from cloud object storage from app</h2>
 <h3 id="python-using-http-request-and-pandas-dataframe">Python using HTTP request and pandas dataframe</h3>
