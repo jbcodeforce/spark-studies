@@ -1,39 +1,38 @@
 # Spark studies
 
-Spark started at UC Berkeley in 2009, and it is one of the most adopted open source solution to run parallel data processing on distributed computers.
+Spark started at UC Berkeley in 2009, and it is one of the most adopted open source solution to run **parallel data processing** on distributed systems to process large-scale data.
 
-The goal of Spark is to offer an **unified** platform for writing big data application: this means consistent APIs to do data loading, SQL, streaming, machine learning... It provides an unified engine for **parallel data processing** on distributed systems to process large-scale data.
+The goal of Spark is to offer an **unified** platform for writing big data application: this means consistent APIs to do data loading, SQL, streaming, machine learning... 
 
 ## Characteristics
 
 * Data is expensive to move so Spark focuses on performing computations over the data, no matter where they reside.
-* Provide a unified API for common data analysis tasks
-* It provides a cluster with a manager node and executor nodes. It can scale horizontally by adding executor nodes.
+* Provide a unified API for common data analysis tasks: RDD and DataFrame (see in [this section](dev-on-spark.md))
+* It provides a cluster with one `manager` node and multiple `executor` nodes. It can scale horizontally by adding executor nodes.
 * Spark includes libraries for SQL and structured data (Spark SQL), machine learning (MLlib), stream processing (Spark Streaming and the newer Structured Streaming), and graph analytics (GraphX)
-* It supports large-scale machine learning using iterative algorithms that need to make multiple passes over the data.
-* It uses a directed acyclic graph, or DAG, to define the workflow to perform on the executor nodes. It is optimized by a DAG engine. Developers write code to will be mapped to DAG.
-* Spark main data element is the Resilient Distributed Dataset (RDD), or its newest version: the **Dataset**. It is the abstraction to manage distributed data in spark cluster.
-* It is written in [Scala](scala_summary.md), and it is recommended to develop spark apps with Scala, even if Python is a viable soluton for POC and prototype.
-* It is fast, 100x faster than hadoop Map Reduce. 
+
+![Spark components](images/spark-components.png)
+
+* Spark supports large-scale machine learning using iterative algorithms that need to make multiple passes over the data.
+* It uses a directed acyclic graph, or DAG, to define the workflow to perform on the executor nodes. It is optimized by a DAG engine. Developers write code that is mapped to DAG for execution.
+* Spark main data element is the Resilient Distributed Dataset (RDD), or in its newest version: the **Data frame**. RDD is an abstraction to manage distributed data in spark cluster.
+* Spark is written in [Scala](scala_summary.md), and it is recommended to develop spark apps with Scala, even if Python is a viable soluton for POC and prototype.
+* It is fast, 100x faster than hadoop Map Reduce.
 
 ## Architecture
 
-* Spark Applications consist of a driver process and a set of executor processes. The driver process runs your main() function, sits on a node in the cluster, and is responsible for three things: 
+* Spark Applications consist of a driver process and a set of executor processes. The driver process runs the main() function, sits on a node in the cluster, and is responsible for three things:
 
-    * maintaining information about the Spark Application
-    * responding to a user’s program or input
+    * maintaining information about the Spark Application.
+    * responding to a user’s program or input.
     * analyzing, distributing, and scheduling work across the executors.
 
-* Each executor is responsible for only two things: executing code assigned to it by the driver, and reporting the state of the computation on that executor back to the driver node
+* Each executor is responsible for only two things: executing code assigned to it by the driver, and reporting the state of the computation on that executor back to the driver node.
 * Spark employs a cluster manager that keeps track of the resources available
 
-![](images/app-arch.png)
+![Spark architecture](images/app-arch.png)
 
-* Other components of spark solution are the Machine learning library, Spark SQL (to apply SQL queries on spark dataset), GraphX:
-
-![](images/spark-components.png)
-
-* There is a SparkSession object available to the user, which is the entry point to running Spark code.
+* The main entry point for programming is the `SparkSession` object:
 
 ```python
 spark = SparkSession.builder.appName("PopularMovies").getOrCreate()
@@ -41,14 +40,18 @@ spark = SparkSession.builder.appName("PopularMovies").getOrCreate()
 lines = spark.sparkContext.textFile("../data/movielens/u.data")
 ```
 
+See more development practices [here](dev-on-spark.md).
+
 ## Deployment
 
 ### Installation on k8s or openshift cluster
 
-The spark driver runs as pod. The driver creates executors which are also running within Kubernetes pods and connects to them, and executes application code.
+The spark driver runs as pod. The driver creates executors, which are also running within Kubernetes pods, connects to them and then executes application code.
 The driver and executor pod scheduling is handled by Kubernetes.
 
-See the product documentation [here](https://spark.apache.org/docs/latest/running-on-kubernetes.html) or use a [Spark operator](https://github.com/radanalyticsio/spark-operator) to deploy to k8s or openshift. The steps are:
+See this [spark openshift deployment](https://jbcodeforce.github.io/openshift-studies/spark-on-os/#spark-on-openshift-using-operator) study.
+
+The spark [product documentation](https://spark.apache.org/docs/latest/running-on-kubernetes.html) or use a [Spark operator](https://jbcodeforce.github.io/openshift-studies/spark-on-os/). The basic steps are:
 
 1. Use a namespace like `jb-sparks`. Modify the cluster and operator yaml files to use this namespace.
 1. Start the operator if it's not running
@@ -76,13 +79,13 @@ See the product documentation [here](https://spark.apache.org/docs/latest/runnin
 
 * 1st define docker network
 
-When running locally to avoid some complex host to docker containers communication tools, like VPN or rsh, we need to define a network so the workers and master nodes can communicate.
+When running locally define a network so the workers and master nodes can communicate together:
 
 ```shell
     docker network create spark_network
 ```
 
-The Dockerfile, in this repository, is using a openjdk base image and install Spark 3.0.0, so here are the commands to build the images and then start it with a shell.
+The Dockerfile, in this repository, is using a openjdk base image and install Spark 3.0.0. The commands to build the images and then start a spark container are:
 
 ```shell
     docker build -t jbcodeforce/spark .
@@ -120,9 +123,7 @@ Within the container run:
 
 Simply go to: [http://localhost:8085/](http://localhost:8085/)
 
-* Start a worker node 
-
-As a separate docker container. 
+* Start a worker node, as a separate docker container
 
 ```shell
     docker run --rm -it --name spark-worker --hostname spark-worker \
@@ -149,10 +150,10 @@ then within the bash shell:
 
 On the Spark console we can see the worker added:
 
-![](images/spark-console.png)
+![Spark console](images/spark-console.png)
 
 !!! Note
-        The docker image includes a script to start the master and one to start workers. The docker compose file uses those commands to propose a simple spark cluser with one worker and one master.
+        The docker image includes one script to start the master and one to start the workers. The docker compose file uses those commands to propose a simple spark cluser with one worker and one master See [below](#using-docker-compose).
 
 #### Smoke test the cluster
 
@@ -164,7 +165,7 @@ Start a 3nd container instance to run the `spark-submit` command to compute the 
 
 ### Using Docker Compose
 
-To manage workers and master and spark submit container, the best is to use docker-compose. The docker compose file is in the root directory of this repository.
+To manage workers and master containers, the simplest approach is to use docker-compose. The docker compose file is in the root directory of this repository.
 
 It uses two scripts to start the master or worker automatically. The environment variables to parameterize the WEB UI port, master node URL, and master port are set in the docker compose file. Start the cluster with 3 workers.
 
@@ -181,8 +182,7 @@ It uses two scripts to start the master or worker automatically. The environment
 
 ## Considerations
 
-* Spark executors are not really cattle as they are keeping data partitions. So from a pure spark architecture, a kubernetes deployment, may look like an anti-pattern.
-* But RDD helps to compensate for pod failure
+* Spark executors are not really cattle as they are keeping data partitions. So from a pure spark architecture, a kubernetes deployment, may look like an anti-pattern. RDD should help to compensate for pod failure.
 
 ## Run a sample python program
 

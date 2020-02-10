@@ -172,6 +172,8 @@ Running the code in Eclipse uses Spark jar files, so there is no connection to r
 
 See also [those explanations](http://jbcodeforce.github.io/spark-studies/#using-docker-compose) to run it with docker compose.
 
+See this [spark openshift deployment](https://jbcodeforce.github.io/openshift-studies/spark-on-os/#spark-on-openshift-using-operator) study.
+
 ### First streaming program
 
 Print tweets from twitter feed. You need a twitter account and API access, then populate the credential in a twitter.txt file.
