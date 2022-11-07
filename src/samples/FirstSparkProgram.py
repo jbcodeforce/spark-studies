@@ -16,7 +16,7 @@ def loadMoviesNames():
 
 
 def parseMovieRecord(line):
-    """
+    """exi
     convert the input line to (movieID, (rating, 1.0)) 
     """
     fields = line.split()
@@ -29,15 +29,17 @@ if __name__ == "__main__":
     sparkSession = SparkContext(conf = sparkConfiguration)
     # load movie ratings as RDD
     lines = sparkSession.textFile('../data/movielens/u.data')
-    # Start to use spark RDD apis: convert to (movieID, (rating, 1.0)) by using the parsing function
+    # Start to use spark RDD apis: map() to convert to (movieID, (rating, 1.0)) by using the parsing function
     movieRatings = lines.map(parseMovieRecord)
     # Reduce to (movieID, (sumOfRatings, totalRatings))
     ratingTotalsAndCount = movieRatings.reduceByKey(lambda movie1, movie2: (movie1[0] + movie2[0], movie1[1] + movie2[1]))
+    print(ratingTotalsAndCount)
     # Map to 
-    averageRatings = ratingTotalsAndCount.mapValues( lambda totalAndCount: totalAndCount[0] / totalAndCount[1])
-    sortedMovies = averageRatings.sortBy(lambda x: x[1])
-    results = sortedMovies.take(10)
-    for result in results:
-        print(mn[result[0]], result[1])
+    # averageRatings = ratingTotalsAndCount.mapValues( lambda totalAndCount: totalAndCount[0] / totalAndCount[1])
+    #sortedMovies = averageRatings.sortBy(lambda x: x[1])
+    #results = sortedMovies.take(10)
+    #for result in averageRatings.take(10):
+        # print(mn[result[0]], result[1])
+    #    print(result)
     # Stop the session
     sparkSession.stop()

@@ -4,7 +4,7 @@ from pyspark.sql import functions
 
 def loadMovieNames():
     movieNames = {}
-    with open("../data/movielens/u.item") as f:
+    with open("../data/movielens/u.item", encoding='ISO-8859-1') as f:
         for line in f:
             fields = line.split('|')
             movieNames[int(fields[0])] = fields[1]

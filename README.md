@@ -1,6 +1,15 @@
-# Apache Spark Studies
+# [Apache Spark Studies](https://jbcodeforce.github.io/spark-studies/)
 
 Better read in [book format.](https://jbcodeforce.github.io/spark-studies/).
+
+## Updates
+
+* 11/7/2022: change spark version and update to doc
+
+## Content
+
+* Dockerfile to build my own spark image to run locally: `docker build -t jbcodeforce/spark .`
+* Docker compose to start one master and one worker: `docker compose up -d`
 
 ## Building this booklet locally
 

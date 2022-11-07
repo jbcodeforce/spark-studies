@@ -85,7 +85,7 @@ When running locally define a network so the workers and master nodes can commun
     docker network create spark_network
 ```
 
-The Dockerfile, in this repository, is using a openjdk base image and install Spark 3.0.0. The commands to build the images and then start a spark container are:
+The Dockerfile, in this repository, is using a openjdk base image and install Spark 3.3.1. The commands to build the images and then start a spark container are:
 
 ```shell
     docker build -t jbcodeforce/spark .
@@ -184,32 +184,5 @@ It uses two scripts to start the master or worker automatically. The environment
 
 * Spark executors are not really cattle as they are keeping data partitions. So from a pure spark architecture, a kubernetes deployment, may look like an anti-pattern. RDD should help to compensate for pod failure.
 
-## Run a sample python program
-
-The most common way to launch spark applications on the cluster is to use the shell command `spark-submit`.
-
-The source code [src/samples/FirstSparkProgram.py](https://github.com/jbcodeforce/spark-studies/tree/master/src/samples/FirstSparkProgram.py) that get the worse rated movie from the movie ratings in the `data` folder. To be able to run program as job on spark cluster we need to connect to the cluster and use spark-submit command. For that we are using another container instance, with the source code mounted to `/home`:
-
-```shell
-    docker run --rm -it --network spark_network -v $(pwd):/home jbcodeforce/spark bash
-```
-
-In the shell within this container runs:
-
-```shell
-bash-4.4# cd /home/src
-bash-4.4# spark-submit samples/FirstSparkProgram.py
-
-Amityville: Dollhouse (1996) 1.0
-Somebody to Love (1994) 1.0
-Every Other Weekend (1990) 1.0
-Homage (1995) 1.0
-3 Ninjas: High Noon At Mega Mountain (1998) 1.0
-Bird of Prey (1996) 1.0
-Power 98 (1995) 1.0
-Beyond Bedlam (1993) 1.0
-Falling in Love Again (1980) 1.0
-T-Men (1947) 1.0
-```
 
 [Next step... develop on spark >>>](dev-on-spark.md)

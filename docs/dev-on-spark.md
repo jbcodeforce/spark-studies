@@ -1,33 +1,8 @@
 # Some getting started
 
-There are different way to do spark app: using python, scala or java.
+There are different ways to do spark app: using python, scala or java.
 
-## Create scala project with maven
 
-See [this article](https://docs.scala-lang.org/tutorials/scala-with-maven.html) to create a maven project for scala project, and package it. 
-
-## SBT the scala CLI
-
-[Scala SBT](http://scala-sbt.org) is a tool to manage library dependencies for Scala development. It also helps to package all dependencies in a single jar.
-
-See [sbt by examples](https://www.scala-sbt.org/1.x/docs/sbt-by-example.html) note and [this SBT essential tutorial](https://www.scalawilliam.com/essential-sbt/).
-
-Example to create a project template: `sbt create scala/helloworld.g8`.
-
-Once code and unit tests done, package the scala program and then submit it to spark cluster:
-
-```shell
-# In spark-studies/src/scala-wordcount
-sbt package
-# start a docker container with spark image (see previous environment notes)
-docker run --rm -it --network spark_network -v $(pwd):/home jbcodeforce/spark bash
-# in the shell within the container
-cd /home
-spark-submit target/scala-2.12/wordcount_2.12-1.0.jar
-```
-
-!!! note
-    The set of commands work well with spark cluster running on local host via docker compose. If you want to access a remote cluster, for example running on IKS OCP see [this section](#remote-spark). 
 
 ## Basic programming concepts
 
@@ -135,6 +110,66 @@ movies = lines.map(parseInput)
 movieDataset = spark.createDataFrame(movies)
 ```
 
+## Python
+
+### Environment setup
+
+I used the Spark 3.3 release within docker image, and Eclipse Scala IDE from [here](http://scala-ide.org/download/sdk.html). See also [ instructions from Sundog education](https://sundog-education.com/spark-streaming).
+
+Running the code in Eclipse uses Spark jar files, so there is no connection to a remote cluster.
+
+See also [those explanations](http://jbcodeforce.github.io/spark-studies/#using-docker-compose) to run it with docker compose.
+
+See this [Spark OpenShift deployment](https://jbcodeforce.github.io/openshift-studies/spark-on-os/#spark-on-openshift-using-operator) study.
+
+### First python program
+
+See code in [src/samples](https://github.com/jbcodeforce/spark-studies/tree/master/src/samples) folder.
+
+The main function build a spark session, loads the data and runs the map reduce with lambda functions.
+
+```python
+sparkConfiguration = SparkConf().setAppName("WorseMovie")
+sparkSession = SparkContext(conf = sparkConfiguration)
+# load movie ratings as RDD
+lines = sparkSession.textFile('../data/movielens/u.data')
+# Start to use spark RDD apis: convert to (movieID, (rating, 1.0)) by using the parsing function
+movieRatings = lines.map(parseMovieRecord)
+# Reduce to (movieID, (sumOfRatings, totalRatings))
+ratingTotalsAndCount = movieRatings.reduceByKey(lambda movie1, movie2: (movie1[0] + movie2[0], movie1[1] + movie2[1]))
+# Map to 
+averageRatings = ratingTotalsAndCount.mapValues( lambda totalAndCount: totalAndCount[0] / totalAndCount[1])
+sortedMovies = averageRatings.sortBy(lambda x: x[1])
+```
+
+* Be sure docker compose has started a master node and at least one worker node. 
+* Verify the Masster console: [http://localhost:8085/](http://localhost:8085/)
+* Run the sample python program: To be able to run program as job on spark cluster we need to connect to the cluster and use `spark-submit` command. 
+
+For that we are using another container instance, with the source code mounted to `/home`:
+
+```shell
+    docker run --rm -it --network spark-studies_spark-network -v $(pwd):/home jbcodeforce/spark bash
+```
+
+In the shell within this container runs:
+
+```shell
+bash-4.4# cd /home/src
+bash-4.4# spark-submit samples/LowestRatedMovieDataFrame.py
+
+Amityville: Dollhouse (1996) 1.0
+Somebody to Love (1994) 1.0
+Every Other Weekend (1990) 1.0
+Homage (1995) 1.0
+3 Ninjas: High Noon At Mega Mountain (1998) 1.0
+Bird of Prey (1996) 1.0
+Power 98 (1995) 1.0
+Beyond Bedlam (1993) 1.0
+Falling in Love Again (1980) 1.0
+T-Men (1947) 1.0
+```
+
 ## Spark Streaming
 
 Big data never stops, so there is a need to continuously analyze data streams in real time. Some nice use cases: clickstream, real time sensor data from IoT. 
@@ -164,15 +199,39 @@ The architecture of the receiver impacts the fault tolerance, for example if the
 
 The drive code can be also a SPOF. But there are ways to design and implement a more reliable driver, by using StreamingContext.getOrCreate() API and use checkpoint directory on distributed filesystem, to be used when the driver restarts, to pickup from the checkpoint directory.
 
-### Environment setup
 
-I used the Spark 3.0 preview 2 from december 2019 release within docker image, and Eclipse Scala IDE from [here](http://scala-ide.org/download/sdk.html). See also [some instructions from Sundog education](https://sundog-education.com/spark-streaming).
 
-Running the code in Eclipse uses Spark jar files, so there is no connection to remote cluster.
 
-See also [those explanations](http://jbcodeforce.github.io/spark-studies/#using-docker-compose) to run it with docker compose.
 
-See this [spark openshift deployment](https://jbcodeforce.github.io/openshift-studies/spark-on-os/#spark-on-openshift-using-operator) study.
+## Scala
+
+### Create scala project with maven
+
+See [this article](https://docs.scala-lang.org/tutorials/scala-with-maven.html) to create a maven project for scala project, and package it. 
+
+### SBT the scala CLI
+
+[Scala SBT](http://scala-sbt.org) is a tool to manage library dependencies for Scala development. It also helps to package all dependencies in a single jar.
+
+See [sbt by examples](https://www.scala-sbt.org/1.x/docs/sbt-by-example.html) note and [this SBT essential tutorial](https://www.scalawilliam.com/essential-sbt/).
+
+Example to create a project template: `sbt create scala/helloworld.g8`.
+
+Once code and unit tests done, package the scala program and then submit it to spark cluster:
+
+```shell
+# In spark-studies/src/scala-wordcount
+sbt package
+# start a docker container with spark image (see previous environment notes)
+docker run --rm -it --network spark_network -v $(pwd):/home jbcodeforce/spark bash
+# in the shell within the container
+cd /home
+spark-submit target/scala-2.12/wordcount_2.12-1.0.jar
+```
+
+!!! note
+    The set of commands work well with spark cluster running on local host via docker compose. If you want to access a remote cluster, for example running on IKS OCP see [this section](#remote-spark). 
+
 
 ### First streaming program
 
@@ -231,4 +290,3 @@ val hashtagKeyValues = hashtags.map(hashtag => (hashtag, 1))
 val hashtagCounts = hashtagKeyValues.reduceByKeyAndWindow( (x,y) => x + y, (x,y) => x - y, Seconds(300), Seconds(1))
   
 ```
-

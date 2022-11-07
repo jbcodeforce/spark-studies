@@ -6,14 +6,34 @@ nav:
   - Scala summary: scala_summary.md
   - Cloud object storage: cloud-storage.md
   - Compendium: compendium.md
- 
+  - Return to main: https://jbcodeforce.github.io
 
 theme: 
   name: material
 extra_css: ["extra.css"]
+features:
+    - content.code.annotate
+    - content.tooltips
+    # - navigation.tabs
+    - navigation.instant
+    #- navigation.tracking
+    # - navigation.sections
+    # - navigation.expand
+    - navigation.tabs.sticky
 markdown_extensions:
+  - abbr
+  - attr_list
+  - md_in_html
   - admonition
   - codehilite
   - footnotes
   - pymdownx.smartsymbols
   - pymdownx.superfences
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.tabbed
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.details
