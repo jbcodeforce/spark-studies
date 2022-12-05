@@ -30,7 +30,7 @@ The goal of Spark is to offer an **unified** platform for writing big data appli
 * Each executor is responsible for only two things: executing code assigned to it by the driver, and reporting the state of the computation on that executor back to the driver node.
 * Spark employs a cluster manager that keeps track of the resources available
 
-![Spark architecture](images/app-arch.png)
+![Spark architecture](./images/app-arch.png)
 
 * The main entry point for programming is the `SparkSession` object:
 
@@ -153,7 +153,8 @@ On the Spark console we can see the worker added:
 ![Spark console](images/spark-console.png)
 
 !!! Note
-        The docker image includes one script to start the master and one to start the workers. The docker compose file uses those commands to propose a simple spark cluser with one worker and one master See [below](#using-docker-compose).
+        The docker image includes one script to start the master and one to start the workers. The docker compose file uses those commands to propose a simple spark cluser with one worker and one master.eifjcbfdjifhgdfkhdnihbnbbcrculinvrukjdefhnbf
+         See [below](#using-docker-compose).
 
 #### Smoke test the cluster
 

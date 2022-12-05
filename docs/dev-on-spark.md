@@ -2,13 +2,11 @@
 
 There are different ways to do spark app: using python, scala or java.
 
-
-
 ## Basic programming concepts
 
 ### RDD: Resilient Distributed Dataset
 
-It is a dataset distributed against the cluster nodes. To create a RDD we use the spark context object and then one of it APIs depending of the data source (JDBC, Hive, HDFS, Cassandra, HBase, ElasticSearch, CSV, json,...):
+It is a dataset distributed against the cluster nodes. To create a RDD we use the spark context object and then one of its APIs depending of the data source (JDBC, Hive, HDFS, Cassandra, HBase, ElasticSearch, CSV, json,...):
 
 ```python
 from pyspark import SparkConf, SparkContext
@@ -23,9 +21,9 @@ for result in results:
     print(result[0], result[1])
 ```
 
-This program is not launched by using python interpreter by the `spark-submit` tool. This tool is available in the Dockerfile we defined, with a python 3.6 interpreter.
+This program is not launched by using python interpreter, but by the `spark-submit` tool. This tool is available in the Dockerfile we defined, with a python 3.6 interpreter.
 
-```
+```sh
 /spark/bin/spark-submit nameoftheprogram.py
 ```
 
@@ -45,9 +43,9 @@ Use Map, flatmap, filter, distinct, union, intersection, substract, ... function
 
 Nothing actually happens in your drive program until an action is called.
 
-here is [an python API documentation](https://spark.apache.org/docs/latest/api/python/index.html).
+here is [the python API documentation](https://spark.apache.org/docs/latest/api/python/index.html).
 
-In [this code](https://github.com/jbcodeforce/spark-studies/blob/master/src/SparkStreaming/SparkStreamingSamples/src/jbcodeforce/rdd/samples/wordscale.scala) there is a documented example of to use RDD to count word occurence in a text.
+In [this code](https://github.com/jbcodeforce/spark-studies/blob/master/src/SparkStreaming/SparkStreamingSamples/src/jbcodeforce/rdd/samples/wordscale.scala) there is a documented example of to use RDD to count word occurence in a text in Scala.
 To be able to get an executor running the code, the scala program needs to be an object and have a main function:
 
 ```scala
@@ -58,7 +56,7 @@ object wordcount {
 }
 ```
 
-Map transform one row into another row:
+Map transforms one row into another row:
 
 ```scala
  // Now extract the text of each tweeter status update into DStreams:
@@ -79,7 +77,7 @@ filter helps to remove row not matching a condition:
     val hashtags = tweetwords.filter(word => word.startsWith("#"))
 ```
 
-A classical transformation  it to create key value pair to count occurence of something like words using a reduce approach. reduce(f,l) applies the function f to elements of the list by pair: (i,j) where i is the result of f(i-1,j-1).
+A classical transformation  it to create key-value pair to count occurence of something like words using a reduce approach. `reduce(f,l)` applies the function f to elements of the list by pair: (i,j) where i is the result of f(i-1,j-1).
 
 ```scala
 valrdd.reduce((x,y) => x + y)
