@@ -6,10 +6,11 @@ from pyspark.sql.functions import lit
 # Load up movie ID -> movie name dictionary
 def loadMovieNames():
     movieNames = {}
-    with open("ml-100k/u.item") as f:
+    with open("../data/movielens/u.item", encoding='ISO-8859-1') as f:
         for line in f:
             fields = line.split('|')
-            movieNames[int(fields[0])] = fields[1].decode('ascii', 'ignore')
+            if fields[1] != None:
+                movieNames[int(fields[0])] = fields[1]
     return movieNames
 
 # Convert u.data lines into (userID, movieID, rating) rows
@@ -31,7 +32,7 @@ if __name__ == "__main__":
     # Convert it to a RDD of Row objects with (userID, movieID, rating)
     ratingsRDD = lines.map(parseInput)
 
-    # Convert to a DataFrame and cache it
+    # Convert RDD to a DataFrame and cache it
     ratings = spark.createDataFrame(ratingsRDD).cache()
 
     # Create an ALS collaborative filtering model from the complete data set
@@ -42,7 +43,7 @@ if __name__ == "__main__":
     print("\nRatings for user ID 0:")
     userRatings = ratings.filter("userID = 0")
     for rating in userRatings.collect():
-        print movieNames[rating['movieID']], rating['rating']
+        print(movieNames[rating['movieID']] + str(rating['rating']))
 
     print("\nTop 20 recommendations:")
     # Find movies rated more than 100 times

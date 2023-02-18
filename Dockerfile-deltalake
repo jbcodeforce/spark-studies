@@ -1,0 +1,47 @@
+FROM amazoncorretto:17.0.6-al2022-RC-headful
+
+WORKDIR /spark
+
+ENV SPARK_VERSION 3.2.3
+ENV HADOOP_VERSION 3.2
+ENV DELTA_VERSION 2.0.2
+ENV SCALA_VERSION 2.12
+
+ENV SPARK_ARCHIVE spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
+RUN yum -y install wget tar python3 pip gzip && mkdir /spark && cd /spark
+RUN wget http://apache.mirror.anlx.net/spark/spark-${SPARK_VERSION}/${SPARK_ARCHIVE}
+ENV PYTHONUNBUFFERED=1
+RUN echo "**** install Spark ****" && \
+    tar -xzf $SPARK_ARCHIVE && \
+    rm $SPARK_ARCHIVE && 
+
+ENV SPARK_DIR "/spark/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
+
+ENV PATH=$SPARK_DIR/bin:$PATH
+
+# DeltaLake
+RUN wget https://repo1.maven.org/maven2/io/delta/delta-core_$SCALA_VERSION/$DELTA_VERSION/delta-core_$SCALA_VERSION-$DELTA_VERSION.jar -P $SPARK_DIR/jars/ && \
+    wget https://repo1.maven.org/maven2/io/delta/delta-storage/$DELTA_VERSION/delta-storage-$DELTA_VERSION.jar -P $SPARK_DIR/jars/
+
+EXPOSE 10000
+ENV MEM 2048m
+
+ENTRYPOINT java \
+ -Duser.timezone=Etc/UTC \
+ -Xmx$MEM \
+ --add-exports java.base/sun.nio.ch=ALL-UNNAMED \
+ -cp "${SPARK_DIR}/conf:${SPARK_DIR}/jars/*" \
+ org.apache.spark.deploy.SparkSubmit \
+ --master local[8] \
+ --packages io.delta:delta-core_$SCALA_VERSION:$DELTA_VERSION \
+ --conf "spark.sql.extensions=io.delta.sql.DeltaSparkSessionExtension" \
+ --conf "spark.sql.catalog.spark_catalog=org.apache.spark.sql.delta.catalog.DeltaCatalog" \
+ --conf spark.executor.extraJavaOptions=-Duser.timezone=Etc/UTC \
+ --conf spark.eventLog.enabled=false \
+ --class org.apache.spark.sql.hive.thriftserver.HiveThriftServer2 \
+ --name "Thrift JDBC/ODBC Server" \
+ --executor-memory $MEM \
+ spark-internal
+
+COPY start-master.sh /start-master.sh
+COPY start-worker.sh /start-worker.sh

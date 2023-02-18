@@ -2,7 +2,12 @@ site_name: studies
 repo_url: https://github.com/jbcodeforce/spark-studies
 nav:
   - Introduction: index.md
-  - Develop on Spark: dev-on-spark.md
+  - Develop with Spark:
+    - Getting Started: dev/index.md
+    - Deployments: dev/deployment.md
+    - Python: dev/python.md
+    - Streaming: dev/streaming.md
+    - Examples: dev/examples.md
   - Scala summary: scala_summary.md
   - Cloud object storage: cloud-storage.md
   - Compendium: compendium.md

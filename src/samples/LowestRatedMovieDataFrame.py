@@ -21,7 +21,7 @@ if __name__ == "__main__":
     # Load up our movie ID -> name dictionary
     movieNames = loadMovieNames()
 
-    # Get the raw data
+    # Get the user's movie score data
     lines = spark.sparkContext.textFile("../data/movielens/u.data")
     # Convert it to a RDD of Row objects with (movieID, rating)
     movies = lines.map(parseInput)

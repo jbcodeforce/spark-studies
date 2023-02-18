@@ -29,5 +29,6 @@ services:
 networks:
   spark-network:
     driver: bridge
+    name: spark-network
     ipam:
       driver: default
