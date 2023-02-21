@@ -9,7 +9,6 @@ object wordcount {
       val sc = new SparkContext(conf)
 
       val input = sc.textFile("book.txt")
-      //val input = sc.textFile("s3n://sundog-spark/book.txt")
       val words = input.flatMap(line => line.split(' '))
       val lowerCaseWords = words.map(word => word.toLowerCase())
       val wordCounts = lowerCaseWords.countByValue()

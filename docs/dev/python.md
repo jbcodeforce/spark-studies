@@ -4,9 +4,9 @@ See [the product documentation to learn how to use pyspark](https://spark.apache
 
 The advantages:
 
-* Write Spark app in python
+* Write Spark app in Python
 * Use interactive analysis of data in distributed environment
-* Pandas can be use and scaled on Spark or Spark data frame.
+* Pandas can be used and scaled on Spark.
 
 ## Environment setup
 
@@ -18,10 +18,20 @@ See [those explanations](../deployment/#using-docker-compose) to run Spark with 
 
 See FirstSparkProgram.py code in [src/samples](https://github.com/jbcodeforce/spark-studies/tree/master/src/samples) folder.
 
+All Spark python program need a main function and then can use SparkContext or sql.SparkSession
+
+```python
+if __name__ == "__main__":
+    sparkConfiguration = SparkConf().setAppName("App name")
+    sparkSession = SparkContext(conf = sparkConfiguration)
+    # .. do a lot of things
+    sparkSession.stop()
+```
+
 The main function build a spark session, loads the data in a RDD and perform transformation or actions.
 
 ```python
-  sparkConfiguration = SparkConf().setAppName("Get POST requests")
+    sparkConfiguration = SparkConf().setAppName("Get POST requests")
     sparkSession = SparkContext(conf = sparkConfiguration)
     # load text file in RDD
     lines = sparkSession.textFile('../data/access_log.txt')
@@ -68,6 +78,10 @@ Falling in Love Again (1980) 1.0
 T-Men (1947) 1.0
 ```
 
+## Assessing similar movies
+
+This example is using Pandas with Spark to merge two files: movie rating and movie data. Spark context has the read_text from different files into a single RDD
+
 ## Movie recommendations
 
 It reads the rating file and map each line to a SQL Row(userID , movieID , rating) then transform it in data frame
@@ -91,3 +105,8 @@ Star Trek: The Wrath of Khan (1982) 4.760307312011719
 Terminator, The (1984) 4.759642124176025
 ...
 ```
+
+
+## Deeper dive
+
+* [RDD pyspark API](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html)

@@ -22,11 +22,11 @@ if __name__ == "__main__":
     movieNames = loadMovieNames()
 
     # Get the user's movie score data
-    lines = spark.sparkContext.textFile("../data/movielens/u.data")
+    ratings = spark.sparkContext.textFile("../data/movielens/u.data")
     # Convert it to a RDD of Row objects with (movieID, rating)
-    movies = lines.map(parseInput)
+    movieRatings = ratings.map(parseInput)
     # Convert that to a DataFrame
-    movieDataset = spark.createDataFrame(movies)
+    movieDataset = spark.createDataFrame(movieRatings)
 
     # Compute average rating for each movieID
     averageRatings = movieDataset.groupBy("movieID").avg("rating")

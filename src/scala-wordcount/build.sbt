@@ -4,7 +4,7 @@ version := "1.0"
 
 organization := "jbcodeforce"
 
-scalaVersion := "2.12.3"
+scalaVersion := "2.13"
 libraryDependencies ++= Seq(
-"org.apache.spark" %% "spark-core" % "3.0.0-preview" % "provided"
+"org.apache.spark" %% "spark-core" % "3.3.2" % "provided"
 )

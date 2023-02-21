@@ -6,6 +6,8 @@ The goal of Spark is to offer an **unified** platform for writing big data appli
 
 The commercial version is supported by Databricks. 
 
+Data Scientists use Python Pandas and scikit-learn to do most of their work on one computer, when the memory of one computer is not enough then Spark helps to process such big data. Pyspark is the API for Python.
+
 ## Characteristics
 
 * Data is expensive to move so Spark focuses on performing computations over the data, no matter where they reside.

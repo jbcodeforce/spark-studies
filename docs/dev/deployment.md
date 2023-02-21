@@ -118,7 +118,11 @@ It uses the two scripts (start-master.sh and start-worker.sh) to start the maste
     spark-worker_2  | 19/12/31 22:48:22 INFO Worker: Successfully registered with master spark://spark-master:7077
 ```
 
-From there we should be able to run the different examples.
+From there we should be able to run the different examples by starting another container on the same network:
+
+```sh
+docker run --rm -it --network spark-network -v $(pwd):/home jbcodeforce/spark bash
+```
 
 ## Installation on k8s or openshift cluster
 

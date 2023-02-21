@@ -7,7 +7,7 @@ ENV HADOOP_VERSION 3
 ENV SCALA_VERSION 2.13
 
 ENV SPARK_ARCHIVE spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
-RUN yum -y install wget tar python3 pip gzip  && cd /spark
+RUN yum -y install wget tar python3 pip gzip && cd /spark
 RUN wget http://apache.mirror.anlx.net/spark/spark-${SPARK_VERSION}/${SPARK_ARCHIVE}
 ENV PYTHONUNBUFFERED=1
 RUN echo "**** install Spark ****" && \

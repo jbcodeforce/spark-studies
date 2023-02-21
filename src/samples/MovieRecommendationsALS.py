@@ -20,17 +20,17 @@ def parseInput(line):
 
 
 if __name__ == "__main__":
-    # Create a SparkSession (the config bit is only for Windows!)
+    # Create a SparkSession
     spark = SparkSession.builder.appName("MovieRecs").getOrCreate()
 
     # Load up our movie ID -> name dictionary
     movieNames = loadMovieNames()
 
     # Get the raw data
-    lines = spark.read.text("../data/movielens/u.data").rdd
+    movies = spark.read.text("../data/movielens/u.data").rdd
 
     # Convert it to a RDD of Row objects with (userID, movieID, rating)
-    ratingsRDD = lines.map(parseInput)
+    ratingsRDD = movies.map(parseInput)
 
     # Convert RDD to a DataFrame and cache it
     ratings = spark.createDataFrame(ratingsRDD).cache()
