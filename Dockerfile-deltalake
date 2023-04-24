@@ -1,19 +1,27 @@
-FROM amazoncorretto:17.0.6-al2022-RC-headful
+# FROM amazoncorretto:17.0.6-al2022-RC-headful
+FROM amazoncorretto:11
+USER root
 
-WORKDIR /spark
-
+# Last release not working with java 17
+#ENV DELTA_VERSION 2.2.0
+#ENV SPARK_VERSION 3.3.2
+#ENV HADOOP_VERSION 3
+#ENV SCALA_VERSION 2.13
+# this setting works with Java 11
+ENV DELTA_VERSION 2.0.2
 ENV SPARK_VERSION 3.2.3
 ENV HADOOP_VERSION 3.2
-ENV DELTA_VERSION 2.0.2
 ENV SCALA_VERSION 2.12
 
+
 ENV SPARK_ARCHIVE spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
-RUN yum -y install wget tar python3 pip gzip && mkdir /spark && cd /spark
+RUN yum -y install wget tar python3 pip gzip 
+RUN mkdir /spark && cd /spark
+WORKDIR /spark
 RUN wget http://apache.mirror.anlx.net/spark/spark-${SPARK_VERSION}/${SPARK_ARCHIVE}
 ENV PYTHONUNBUFFERED=1
-RUN echo "**** install Spark ****" && \
-    tar -xzf $SPARK_ARCHIVE && \
-    rm $SPARK_ARCHIVE && 
+RUN echo "**** install Spark ****" && tar -xzf $SPARK_ARCHIVE && rm $SPARK_ARCHIVE
+
 
 ENV SPARK_DIR "/spark/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
 
@@ -23,7 +31,7 @@ ENV PATH=$SPARK_DIR/bin:$PATH
 RUN wget https://repo1.maven.org/maven2/io/delta/delta-core_$SCALA_VERSION/$DELTA_VERSION/delta-core_$SCALA_VERSION-$DELTA_VERSION.jar -P $SPARK_DIR/jars/ && \
     wget https://repo1.maven.org/maven2/io/delta/delta-storage/$DELTA_VERSION/delta-storage-$DELTA_VERSION.jar -P $SPARK_DIR/jars/
 
-EXPOSE 10000
+EXPOSE 10000 4040
 ENV MEM 2048m
 
 ENTRYPOINT java \

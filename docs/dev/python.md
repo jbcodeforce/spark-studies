@@ -10,9 +10,11 @@ The advantages:
 
 ## Environment setup
 
-I used the Spark 3.3 release within docker image. To use Eclipse IDE see [instructions from Sundog education](https://sundog-education.com/spark-streaming).
+I used the Spark 3.3 release within docker image. 
 
 See [those explanations](../deployment/#using-docker-compose) to run Spark with docker compose.
+
+To run jupyter notebook in VScode with Spark cluster. 
 
 ## First python program
 
@@ -80,7 +82,7 @@ T-Men (1947) 1.0
 
 ## Assessing similar movies
 
-This example is using Pandas with Spark to merge two files: movie rating and movie data. Spark context has the read_text from different files into a single RDD
+This example is using Pandas with Spark to merge two files: movie rating and movie data. Spark context has the read_text function from different files into a single RDD. Then transform this RDD in data frame, and use pivot table.
 
 ## Movie recommendations
 
@@ -110,3 +112,4 @@ Terminator, The (1984) 4.759642124176025
 ## Deeper dive
 
 * [RDD pyspark API](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.RDD.html)
+* [PySpark RDD, Dataframe and SQL examples from spark-examples github](https://github.com/spark-examples/pyspark-examples) also explained in [pyspark-tutorial.](https://sparkbyexamples.com/pyspark-tutorial/)

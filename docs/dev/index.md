@@ -153,8 +153,5 @@ cd /home
 spark-submit target/scala-2.12/wordcount_2.12-1.0.jar
 ```
 
-!!! note
-    The set of commands work well with spark cluster running on local host via docker compose. If you want to access a remote cluster, for example running on IKS OCP see [this section](#remote-spark). 
-
 
 [Next step... Deployment with local run >>>](deployment.md)

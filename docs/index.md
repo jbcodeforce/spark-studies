@@ -1,5 +1,8 @@
 # Spark studies
 
+!!!- "Update"
+    03/07/2023
+
 [Spark](https://spark.apache.org/) started at UC Berkeley in 2009, and it is one of the most adopted open source solution to run **parallel data processing** on distributed systems to process large-scale data.
 
 The goal of Spark is to offer an **unified** platform for writing big data application: this means consistent APIs to do data loading, SQL, streaming, machine learning... 
@@ -12,8 +15,8 @@ Data Scientists use Python Pandas and scikit-learn to do most of their work on o
 
 * Data is expensive to move so Spark focuses on performing computations over the data, no matter where they reside.
 * Provide a unified API for common data analysis tasks: RDD and DataFrame (see in [this section](dev-on-spark.md))
-* Spark main data element is the Resilient Distributed Dataset (RDD), or in its newest version: the **Data frame**. RDD is an abstraction to manage distributed data in spark cluster.
-* It provides a cluster with one `manager` node and multiple `executor` nodes. It can scale horizontally by adding executor nodes.
+* Spark architecture is based on cluster with one `manager` node and multiple `executor` nodes. It can scale horizontally by adding executor nodes.
+* Spark main data element is the Resilient Distributed Dataset (RDD), or in its newest version: the **Data frame**. RDD is an abstraction to manage distributed data in spark cluster. Each dataset in RDD is divided into logical partitions, which can be computed on different nodes of the cluster.
 * Spark includes libraries for SQL for structured data (Spark SQL), machine learning (MLlib), stream processing (Spark Streaming and the newer Structured Streaming), and graph analytics (GraphX).
 
 ![Spark components](images/spark-components.png)
@@ -32,7 +35,6 @@ Data Scientists use Python Pandas and scikit-learn to do most of their work on o
     * analyzing, distributing, and scheduling work across the executors.
 
 * Each executor is responsible for only two things: executing code assigned to it by the driver, and reporting the state of the computation on that executor back to the driver node.
-* Spark employs a cluster manager that keeps track of the resources available
 
 ![Spark architecture](./images/app-arch.png)
 
@@ -44,8 +46,13 @@ spark = SparkSession.builder.appName("PopularMovies").getOrCreate()
 lines = spark.sparkContext.textFile("../data/movielens/u.data")
 ```
 
-See more development practices [here](dev-on-spark.md).
+See more development practices [here](./dev/index.md).
 
+### Extended architecture
+
+The full architecture includes storage and Delta lake which is an intermediate layer between Spark and storage to add services like ACID transaction and metadata about the object in the data lake. Spark job uses the Delta Lake to read and write data. 
+
+![](./diagrams/spark-delta-hla.drawio.png){ width=600 }
 
 ## Considerations
 

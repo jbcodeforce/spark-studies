@@ -1,23 +1,60 @@
-FROM amazoncorretto:17.0.6-al2022-RC-headful
+ARG OWNER=jupyter
+FROM ${OWNER}/scipy-notebook
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-WORKDIR /spark
+USER root
+ENV JDK_VERSION 11
 
+RUN apt-get update --yes && \
+    apt-get install --yes --no-install-recommends \
+    "openjdk-${JDK_VERSION}-jre-headless" \
+    ca-certificates-java  \
+    curl && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install nodejs
+# Node
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+RUN sudo apt-get install -y nodejs
+RUN echo "NODE Version:" && node --version
+RUN echo "NPM Version:" && npm --version
+
+# Install Elyra
+RUN  pip3 install --upgrade pip==23.1  && pip3 install --no-cache-dir  --upgrade  elyra[all] findspark
+RUN jupyter lab  build --dev-build=False --minimize=False
+
+
+# Spark dependencies
+WORKDIR /usr/local
 ENV SPARK_VERSION 3.3.2
 ENV HADOOP_VERSION 3
 ENV SCALA_VERSION 2.13
+ENV JUPYTER_ENABLE_LAB=yes
+
+ENV SPARK_DIR=spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}
+ENV SPARK_HOME=/usr/local/${SPARK_DIR}
+ENV SPARK_OPTS="--driver-java-options=-Xms1024M --driver-java-options=-Xmx4096M --driver-java-options=-Dlog4j.logLevel=info" \
+    PATH="${PATH}:${SPARK_HOME}/bin"
 
 ENV SPARK_ARCHIVE spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}.tgz
-RUN yum -y install wget tar python3 pip gzip && cd /spark
-RUN wget http://apache.mirror.anlx.net/spark/spark-${SPARK_VERSION}/${SPARK_ARCHIVE}
+
+RUN wget http://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/${SPARK_ARCHIVE}
 ENV PYTHONUNBUFFERED=1
 RUN echo "**** install Spark ****" && \
     tar -xzf $SPARK_ARCHIVE && \
     rm $SPARK_ARCHIVE 
 
-ENV SPARK_DIR "/spark/spark-${SPARK_VERSION}-bin-hadoop${HADOOP_VERSION}"
+RUN mkdir -p /usr/local/bin/before-notebook.d && \
+    ln -s "${SPARK_HOME}/sbin/spark-config.sh" /usr/local/bin/before-notebook.d/spark-config.sh
 
-ENV PATH=$SPARK_DIR/bin:$PATH
+USER jovyan
 
+# Install pyarrow
+RUN mamba install --quiet --yes \
+    'pyarrow' && \
+    mamba clean --all -f -y
+
+WORKDIR "${HOME}"
 
 EXPOSE 10000
 ENV MEM 2048m

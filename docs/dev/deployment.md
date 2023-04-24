@@ -124,6 +124,75 @@ From there we should be able to run the different examples by starting another c
 docker run --rm -it --network spark-network -v $(pwd):/home jbcodeforce/spark bash
 ```
 
+## Spark and Delta Lake
+
+The dockerfile named `Dockerfile-deltalake` build a Spark with Delta Lake extension so we can use the API to save and load data with transaction support, schema validation.
+
+* Build the image
+
+```sh
+docker build -f Dockerfile-deltalake -t jbcodeforce/spark-delta .
+```
+
+* Run the image
+
+```sh
+docker run -p 4040:4040 -v $(pwd):/app jbcodeforce/spark-delta
+```
+
+* If you need to update the version see the [delta-spark compatibility list](https://docs.delta.io/latest/releases.html)
+
+### Proof Delta Lake is cool
+
+* Connect to the docker container:
+
+```sh
+docker exec -ti distracted_satoshi bash
+```
+
+* and start spark-shell:
+
+```sh
+spark-shell
+```
+
+* Write a code to create 100 records in a file with the classical dataframe API, and a second that overwrite it but generate an exception:
+
+```scala
+// first job
+spark.range(100).repartition(1).write.mode("overwrite").csv("./tmp/test/")
+// second job
+scala.util.Try(spark.range(100).repartition(1).map{ i=>
+    if (i>50) {
+        Thread.sleep(5000)
+        throw new RuntimeException("Too bad crash !")
+    }
+    i
+}.write.mode("overwrite").csv("./tmp/test"))
+```
+
+The `spark` is variable is a SparkSession and `sc` is the spark context, predefined in the shell.
+
+You should observe the file is delete after the exception, so we lost data. As a general statement, due to the immutable nature of the underlying storage in the cloud, one of the challenges in data processing is updating or deleting a subset of identified records from a data lake.
+
+So let use Delta lake API to keep the file created even in second job could not complete the update. The code uses change the schema:
+
+```scala
+spark.range(100).select($"id".as("id")).repartition(1).write.mode("overwrite").format("delta").save("./tmp/test/")
+
+scala.util.Try(spark.range(100).repartition(1).map{ i=>
+    if (i>50) {
+        Thread.sleep(5000)
+        throw new RuntimeException("Too bad crash !")
+    }
+    i
+}.select($"value".as("id")).write.mode("overwrite").format("delta").save("./tmp/test"))
+```
+
+It is important to note that now a transaction log was created under the `_delta_log` folder. And in the second job, the exception is created and delta could not create a commit file, so the first file is preserved. A read operation via the delta api will read file with a commit file only.
+
+(See source from [Learning journal](https://www.learningjournal.guru/article/distributed-architecture/how-to-use-delta-lake-in-apache-spark/))
+
 ## Installation on k8s or openshift cluster
 
 The spark driver runs as pod. The driver creates executors, which are also running within Kubernetes pods, connects to them and then executes application code.
