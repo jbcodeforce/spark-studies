@@ -1,4 +1,4 @@
-site_name: studies
+site_name: Spark studies
 repo_url: https://github.com/jbcodeforce/spark-studies
 nav:
   - Introduction: index.md
@@ -10,6 +10,7 @@ nav:
     - Examples: dev/examples.md
   - Scala summary: scala_summary.md
   - Cloud object storage: cloud-storage.md
+  - Databricks: https://jbcodeforce.github.io/techno/databricks/
   - Compendium: compendium.md
   - Return to main: https://jbcodeforce.github.io
 
