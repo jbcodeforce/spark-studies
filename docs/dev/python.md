@@ -30,7 +30,7 @@ if __name__ == "__main__":
     sparkSession.stop()
 ```
 
-The main function build a spark session, loads the data in a RDD and perform transformation or actions.
+The main function build a spark session, loads the data in a RDD and performs transformation or actions.
 
 ```python
     sparkConfiguration = SparkConf().setAppName("Get POST requests")
@@ -43,7 +43,7 @@ The main function build a spark session, loads the data in a RDD and perform tra
 
 * Be sure docker compose has started a master node and at least one worker node. 
 * Verify the Masster console: [http://localhost:8085/](http://localhost:8085/)
-* Run the sample python program: To be able to run program as job on spark cluster we need to connect to the cluster and use `spark-submit` command. 
+* Run the sample python program: To be able to run program as job on Spark cluster, we need to connect to the cluster and use `spark-submit` command. 
 
     For that we are using another container instance, with the source code mounted to `/home`:
 
@@ -60,8 +60,7 @@ The main function build a spark session, loads the data in a RDD and perform tra
 
 ## Computing the lowest rated movie
 
-It reads the rating file and map each line to a SQL Row( movieID , rating) then transforms it in data frame, then compute average rating for each movieID, and count the number of time the movie is rated, joins the two data frames
-and pull the top 10 results:
+It reads the rating file and maps each line to a SQL Row( movieID , rating) then transforms it in data frame, then computes average rating for each movieID, and counts the number of time the movie is rated, joins the two data frames and finally pulls the top 10 results:
 
 See the code in [LowestRatedMovieDataFrame.py](https://github.com/jbcodeforce/spark-studies/blob/master/src/samples/LowestRatedMovieDataFrame.py)
 
@@ -82,12 +81,11 @@ T-Men (1947) 1.0
 
 ## Assessing similar movies
 
-This example is using Pandas with Spark to merge two files: movie rating and movie data. Spark context has the read_text function from different files into a single RDD. Then transform this RDD in data frame, and use pivot table.
+This example is using Pandas with Spark to merge two files: movie rating and movie data. Spark context has the `read_text` function from different files into a single RDD. Then the code transforms this RDD in data frame, and uses pivot table.
 
 ## Movie recommendations
 
-It reads the rating file and map each line to a SQL Row(userID , movieID , rating) then transform it in data frame
-so it can apply ML recommendation using the [Alternating Least Squares](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.recommendation.ALS.html) api on the dataframe. Once the model is fitted, take the movies with at least 100 ratings, build a test dataframe with the movie evaludated by user 0. From those movies use the model to do a recommendations, finally get the top 20 movies with the highest predicted rating for this user.
+It reads the rating file and maps each line to a SQL Row(userID , movieID , rating) then transforms it in data frame so it can apply ML recommendation using the [Alternating Least Squares](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.recommendation.ALS.html) API on the dataframe. Once the model is fitted, takes the movies with at least 100 ratings, builds a test dataframe with the movie evaludated by user 0. From those movies, uses the model to do recommendations, finally gets the top 20 movies with the highest predicted rating for this user.
 
 See the code in [MovieRecommendationsALS.py](https://github.com/jbcodeforce/spark-studies/blob/master/src/samples/MovieRecommendationsALS.py)
 

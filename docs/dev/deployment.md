@@ -87,7 +87,7 @@
     ![Spark console](./images/spark-console.png)
 
     !!! Note
-        The docker image includes one script to start the master and one to start the workers. The docker compose file below uses those commands to propose a simple spark cluser with one worker and one master.
+        The docker image includes one script to start the master and one to start the workers. The docker compose file below uses those commands to propose a simple spark cluster with one worker and one master.
          See [below](#using-docker-compose).
 
 ### Smoke test the cluster
@@ -150,13 +150,13 @@ docker run -p 4040:4040 -v $(pwd):/app jbcodeforce/spark-delta
 docker exec -ti distracted_satoshi bash
 ```
 
-* and start spark-shell:
+* Start spark-shell:
 
 ```sh
 spark-shell
 ```
 
-* Write a code to create 100 records in a file with the classical dataframe API, and a second that overwrite it but generate an exception:
+* Write a code to create 100 records in a file with the classical dataframe API, and a second one that overwrites it but generates an exception:
 
 ```scala
 // first job
@@ -173,9 +173,9 @@ scala.util.Try(spark.range(100).repartition(1).map{ i=>
 
 The `spark` is variable is a SparkSession and `sc` is the spark context, predefined in the shell.
 
-You should observe the file is delete after the exception, so we lost data. As a general statement, due to the immutable nature of the underlying storage in the cloud, one of the challenges in data processing is updating or deleting a subset of identified records from a data lake.
+We should observe the file is deleted after the exception, so we lost data. As a general statement, due to the immutable nature of the underlying storage in the cloud, one of the challenges in data processing is updating or deleting a subset of identified records from a data lake.
 
-So let use Delta lake API to keep the file created even in second job could not complete the update. The code uses change the schema:
+With Delta lake API we can keep the file created even if the second job could not complete the update. The code uses:
 
 ```scala
 spark.range(100).select($"id".as("id")).repartition(1).write.mode("overwrite").format("delta").save("./tmp/test/")

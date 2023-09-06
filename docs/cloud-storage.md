@@ -55,15 +55,6 @@
 * Download a file (like access_log.txt): `curl -X GET https://s3.us-south.cloud-object-storage.appdomain.cloud/cloud-object-storage-eda-folders/access_log.txt -H "Authorization: Bearer $COS_ADMIN_TOKEN"  -H "x-amz-acl: public-read" -H "ibm-service-instance-id: $COS_GUID"`
 * Other [curl commands explanation](https://cloud.ibm.com/docs/services/cloud-object-storage/cli?topic=cloud-object-storage-curl).
 
-## Accessing files from cloud object storage from app
-
-### Python using HTTP request and pandas dataframe
-
-```python
-import requests
-```
-
-### Spark specifics
 
 ## Fearther readings
 
