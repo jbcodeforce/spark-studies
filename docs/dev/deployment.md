@@ -11,6 +11,7 @@
     ```shell
     docker build -t jbcodeforce/spark .
     ```
+
     (change the Spark version in the Dockerfile if there is a [new release](http://apache.mirror.anlx.net/spark/))
 
 
@@ -33,29 +34,13 @@ From there we should be able to run the different examples by starting another c
 docker run --rm -it --network spark-network -v $(pwd):/home jbcodeforce/spark bash
 ```
 
-
+???- example "Start with docker without docker compose"
     ```sh
     docker run --rm -it --name spark-master --hostname spark-master -v $(pwd):/app \
             -p 7077:7077 -p 8085:8085 --network spark_network jbcodeforce/spark bash
     ```
 
-
-* Validate the installation, use the `spark-shell` inside the docker container as:
-
-    ```shell
-    bash-4.4# cd /app
-    bash-4.4# spark-shell
-
-    Using Scala version 2.12.15 (OpenJDK 64-Bit Server VM, Java 17.0.6)
-    Type in expressions to have them evaluated.
-    Type :help for more information.
-
-    scala> val rdd = sc.textFile("README.md")
-    rdd: org.apache.spark.rdd.RDD[String] = README.md MapPartitionsRDD[1] at textFile at <console>:24
-    scala> rdd.count()
-    ```
-
-* Start the Spark Master node. Within the container run:
+    Start the Spark Master node. Within the container run:
 
     ```shell
     /spark/spark-3.3.2-bin-hadoop3/bin/spark-class org.apache.spark.deploy.master.Master --ip spark-master --port 7077 --webui-port 8085
@@ -64,12 +49,7 @@ docker run --rm -it --network spark-network -v $(pwd):/home jbcodeforce/spark ba
     19/12/31 21:24:56 INFO MasterWebUI: Bound MasterWebUI to 0.0.0.0, and started at http://a63a4db062fb:8085
     19/12/31 21:24:56 INFO Master: I have been elected leader! New state: ALIVE
     ```
-
-* Access the Spark console
-
-    Simply go to: [http://localhost:8085/](http://localhost:8085/)
-
-* Start a worker node, as a separate docker container
+    Start a worker node, as a separate docker container
 
     ```shell
     docker run --rm -it --name spark-worker --hostname spark-worker \
@@ -93,6 +73,26 @@ docker run --rm -it --network spark-network -v $(pwd):/home jbcodeforce/spark ba
         19/12/31 21:39:58 INFO TransportClientFactory: Successfully created connection to spark-master/172.18.0.2:7077 after 75 ms (0 ms spent in bootstraps)
         19/12/31 21:39:59 INFO Worker: Successfully registered with master spark://spark-master:7077
     ```
+
+
+* Validate the installation, use the `spark-shell` inside the docker container as:
+
+    ```shell
+    bash-4.4# cd /app
+    bash-4.4# spark-shell
+
+    Using Scala version 2.12.15 (OpenJDK 64-Bit Server VM, Java 17.0.6)
+    Type in expressions to have them evaluated.
+    Type :help for more information.
+
+    scala> val rdd = sc.textFile("README.md")
+    rdd: org.apache.spark.rdd.RDD[String] = README.md MapPartitionsRDD[1] at textFile at <console>:24
+    scala> rdd.count()
+    ```
+
+* Access the Spark console
+
+    Simply go to: [http://localhost:8085/](http://localhost:8085/)
 
     On the Spark console we can see a new worker was added:
 
@@ -130,57 +130,6 @@ docker run -p 4040:4040 -v $(pwd):/app jbcodeforce/spark-delta
 ```
 
 * If you need to update the version see the [delta-spark compatibility list](https://docs.delta.io/latest/releases.html)
-
-### Proof Delta Lake is cool
-
-* Connect to the docker container:
-
-```sh
-docker exec -ti distracted_satoshi bash
-```
-
-* Start spark-shell:
-
-```sh
-spark-shell
-```
-
-* Write a code to create 100 records in a file with the classical dataframe API, and a second one that overwrites it but generates an exception:
-
-```scala
-// first job
-spark.range(100).repartition(1).write.mode("overwrite").csv("./tmp/test/")
-// second job
-scala.util.Try(spark.range(100).repartition(1).map{ i=>
-    if (i>50) {
-        Thread.sleep(5000)
-        throw new RuntimeException("Too bad crash !")
-    }
-    i
-}.write.mode("overwrite").csv("./tmp/test"))
-```
-
-The `spark` is variable is a SparkSession and `sc` is the spark context, predefined in the shell.
-
-We should observe the file is deleted after the exception, so we lost data. As a general statement, due to the immutable nature of the underlying storage in the cloud, one of the challenges in data processing is updating or deleting a subset of identified records from a data lake.
-
-With Delta lake API we can keep the file created even if the second job could not complete the update. The code uses:
-
-```scala
-spark.range(100).select($"id".as("id")).repartition(1).write.mode("overwrite").format("delta").save("./tmp/test/")
-
-scala.util.Try(spark.range(100).repartition(1).map{ i=>
-    if (i>50) {
-        Thread.sleep(5000)
-        throw new RuntimeException("Too bad crash !")
-    }
-    i
-}.select($"value".as("id")).write.mode("overwrite").format("delta").save("./tmp/test"))
-```
-
-It is important to note that now a transaction log was created under the `_delta_log` folder. And in the second job, the exception is created and delta could not create a commit file, so the first file is preserved. A read operation via the delta api will read file with a commit file only.
-
-(See source from [Learning journal](https://www.learningjournal.guru/article/distributed-architecture/how-to-use-delta-lake-in-apache-spark/))
 
 ## Installation on k8s or openshift cluster
 

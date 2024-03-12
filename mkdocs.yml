@@ -5,17 +5,17 @@ nav:
   - Develop with Spark:
     - Getting Started: dev/index.md
     - Deployments: dev/deployment.md
-    - Python: dev/python.md
+    - PySpark: dev/python.md
     - Streaming: dev/streaming.md
     - Examples: dev/examples.md
   - Scala summary: scala_summary.md
-  - Cloud object storage: cloud-storage.md
   - Databricks: https://jbcodeforce.github.io/techno/databricks/
   - Compendium: compendium.md
   - Return to main: https://jbcodeforce.github.io
 
 theme: 
   name: material
+  logo: images/apache_spark_logo.png
 extra_css: ["extra.css"]
 features:
     - content.code.annotate

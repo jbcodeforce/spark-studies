@@ -4,7 +4,7 @@
 
 ### RDD: Resilient Distributed Dataset
 
-It is a dataset distributed against the cluster nodes. To create a RDD, we use the spark context object and then one of its APIs depending of the data source (JDBC, Hive, HDFS, Cassandra, HBase, ElasticSearch, CSV, json,...). In the code below, `movies` variable is a RDD.
+RDD is a dataset distributed against the cluster nodes. RDDs are fault-tolerant, immutable distributed collections of objects.  Each dataset in RDD is divided into logical partitions, which can be computed on different nodes of the cluster. To create a RDD, we use the spark context object and then one of its APIs depending of the data source (JDBC, Hive, HDFS, Cassandra, HBase, ElasticSearch, CSV, json,...). In the code below, `movies` variable is a RDD.
 
 ```python
 from pyspark import SparkConf, SparkContext
@@ -26,6 +26,8 @@ This program is not launched by using Python interpreter, but by the `spark-subm
 ```
 
 Creating a RDD can be done from different data sources, text file, csv, database, Hive, Cassandra...
+
+On Spark RDD, we can perform two kinds of operations: RDD Transformations and RDD actions.
 
 ### Spark context
 
@@ -88,7 +90,7 @@ val counts = hashtagKeyValues.reduceByKey()
 
 ### DataFrames
 
-Spark 2.0 supports exposing data in RDD as data frames to apply SQL queries. DataFrames contain Row Objects and may be easier to manipulate.
+Spark 2.0 supports exposing data in RDD as data frames to apply SQL queries. DataFrame is a distributed collection of data organized into named columns. DataFrames contain Row Objects and may be easier to manipulate. 
 
 In the example below, the movies rating file includes records like:
 
@@ -127,6 +129,8 @@ averageRatings = movieDataset.groupBy("movieID").avg("rating")
 counts = movieDataset.groupBy("movieID").count()
 ```
 
+Since DataFrames are structure format that contains names and column, we can get the schema of the DataFrame using the `df.printSchema()`.
+
 ## Scala
 
 ### Create scala project with maven
@@ -153,5 +157,55 @@ cd /home
 spark-submit target/scala-2.12/wordcount_2.12-1.0.jar
 ```
 
+## Proof Delta Lake is cool
+
+* Connect to the docker container:
+
+```sh
+docker exec -ti distracted_satoshi bash
+```
+
+* Start spark-shell:
+
+```sh
+spark-shell
+```
+
+* Write a code to create 100 records in a file with the classical dataframe API, and a second one that overwrites it but generates an exception:
+
+```scala
+// first job
+spark.range(100).repartition(1).write.mode("overwrite").csv("./tmp/test/")
+// second job
+scala.util.Try(spark.range(100).repartition(1).map{ i=>
+    if (i>50) {
+        Thread.sleep(5000)
+        throw new RuntimeException("Too bad crash !")
+    }
+    i
+}.write.mode("overwrite").csv("./tmp/test"))
+```
+
+The `spark` is variable is a SparkSession and `sc` is the spark context, predefined in the shell.
+
+We should observe the file is deleted after the exception, so we lost data. As a general statement, due to the immutable nature of the underlying storage in the cloud, one of the challenges in data processing is updating or deleting a subset of identified records from a data lake.
+
+With Delta lake API we can keep the file created even if the second job could not complete the update. The code uses:
+
+```scala
+spark.range(100).select($"id".as("id")).repartition(1).write.mode("overwrite").format("delta").save("./tmp/test/")
+
+scala.util.Try(spark.range(100).repartition(1).map{ i=>
+    if (i>50) {
+        Thread.sleep(5000)
+        throw new RuntimeException("Too bad crash !")
+    }
+    i
+}.select($"value".as("id")).write.mode("overwrite").format("delta").save("./tmp/test"))
+```
+
+It is important to note that now a transaction log was created under the `_delta_log` folder. And in the second job, the exception is created and delta could not create a commit file, so the first file is preserved. A read operation via the delta api will read file with a commit file only.
+
+(See source from [Learning journal](https://www.learningjournal.guru/article/distributed-architecture/how-to-use-delta-lake-in-apache-spark/))
 
 [Next step... Deployment with local run >>>](deployment.md)

@@ -10,6 +10,10 @@ def loadMovieNames():
             movieNames[int(fields[0])] = fields[1]
     return movieNames
 
+# Split line in fields and return the movieId an rating as a Row. Below are examples of line content
+# 0	50	5	881250949
+# 0	172	5	881250949
+
 def parseInput(line):
     fields = line.split()
     return Row(movieID = int(fields[1]), rating = float(fields[2]))
@@ -21,7 +25,7 @@ if __name__ == "__main__":
     # Load up our movie ID -> name dictionary
     movieNames = loadMovieNames()
 
-    # Get the user's movie score data
+    # Get the user's movie rating data
     ratings = spark.sparkContext.textFile("../data/movielens/u.data")
     # Convert it to a RDD of Row objects with (movieID, rating)
     movieRatings = ratings.map(parseInput)

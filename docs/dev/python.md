@@ -1,22 +1,41 @@
 # Spark programming with Python
 
-See [the product documentation to learn how to use pyspark](https://spark.apache.org/docs/latest/api/python/index.html).
+PySpark is the Python API to  perform real-time, large-scale data processing in a distributed environment using Python.
+
+See [the product documentation to learn how to use pySpark](https://spark.apache.org/docs/latest/api/python/index.html).
 
 The advantages:
 
-* Write Spark app in Python
-* Use interactive analysis of data in distributed environment
-* Pandas can be used and scaled on Spark.
+* Write Spark app in Python.
+* Use interactive analysis of data in distributed environment.
+* Pandas workload to any size by running it distributed across multiple nodes.
 
-## Environment setup
+## Major constructs
 
-I used the Spark 3.3 release within docker image. 
+* PySpark DataFrames are implemented on top of RDD.
+* PySpark applications start with initializing SparkSession
 
-See [those explanations](../deployment/#using-docker-compose) to run Spark with docker compose.
+    ```python
+    from pyspark.sql import SparkSession
 
-To run jupyter notebook in VScode with Spark cluster. 
+    spark = SparkSession.builder.getOrCreate()
+    ```
 
-## First python program
+* PySpark DataFrame can be created via `pyspark.sql.SparkSession.createDataFrame` typically by passing a list of lists, tuples, dictionaries and pyspark.sql.Rows, a pandas DataFrame and an RDD. It supports discovering the schema from the data, or explicit schema definition:
+
+    ```python
+    df = spark.createDataFrame([
+        (1, 2., 'string1', date(2000, 1, 1), datetime(2000, 1, 1, 12, 0)),
+        (2, 3., 'string2', date(2000, 2, 1), datetime(2000, 1, 2, 12, 0)),
+        (3, 4., 'string3', date(2000, 3, 1), datetime(2000, 1, 3, 12, 0))
+    ], schema='a long, b double, c string, d date, e timestamp')
+    # show a summary of a data frame
+    df.select("a", "b", "c").describe().show()
+    ```
+
+## Coding with PySpark
+
+### First python program
 
 See FirstSparkProgram.py code in [src/samples](https://github.com/jbcodeforce/spark-studies/tree/master/src/samples) folder.
 
@@ -41,8 +60,8 @@ The main function build a spark session, loads the data in a RDD and performs tr
     posts = lines.filter(lambda l: "POST" in l).collect()
 ```
 
-* Be sure docker compose has started a master node and at least one worker node. 
-* Verify the Masster console: [http://localhost:8085/](http://localhost:8085/)
+* To run it, be sure docker compose has started a master node and at least one worker node. 
+* Verify the Master console: [http://localhost:8085/](http://localhost:8085/)
 * Run the sample python program: To be able to run program as job on Spark cluster, we need to connect to the cluster and use `spark-submit` command. 
 
     For that we are using another container instance, with the source code mounted to `/home`:
@@ -58,9 +77,11 @@ The main function build a spark session, loads the data in a RDD and performs tr
     bash-5.2# spark-submit samples/FirstSparkProgram.py
     ```
 
-## Computing the lowest rated movie
+The traces illustrate the start of the Executor, the creation of a SparkContext, the scheduling of a job,  the creation of a Python Runner, the DAG and the task executions.
 
-It reads the rating file and maps each line to a SQL Row( movieID , rating) then transforms it in data frame, then computes average rating for each movieID, and counts the number of time the movie is rated, joins the two data frames and finally pulls the top 10 results:
+### Computing the lowest rated movie
+
+The approach is to read the rating file and map each line to a SQL Row(movieID , rating) then transform it in data frame. From the DataFram it is easy to compute average rating for each movieID, and counts the number of time the movie is rated, joins the two data frames and finally pulls the top 10 results:
 
 See the code in [LowestRatedMovieDataFrame.py](https://github.com/jbcodeforce/spark-studies/blob/master/src/samples/LowestRatedMovieDataFrame.py)
 
@@ -79,11 +100,11 @@ Falling in Love Again (1980) 1.0
 T-Men (1947) 1.0
 ```
 
-## Assessing similar movies
+### Assessing similar movies
 
 This example is using Pandas with Spark to merge two files: movie rating and movie data. Spark context has the `read_text` function from different files into a single RDD. Then the code transforms this RDD in data frame, and uses pivot table.
 
-## Movie recommendations
+### Movie recommendations
 
 It reads the rating file and maps each line to a SQL Row(userID , movieID , rating) then transforms it in data frame so it can apply ML recommendation using the [Alternating Least Squares](https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.recommendation.ALS.html) API on the dataframe. Once the model is fitted, takes the movies with at least 100 ratings, builds a test dataframe with the movie evaludated by user 0. From those movies, uses the model to do recommendations, finally gets the top 20 movies with the highest predicted rating for this user.
 
