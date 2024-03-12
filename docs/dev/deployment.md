@@ -5,22 +5,34 @@
 
 ## Run locally with Docker
 
-* 1st define docker network
 
-    When running locally define a network so the workers and master nodes can communicate together:
-
-    ```shell
-    docker network create spark_network
-    ```
-
-* Build the image: The Dockerfile, in this repository, is using a openjdk base image and install Spark 3.3.1. The command to build the images:
+* Build the image: The Dockerfile, in this repository, is using a OpenJdk base image and install Spark 3.3.1. The command to build the images:
 
     ```shell
     docker build -t jbcodeforce/spark .
     ```
     (change the Spark version in the Dockerfile if there is a [new release](http://apache.mirror.anlx.net/spark/))
 
-* Start the container with docker:
+
+* Start the container with docker compose. The docker compose file is in the root directory of this repository. It uses the two scripts (start-master.sh and start-worker.sh) to start the master or worker automatically. The environment variables to parameterize the WEB UI port, master node URL, and master port are set in the docker compose file. Start the cluster with 3 workers.
+
+```shell
+    docker-compose up --scale spark-worker=3
+
+    spark-master    | 19/12/31 22:48:22 INFO Master: Registering worker 172.19.0.4:39193 with 3 cores, 4.8 GB RAM
+    spark-master    | 19/12/31 22:48:22 INFO Master: Registering worker 172.19.0.3:39161 with 3 cores, 4.8 GB RAM
+    spark-master    | 19/12/31 22:48:22 INFO Master: Registering worker 172.19.0.5:43775 with 3 cores, 4.8 GB RAM
+    spark-worker_1  | 19/12/31 22:48:22 INFO Worker: Successfully registered with master spark://spark-master:7077
+    spark-worker_3  | 19/12/31 22:48:22 INFO Worker: Successfully registered with master spark://spark-master:7077
+    spark-worker_2  | 19/12/31 22:48:22 INFO Worker: Successfully registered with master spark://spark-master:7077
+```
+
+From there we should be able to run the different examples by starting another container on the same network:
+
+```sh
+docker run --rm -it --network spark-network -v $(pwd):/home jbcodeforce/spark bash
+```
+
 
     ```sh
     docker run --rm -it --name spark-master --hostname spark-master -v $(pwd):/app \
@@ -99,29 +111,6 @@ docker run --rm -it --name spark-client --hostname spark-client \
             --network spark_network jbcodeforce/spark bash
 
 /spark/spark-3.3.2-bin-hadoop3/bin/spark-submit --master spark://spark-master:7077 --class     org.apache.spark.examples.SparkPi  /spark/spark-3.3.2-bin-hadoop3/examples/jars/spark-examples_2.12-3.3.2.jar 1000
-```
-
-## Using Docker Compose
-
-To manage workers and master containers, the simplest approach is to use docker-compose. The docker compose file is in the root directory of this repository.
-
-It uses the two scripts (start-master.sh and start-worker.sh) to start the master or worker automatically. The environment variables to parameterize the WEB UI port, master node URL, and master port are set in the docker compose file. Start the cluster with 3 workers.
-
-```shell
-    docker-compose up --scale spark-worker=3
-
-    spark-master    | 19/12/31 22:48:22 INFO Master: Registering worker 172.19.0.4:39193 with 3 cores, 4.8 GB RAM
-    spark-master    | 19/12/31 22:48:22 INFO Master: Registering worker 172.19.0.3:39161 with 3 cores, 4.8 GB RAM
-    spark-master    | 19/12/31 22:48:22 INFO Master: Registering worker 172.19.0.5:43775 with 3 cores, 4.8 GB RAM
-    spark-worker_1  | 19/12/31 22:48:22 INFO Worker: Successfully registered with master spark://spark-master:7077
-    spark-worker_3  | 19/12/31 22:48:22 INFO Worker: Successfully registered with master spark://spark-master:7077
-    spark-worker_2  | 19/12/31 22:48:22 INFO Worker: Successfully registered with master spark://spark-master:7077
-```
-
-From there we should be able to run the different examples by starting another container on the same network:
-
-```sh
-docker run --rm -it --network spark-network -v $(pwd):/home jbcodeforce/spark bash
 ```
 
 ## Spark and Delta Lake
