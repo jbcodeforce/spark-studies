@@ -1,0 +1,1368 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../dev/examples/">
+      
+      
+        <link rel="next" href="../compendium/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>Scala summary - Spark studies</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.7e359304.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../extra.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#scala-summary" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Spark studies" class="md-header__button md-logo" aria-label="Spark studies" data-md-component="logo">
+      
+  <img src="../images/apache_spark_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spark studies
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Scala summary
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jbcodeforce/spark-studies" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Spark studies" class="md-nav__button md-logo" aria-label="Spark studies" data-md-component="logo">
+      
+  <img src="../images/apache_spark_logo.png" alt="logo">
+
+    </a>
+    Spark studies
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jbcodeforce/spark-studies" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Develop with Spark
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Develop with Spark
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev/deployment/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Deployments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev/python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PySpark
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev/streaming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Streaming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../dev/examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Scala summary
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Scala summary
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-scala" class="md-nav__link">
+    <span class="md-ellipsis">
+      why scala ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-constructs" class="md-nav__link">
+    <span class="md-ellipsis">
+      language constructs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="language constructs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expression evaluation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operators-are-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operators are methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trait" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trait
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pattern matching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flow control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scala-build-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scala Build Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scala-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scala program
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with java
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-readings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Readings
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://jbcodeforce.github.io/techno/databricks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Databricks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compendium/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compendium
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://jbcodeforce.github.io" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Return to main
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#why-scala" class="md-nav__link">
+    <span class="md-ellipsis">
+      why scala ?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#language-constructs" class="md-nav__link">
+    <span class="md-ellipsis">
+      language constructs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="language constructs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#expression-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Expression evaluation
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#operators-are-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      Operators are methods
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#function" class="md-nav__link">
+    <span class="md-ellipsis">
+      Function
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#class" class="md-nav__link">
+    <span class="md-ellipsis">
+      Class
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#unit" class="md-nav__link">
+    <span class="md-ellipsis">
+      Unit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#trait" class="md-nav__link">
+    <span class="md-ellipsis">
+      Trait
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pattern-matching" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pattern matching
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flow-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      Flow control
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      Data Structure
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scala-build-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scala Build Test
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scala-program" class="md-nav__link">
+    <span class="md-ellipsis">
+      Scala program
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#integration-with-java" class="md-nav__link">
+    <span class="md-ellipsis">
+      Integration with java
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#further-readings" class="md-nav__link">
+    <span class="md-ellipsis">
+      Further Readings
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="scala-summary">Scala summary<a class="headerlink" href="#scala-summary" title="Permanent link">&para;</a></h1>
+<p>Scala is a blend of object-oriented and functional programming concepts in a statically typed language. Everything is an object, including numbers or functions. Function types are classes that can be inherited by subclasses. It runs on the JVM.</p>
+<p>OOP is orthogonal from logic programming, functional or imperative programming.</p>
+<ul>
+<li>Run on the standard Java platform and interoperates seamlessly with all Java libraries</li>
+<li>It is also a scripting language with its own interpreter</li>
+<li>Support an "associative map" construct in the syntax of the language</li>
+<li>Scala allows users to grow and adapt the language in the directions they need by defining easy-to-use libraries that feel like native language support.</li>
+<li>Support enhanced parallel processing using actors: Actors are concurrency abstractions that can be implemented on top of threads. They communicate by sending messages to each other. An actor can perform two basic operations, message send and receive. The send operation, denoted by an exclamation point (!), sends a message to an actor. A send is asynchronous.</li>
+<li>Scala is an object-oriented language in pure form: every value is an object and every operation is a method call.</li>
+<li>It supports composing objects with the concept of Trait. Traits are like interfaces in Java, but they can also have method implementations and even fields. Objects are constructed by mixing composition, which takes the members of a class and adds the members of a number of traits to them.</li>
+<li>Traits are more "pluggable" than classes</li>
+<li>Functions that are first-class values provide a convenient means for abstracting over operations and creating new control structures</li>
+<li>The second main idea of functional programming is that the operations of a program should map input values to output values rather than change data in place</li>
+<li>Methods should not have any side effects. They should communicate with their environment only by taking arguments and returning results</li>
+</ul>
+<h2 id="why-scala">why scala ?<a class="headerlink" href="#why-scala" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Scala is compatible with java API</li>
+<li>Concise: quicker to write, easier to read, and most importantly, less error prone</li>
+<li>High level: scala lets developers raise the level of abstraction in the interfaces they design and use</li>
+<li>Scala's functional programming style also offers high-level reasoning principles for programming.</li>
+<li>Statically typed: very advanced static type system. Starting from a system of nested class types much like Java's, it allows you to parameterize types with generics, to combine types using intersections, and to hide details of types using abstract types. Verbosity is avoided through type inference and flexibility is gained through pattern matching and several new ways to write and compose types</li>
+<li>Static type systems can prove the absence of certain run-time errors</li>
+<li>A static type system provides a safety net that lets you make changes to a codebase with a high degree of confidence, by identifying change name, adding new parameters to functions...</li>
+</ul>
+<p>Scala has some innovations: abstract types provide a more object-oriented alternative to generic types, its traits allow for flexible component assembly, and its extractors provide a representation-independent way to do pattern matching.</p>
+<p>Scala has an interactive shell or REPL: Read-Eval-Print-Loop. Started by using &gt; scala or using the scala build tool, sbt, using &gt;sbt console.</p>
+<p>To read more about scala API: <a href="www.scala-lang.org/api">www.scala-lang.org/api</a></p>
+<h2 id="language-constructs">language constructs<a class="headerlink" href="#language-constructs" title="Permanent link">&para;</a></h2>
+<h3 id="variables">Variables<a class="headerlink" href="#variables" title="Permanent link">&para;</a></h3>
+<p>Scala has two kinds of variables, vals and vars. A val is similar to a final variable in Java. Once initialized, a val can never be reassigned. A var, by contrast, is similar to a non-final variable in Java.
+Scala uses the type inference capability to figure out the types not specified at variable declaration:</p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">msg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hi&quot;</span>
+<span class="kd">var</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span>
+</code></pre></div>
+<p>See some first exercise in this code: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala1.sc">LeaningScala1.sc</a></p>
+<p>Primitive types are with uppercase because Scala is fully object oriented</p>
+<p>Object is for a class that is a single instance. there is no static concept in Scala. it is covered by the object concept</p>
+<h3 id="expression-evaluation">Expression evaluation<a class="headerlink" href="#expression-evaluation" title="Permanent link">&para;</a></h3>
+<p>non-primitive expression is evaluated:</p>
+<ul>
+<li>take leftmost operator</li>
+<li>evaluate its operands left before right</li>
+<li>apply the operator to the operands</li>
+</ul>
+<h3 id="operators-are-methods">Operators are methods<a class="headerlink" href="#operators-are-methods" title="Permanent link">&para;</a></h3>
+<p>1 + 2 really means the same thing as (1).+(2). The + symbol is an operator—an infix operator to be specific. Operator notation is not limited to methods like + that look like operators in other languages. You can use any method in operator notation.</p>
+<p>Scala also has two other operator notations: prefix and postfix. In prefix notation, you put the method name before the object on which you are invoking the method. prefix and postfix operators are unary: they take just one operand.
+The only identifiers that can be used as prefix operators are +, -, !, and ~</p>
+<p>The logical-and and logical-or operations are short-circuited as in Java: expressions built from these operators are only evaluated as far as needed to determine the result</p>
+<p>The operator precedence looks like:</p>
+<div class="highlight"><pre><span></span><code><span class="p">(</span><span class="n">all</span><span class="w"> </span><span class="n">other</span><span class="w"> </span><span class="n">special</span><span class="w"> </span><span class="n">characters</span><span class="p">)</span>
+<span class="o">*</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="o">%</span>
+<span class="o">+</span><span class="w"> </span><span class="o">-</span>
+<span class="p">:</span>
+<span class="o">=!</span>
+<span class="o">&lt;&gt;</span>
+<span class="n">&amp;</span>
+<span class="n">^</span>
+<span class="o">|</span>
+<span class="p">(</span><span class="n">all</span><span class="w"> </span><span class="n">letters</span><span class="p">)</span>
+<span class="p">(</span><span class="n">all</span><span class="w"> </span><span class="n">assignment</span><span class="w"> </span><span class="n">operators</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="function">Function<a class="headerlink" href="#function" title="Permanent link">&para;</a></h3>
+<p>Function declaration has the following form</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">functionName</span><span class="w"> </span><span class="p">([</span><span class="n">list</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">parameters</span><span class="p">])</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="k">return</span><span class="w"> </span><span class="k">type</span><span class="p">]</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">constOne</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">:</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span>
+<span class="c1">// y is passed by name</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">format</span><span class="w"> </span><span class="n">now</span>
+</code></pre></div>
+<p>A function can support using Type parameter, written in []  See polymorphism</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">singleton</span><span class="p">[</span><span class="nc">T</span><span class="p">](</span><span class="n">elemen</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">T</span>
+
+<span class="n">or</span>
+<span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">[</span><span class="nc">T</span><span class="p">](</span><span class="n">l</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]):</span><span class="w"> </span><span class="nc">List</span><span class="p">[(</span><span class="nc">T</span><span class="p">,</span><span class="nc">Int</span><span class="p">)]</span>
+</code></pre></div>
+<p>Function evaluation for a function f(a1,...,an) is done by evaluating the expressions a1,...,an of the parameters resulting in the values v1,..,vn, then by replacing the application with the body of the function f in which the actual parameters are v1,..,vn</p>
+<p>function evaluation is done by <em>substitution model</em>: all evaluation done is by reducing an expression to a value.</p>
+<ul>
+<li>evaluate all function arguments from left to right</li>
+<li>replace function application by function right-hand side</li>
+<li>replace the formal parameters of the function by the actual arguments</li>
+<li>two evaluation models: call by value, and call by name</li>
+</ul>
+<p>See the code example in: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala3.sc">LeaningScala3.sc</a></p>
+<p>A name is evaluate by replacing its right end definition.</p>
+<p>Functions are objects. It is possible to pass functions as arguments, to store them in variables, and to return them from other functions.</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="c1">// function that uses a function as argument</span>
+<span class="w">    </span><span class="c1">// type () =&gt; Unit is for function taking no argument and return nothing</span>
+<span class="w">     </span><span class="k">def</span><span class="w"> </span><span class="nf">oncePerSecond</span><span class="p">(</span><span class="n">callback</span><span class="p">:</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Unit</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="c1">// call it</span>
+<span class="w">          </span><span class="n">callback</span><span class="p">()</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="c1">// factorial example</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">):</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">factorial</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1">// greatest common denominator using the Euclid algorithm</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>
+<span class="w">   </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">a</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1">// sum of integers between a and b with function as argument</span>
+<span class="w">  </span><span class="c1">// f is a function as A=&gt;B is a type of a function that takes an argument</span>
+<span class="w">  </span><span class="c1">// of type A and returns a result of type B</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">f</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="mi">0</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">f</span><span class="p">,</span><span class="n">a</span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+
+<span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">sumInts</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">id</span><span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">):</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">x</span>
+</code></pre></div>
+<p>The sum function is a linear recursion.
+Tail recursion: if a function calls itself as its last action, the functions stack frame can be used. It is iterative. (gcd above is a tail recursive function)</p>
+<p>Anonymous function:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Declared like:  (x1 : T1,.... , xn :Tn) =&gt; E</span>
+
+<span class="p">(</span><span class="n">x</span><span class="p">:</span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span>
+<span class="c1">// using anonymous function to compute the sum of the cubes using the sum function defined above</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sumCubes</span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="n">b</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="w"> </span><span class="o">*</span><span class="n">x</span><span class="p">,</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+
+<span class="c1">// another simplification by using function as return result</span>
+<span class="c1">// sum return a function that takes to int as argument and return a int</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">sum</span><span class="p">(</span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Int</span><span class="p">):</span><span class="w"> </span><span class="p">(</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="k">def</span><span class="w"> </span><span class="nf">sumF</span><span class="p">(</span><span class="n">a</span><span class="p">:</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">:</span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="w"> </span><span class="o">=</span>
+<span class="w">           </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w">  </span><span class="mi">0</span>
+<span class="w">           </span><span class="k">else</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">sumF</span><span class="p">(</span><span class="n">a</span><span class="o">+</span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="n">b</span><span class="p">)</span>
+<span class="w">         </span><span class="n">sumF</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">sumCubes</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="n">sumCubes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+</code></pre></div>
+<p>When doing functional programming, you try to avoid side effect, by using vars. When your function need to modify its parameters, use the Unit result type. Function values are treated as objects in Scala.</p>
+<h3 id="class">Class<a class="headerlink" href="#class" title="Permanent link">&para;</a></h3>
+<p>The class declaration includes the parameters of the constructor:</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Tweet</span><span class="p">(</span><span class="kd">val</span><span class="w"> </span><span class="n">user</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">text</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">,</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">retweets</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">...</span>
+</code></pre></div>
+<p>parameters are always pass by-value, they become fields of the class</p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">Tweet</span><span class="p">(</span><span class="s">&quot;gizmodo&quot;</span><span class="p">,</span><span class="s">&quot; some text&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">)</span>
+<span class="n">a</span><span class="p">.</span><span class="n">user</span>
+</code></pre></div>
+<p>Classes in Scala cannot have static members. So there is the concept of singleton object: the definition looks like a class definition, except instead of the keyword <code>class</code> you use the keyword <code>object</code>. When a singleton object shares the same name with a class, it is called that class's companion object. They cannot take parameters. A singleton object that does not share the same name with a companion class is called a standalone object.</p>
+<p>It is possible to define precondition of the primary constructor of a class. For example for the Rational class we can enforce that the denominator is never 0 using require expression</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Rational</span><span class="p">(</span><span class="n">n</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="n">require</span><span class="p">(</span><span class="n">d</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<span class="w">    </span><span class="k">override</span><span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">toString</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">+</span><span class="s">&quot;/&quot;</span><span class="o">+</span><span class="w"> </span><span class="n">d</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<p>Class can use type parameter to support polymorphism</p>
+<div class="highlight"><pre><span></span><code><span class="k">trait</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">isEmpty</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">head</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">T</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">tail</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Cons</span><span class="p">[</span><span class="nc">T</span><span class="p">](</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">head</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="p">,</span><span class="w"> </span><span class="n">tail</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">])</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">isEmpty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">false</span>
+<span class="p">}</span>
+
+<span class="k">class</span><span class="w"> </span><span class="nc">Nil</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="p">{</span>
+<span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">isEmpty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">head</span><span class="w"> </span><span class="p">:</span><span class="nc">Nothing</span><span class="w"> </span><span class="o">=</span><span class="w">  </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span><span class="p">(</span><span class="s">&quot;Nil head&quot;</span><span class="p">)</span>
+<span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">tail</span><span class="w"> </span><span class="p">:</span><span class="nc">Nothing</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">NoSuchElementException</span><span class="p">(</span><span class="s">&quot;Nil tail&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Immutable objects offer several advantages over mutable objects:</p>
+<ul>
+<li>easier to reason about than mutable ones, because they do not have complex state spaces that change over time</li>
+<li>pass immutable objects around quite freely, whereas you may need to make defensive copies of mutable objects before passing them to other code</li>
+<li>there is no way for two threads concurrently accessing an immutable to corrupt its state once it has been properly constructed, because no thread can change the state of an immutable!</li>
+<li>immutable objects make safe hashtable keys</li>
+<li>main disadvantage of immutable objects is that they sometimes require that a large object graph be copied where otherwise an update could be done in place.</li>
+</ul>
+<p><code>scala.Any</code> is the root of all classes in scala. <code>scala.AnyVal</code> is base type of all primitive types. <code>scala.AnyRef</code> the base type of reference types, it is an alias to java.lang.Object.</p>
+<p><code>scala.Nothing</code> is at bottom of type hierarchy. There is no value of type Nothing. it is used to signal abnormal termination or as an element type of an empty collection. <code>Set[Nothing]</code></p>
+<p>As the function throw and exception, the return type of the function is set to Nothing.</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">error</span><span class="p">(</span><span class="n">msg</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">Error</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="n">error</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">msg</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">)</span><span class="nc">Nothing</span>
+</code></pre></div>
+<p><code>scala.Null</code>, is subclass of all the classes in AnyRef, and it is the type of null value. Null is incompatible with subtypes of <code>AnyVal</code>.</p>
+<div class="highlight"><pre><span></span><code><span class="n">scala</span><span class="o">&gt;</span><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+<span class="n">x</span><span class="p">:</span><span class="w"> </span><span class="nc">Null</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">null</span>
+</code></pre></div>
+<p>One important characteristic of method parameters in Scala is that they are vals, not vars</p>
+<h3 id="unit">Unit<a class="headerlink" href="#unit" title="Permanent link">&para;</a></h3>
+<p>Methods with a result type of Unit, are executed for their side effect.  A side effect is generally defined as mutating state somewhere external to the method or performing an I/O action.</p>
+<h3 id="trait">Trait<a class="headerlink" href="#trait" title="Permanent link">&para;</a></h3>
+<p>Declared like an abstract class. They contains fields and concrete methods. A class can inherit one unique class but can have many traits.
+Trait do not have parameters as part of the constructor.</p>
+<h3 id="pattern-matching">Pattern matching<a class="headerlink" href="#pattern-matching" title="Permanent link">&para;</a></h3>
+<p>When using a pure OO implementation, adding a new method to a class you may add this method in multiple classes and subclasses.  Scala offers the pattern matching capability to support simple function extension.</p>
+<p><code>case</code> classes are like <code>class</code> but the case keyword let them participate in pattern matching. Implicitly scala compiler will add object for case class with a factory method apply.
+Pattern matching is a generalization of switch of Java.</p>
+<p>The syntax looks like:  <code>expr match { case pattern =&gt; expr ... case pn =&gt; en}</code></p>
+<ul>
+<li>in case of not matching there is a MatchError exception.</li>
+<li>If a pattern matches the whole right hand side is used.</li>
+<li>patterns are constructed from constructors, variables, wildcard patterns, constants</li>
+<li>case and pattern matching is also helpful for tree-like recursive data</li>
+<li>variable start by lowercase, where constant starts by Uppercase</li>
+</ul>
+<h3 id="flow-control">Flow control<a class="headerlink" href="#flow-control" title="Permanent link">&para;</a></h3>
+<p>See the code example in: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala2.sc">LeaningScala2.sc</a></p>
+<p>Almost all of Scala's control structures result in some value. This is the approach taken by functional languages, in which programs are viewed as computing a value, thus the components of a program should also compute values.</p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">args</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">)</span><span class="w"> </span><span class="n">args</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="w">      </span><span class="k">else</span><span class="w"> </span><span class="s">&quot;default.txt&quot;</span>
+<span class="c1">// while and do while: are loops not expression</span>
+
+<span class="w">  </span><span class="kd">var</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span>
+<span class="w">    </span><span class="k">do</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">readLine</span><span class="p">()</span>
+<span class="w">      </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Read: &quot;</span><span class="o">+</span><span class="w"> </span><span class="n">line</span><span class="p">)</span>
+<span class="w">    </span><span class="p">}</span><span class="w"> </span><span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">line</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>The <code>while</code> and <code>do-while</code> constructs are called "loops," not expressions, because they don't result in an interesting value. The type of the result is Unit.</p>
+<p><code>For</code> is simply used to iterate through a sequence of integers. But has more advanced expressions to iterate over multiple collections of different kinds, to filter out elements based on arbitrary conditions, and to produce new collections. The notation " &lt;- "  is called a generator,</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">e</span>
+</code></pre></div>
+<p><code>s</code> is a sequence of generators and filters, <code>e</code> is an expression whose value is returned by an iteration
+generator of the form p &lt;- c   :  c is a collection and p is a pattern
+filter is a boolean expression
+if there are several generators in sequence the last ones vary faster than the first</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// list the file in the current directory</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">filesHere</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="k">new</span><span class="w"> </span><span class="n">java</span><span class="p">.</span><span class="n">io</span><span class="p">.</span><span class="nc">File</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)).</span><span class="n">listFiles</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">filesHere</span><span class="p">)</span>
+<span class="w">  </span><span class="n">println</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span><span class="w">  </span><span class="c1">// could be 1 until 4</span>
+<span class="w">  </span><span class="n">println</span><span class="p">(</span><span class="s">&quot;Iteration &quot;</span><span class="o">+</span><span class="w"> </span><span class="n">i</span><span class="p">)</span>
+
+<span class="c1">// For supports filter to build subset</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">filesHere</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">getName</span><span class="p">.</span><span class="n">endsWith</span><span class="p">(</span><span class="s">&quot;.scala&quot;</span><span class="p">))</span>
+
+<span class="c1">// filter can be combined, and separated by ;</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span>
+<span class="w">      </span><span class="n">file</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">filesHere</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">isFile</span><span class="p">;</span>
+<span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="n">file</span><span class="p">.</span><span class="n">getName</span><span class="p">.</span><span class="n">endsWith</span><span class="p">(</span><span class="s">&quot;.scala&quot;</span><span class="p">)</span>
+<span class="w">    </span><span class="p">)</span>
+
+<span class="c1">// If you add multiple &lt;- clauses, you will get nested &quot;loops.&quot;</span>
+<span class="c1">// for like a SQL query</span>
+<span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">books</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">authors</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">startsWith</span><span class="w"> </span><span class="s">&quot;Bird&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">title</span>
+</code></pre></div>
+<p><code>For</code> is closely related to higher order functions. For example the following three functions can be written with <code>for</code>:</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">mapFunction</span><span class="p">[</span><span class="nc">T</span><span class="p">,</span><span class="nc">U</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">],</span><span class="w"> </span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">U</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">U</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">xs</span><span class="p">)</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">flatMap</span><span class="w"> </span><span class="p">[</span><span class="nc">T</span><span class="p">,</span><span class="nc">U</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">],</span><span class="w"> </span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Iterable</span><span class="p">[</span><span class="nc">U</span><span class="p">])</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">U</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">xs</span><span class="p">;</span><span class="w"> </span><span class="n">y</span><span class="o">&lt;-</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">y</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">filter2</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">],</span><span class="w"> </span><span class="n">f</span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">Boolean</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">xs</span><span class="p">;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">f</span><span class="p">(</span><span class="n">x</span><span class="p">))</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">x</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="n">l</span><span class="o">=</span><span class="nc">List</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w">                    </span><span class="o">&gt;</span><span class="w"> </span><span class="n">l</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span>
+<span class="c1">// to avoid missing parameter type, we need to add [Int]</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">r</span><span class="o">=</span><span class="n">filter2</span><span class="p">[</span><span class="nc">Int</span><span class="p">](</span><span class="n">l</span><span class="p">,(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">%</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">))</span><span class="w">    </span><span class="o">&gt;</span><span class="w"> </span><span class="n">r</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">)</span>
+</code></pre></div>
+<p>Expressing for with HOF</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">books</span><span class="p">;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">authors</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">startsWith</span><span class="w"> </span><span class="s">&quot;Bird&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">title</span><span class="w">   </span><span class="n">is</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">same</span><span class="w"> </span><span class="n">as</span>
+<span class="w">  </span><span class="n">books</span><span class="w"> </span><span class="n">flatMap</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">authors</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">startsWith</span><span class="w"> </span><span class="s">&quot;Bird&quot;</span><span class="p">)</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">title</span><span class="p">)</span><span class="w">   </span><span class="n">or</span>
+<span class="w">  </span><span class="n">books</span><span class="w"> </span><span class="n">flatMap</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">authors</span><span class="w"> </span><span class="n">withFilter</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">startsWith</span><span class="w"> </span><span class="s">&quot;Bird&quot;</span><span class="p">))</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">title</span><span class="p">)</span><span class="w">   </span><span class="n">or</span>
+<span class="w">  </span><span class="n">books</span><span class="w"> </span><span class="n">flatMap</span><span class="w"> </span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">b</span><span class="p">.</span><span class="n">authors</span><span class="w"> </span><span class="n">withFilter</span><span class="w"> </span><span class="p">(</span><span class="n">a</span><span class="o">=&gt;</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">startsWith</span><span class="w"> </span><span class="s">&quot;Bird&quot;</span><span class="p">)</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">y</span><span class="p">.</span><span class="n">title</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="data-structure">Data Structure<a class="headerlink" href="#data-structure" title="Permanent link">&para;</a></h3>
+<p>See the code example in: <a href="https://github.com/jbcodeforce/spark-studies/tree/master/src/SparkStreaming/LeaningScala/src/LeaningScala4.sc">LeaningScala4.sc</a></p>
+<h4 id="list">List<a class="headerlink" href="#list" title="Permanent link">&para;</a></h4>
+<p>Lists are immutable, and recursive and linear: access to the first element is much faster than accessing to the middle of end of the list.
+Lists are constructed from empty list Nil and the cons operation <code>::</code></p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">empty</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">()</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">fruit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="s">&quot;apple&quot;</span><span class="p">,</span><span class="s">&quot;banana&quot;</span><span class="p">,</span><span class="s">&quot;pear&quot;</span><span class="p">)</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">matrix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="nc">List</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="nc">List</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="nc">List</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="c1">// equivalent to </span>
+<span class="kd">val</span><span class="w"> </span><span class="n">fruit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;apple&quot;</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;banana&quot;</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;pear&quot;</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nc">Nil</span><span class="p">))</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">fruit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;apple&quot;</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">&quot;banana&quot;</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="s">&quot;pear&quot;</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="nc">Nil</span>
+<span class="c1">// concat</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">fruits</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fruit</span><span class="w"> </span><span class="o">++</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="s">&quot;strawberry&quot;</span><span class="p">)</span>
+</code></pre></div>
+<p>in scala there is a convention the operators ending with : associate to the right operand. They could be seen as method calls of the right hand operand
+Three list operations are important, head, tail, isEmpty</p>
+<div class="highlight"><pre><span></span><code><span class="n">xs</span><span class="p">.</span><span class="n">length</span>
+<span class="n">xs</span><span class="p">.</span><span class="n">last</span>
+<span class="n">xs</span><span class="p">.</span><span class="n">init</span><span class="w">         </span><span class="c1">// build a new list from xs without the last one</span>
+<span class="n">xs</span><span class="w"> </span><span class="n">take</span><span class="w"> </span><span class="n">n</span><span class="w">    </span><span class="c1">// return a new list of the n first elements of xs</span>
+<span class="n">xs</span><span class="w"> </span><span class="n">drop</span><span class="w"> </span><span class="n">n</span><span class="w">    </span><span class="c1">//the rest of the collection after position n</span>
+<span class="n">xs</span><span class="p">(</span><span class="n">n</span><span class="p">)</span><span class="w">         </span><span class="c1">// element at n position</span>
+<span class="n">xs</span><span class="w"> </span><span class="n">splitAt</span><span class="w"> </span><span class="n">n</span><span class="w">   </span><span class="c1">// return a pair of two sub lists from list xs one up to index n and one from position n</span>
+
+<span class="kd">val</span><span class="w"> </span><span class="n">alist</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;aba&quot;</span><span class="p">.</span><span class="n">toList</span>
+<span class="n">alist</span><span class="w"> </span><span class="n">groupBy</span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">)</span>
+</code></pre></div>
+<p>Partitions a collection into a map of collections according to a discriminator function (here is Identity)</p>
+<div class="highlight"><pre><span></span><code><span class="nc">Map</span><span class="p">[</span><span class="nc">Char</span><span class="p">,</span><span class="nc">List</span><span class="p">[</span><span class="nc">Char</span><span class="p">]]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Map</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">b</span><span class="p">),</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">))</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">m</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Map</span><span class="p">(</span><span class="s">&quot;kirk&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;Enterprise&quot;</span><span class="p">,</span><span class="s">&quot;joe&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="s">&quot;Voyager&quot;</span><span class="p">)</span>
+<span class="n">println</span><span class="p">(</span><span class="n">m</span><span class="p">[</span><span class="s">&quot;kirk&quot;</span><span class="p">])</span>
+</code></pre></div>
+<p>It is possible to decompose a list with pattern matching:</p>
+<h4 id="nil-constant">Nil constant<a class="headerlink" href="#nil-constant" title="Permanent link">&para;</a></h4>
+<p>p :: ps is a pattern that matches a list with a head and a tail
+List(a,b,c,) to match a complete list</p>
+<p>Here are examples of list using recursion and pattern matching</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">def</span><span class="w"> </span><span class="nf">last</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">])</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">T</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nc">List</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">Error</span><span class="p">(</span><span class="s">&quot;Last of empty list is not possible&quot;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">last</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="w">   </span><span class="p">}</span><span class="w">                                              </span><span class="c1">//&gt; last: [T](xs: List[T])T</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">init</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">])</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nc">List</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="k">throw</span><span class="w"> </span><span class="k">new</span><span class="w"> </span><span class="nc">Error</span><span class="p">(</span><span class="s">&quot;init of empty list is not possible&quot;</span><span class="w"> </span><span class="p">)</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">()</span>
+<span class="w">   </span><span class="k">case</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">init</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">concat</span><span class="p">[</span><span class="nc">T</span><span class="p">](</span><span class="n">l1</span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">],</span><span class="n">l2</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">])</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">List</span><span class="p">[</span><span class="nc">T</span><span class="p">]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">  </span><span class="n">l1</span><span class="w"> </span><span class="k">match</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="nc">List</span><span class="p">()</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">l2</span>
+<span class="w">    </span><span class="k">case</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="n">ys</span><span class="p">,</span><span class="n">l2</span><span class="p">)</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre></div>
+<p><a href="http://www.scala-lang.org/api/2.11.1/index.html#scala.collection.immutable.List">See the scala.collection.immutable.List documentation</a></p>
+<h4 id="other-collections">Other collections<a class="headerlink" href="#other-collections" title="Permanent link">&para;</a></h4>
+<p>Vector has a more evenly balanced structure using 32 word array. when it is more than 32 elements a next level is added as array of pointer so covering 2** 10 elements. 
+The access is in log 32(n)
+it supports the same operations as on List as List and Vector are Seq, the class of all sequences which itself is a Iterable. Exception is on concatenation. </p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">nums</span><span class="o">=</span><span class="w"> </span><span class="nc">Vector</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">)</span><span class="w">         </span><span class="o">&gt;</span><span class="w"> </span><span class="n">nums</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="n">scala</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">immutable</span><span class="p">.</span><span class="nc">Vector</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">)</span>
+<span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">n2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">+:</span><span class="w"> </span><span class="n">nums</span><span class="w">                  </span><span class="o">&gt;</span><span class="w"> </span><span class="n">n2</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="n">scala</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">immutable</span><span class="p">.</span><span class="nc">Vector</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Vector</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">)</span>
+<span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">n3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nums</span><span class="w"> </span><span class="o">:+</span><span class="w"> </span><span class="mi">15</span>
+</code></pre></div>
+<h4 id="arrays-and-string-are-seq-too">Arrays and String are Seq too<a class="headerlink" href="#arrays-and-string-are-seq-too" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Array</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">)</span><span class="w">                </span><span class="o">&gt;</span><span class="w"> </span><span class="n">a</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="nc">Array</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Array</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">)</span>
+<span class="w">  </span><span class="n">a</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">x</span><span class="o">*</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">                         </span><span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="nc">Array</span><span class="p">[</span><span class="nc">Int</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Array</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">6</span><span class="p">,</span><span class="w"> </span><span class="mi">88</span><span class="p">)</span>
+<span class="w">  </span><span class="kd">val</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="w">                   </span><span class="o">&gt;</span><span class="w"> </span><span class="n">s</span><span class="w">  </span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Hello</span><span class="w"> </span><span class="nc">World</span>
+<span class="w">  </span><span class="n">s</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">isUpper</span><span class="p">)</span><span class="o">/</span><span class="w">               </span><span class="o">&gt;</span><span class="w"> </span><span class="n">res1</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">HW</span>
+</code></pre></div>
+<p>range represents a sequence of evenly spaced integers.
+Some operations on Seq</p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello World&quot;</span><span class="w">  </span>
+<span class="n">s</span><span class="w"> </span><span class="n">exists</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;e&#39;</span><span class="p">)</span><span class="w"> </span><span class="kc">true</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">there</span><span class="w"> </span><span class="n">is</span><span class="w"> </span><span class="n">an</span><span class="w"> </span><span class="n">element</span><span class="w"> </span><span class="n">in</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">holds</span>
+
+<span class="n">xs</span><span class="w"> </span><span class="n">forall</span><span class="w"> </span><span class="n">p</span><span class="w">   </span><span class="kc">true</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">p</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">holds</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">xs</span>
+
+<span class="n">xs</span><span class="w"> </span><span class="n">zip</span><span class="w"> </span><span class="n">ys</span><span class="w">     </span><span class="n">build</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">pairs</span><span class="w"> </span><span class="n">drawn</span><span class="w"> </span><span class="n">from</span><span class="w"> </span><span class="n">corresponding</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">xs</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">ys</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">z</span><span class="o">=</span><span class="n">s</span><span class="w"> </span><span class="n">zip</span><span class="w"> </span><span class="n">nums</span><span class="w">      </span><span class="c1">//&gt; z  : scala.collection.immutable.IndexedSeq[(Char, Int)] = Vector((H,1), (e,2), (l,3), (l,44))</span>
+<span class="w">  </span><span class="n">z</span><span class="p">.</span><span class="n">unzip</span><span class="w">               </span><span class="o">&gt;</span><span class="w"> </span><span class="n">res3</span><span class="p">:</span><span class="w"> </span><span class="p">(</span><span class="n">scala</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">immutable</span><span class="p">.</span><span class="nc">IndexedSeq</span><span class="p">[</span><span class="nc">Char</span><span class="p">],</span><span class="w"> </span><span class="n">scala</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">immutable</span><span class="p">.</span><span class="nc">IndexedSeq</span><span class="p">[</span><span class="nc">Int</span><span class="p">])</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="nc">Vector</span><span class="p">(</span><span class="nc">H</span><span class="p">,</span><span class="w"> </span><span class="n">e</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="p">),</span><span class="nc">Vector</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="mi">44</span><span class="p">))</span>
+<span class="c1">// other example using a range</span>
+<span class="kd">val</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w">  </span><span class="c1">//&gt; q  : List[Int] = List(2, 0, 3)</span>
+<span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">by</span><span class="w"> </span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="n">zip</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">/&gt;</span><span class="w"> </span><span class="n">res0</span><span class="p">:</span><span class="w"> </span><span class="n">scala</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">immutable</span><span class="p">.</span><span class="nc">IndexedSeq</span><span class="p">[(</span><span class="nc">Int</span><span class="p">,</span><span class="w"> </span><span class="nc">Int</span><span class="p">)]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Vector</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">xs</span><span class="p">.</span><span class="n">unzip</span><span class="w">        </span><span class="nc">Splits</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="n">sequence</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">pairs</span><span class="w"> </span><span class="n">into</span><span class="w"> </span><span class="n">two</span><span class="w"> </span><span class="n">sequences</span><span class="w"> </span><span class="n">consisting</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">first</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">second</span><span class="w"> </span><span class="n">halves</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">pairs</span><span class="w"> </span>
+<span class="n">xs</span><span class="p">.</span><span class="n">flatMap</span><span class="w"> </span><span class="n">f</span><span class="w">    </span><span class="n">applies</span><span class="w"> </span><span class="n">collection</span><span class="o">-</span><span class="n">valued</span><span class="w"> </span><span class="n">function</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">all</span><span class="w"> </span><span class="n">elements</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="n">and</span><span class="w"> </span><span class="n">concatenates</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">results</span>
+
+<span class="c1">// for example build a list of all combinations of number x for 1..M and y 1..N</span>
+<span class="p">(</span><span class="mi">1</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">5</span><span class="p">)</span><span class="w"> </span><span class="n">flatMap</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="n">map</span><span class="w"> </span><span class="p">(</span><span class="n">y</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)))</span>
+<span class="o">&gt;</span><span class="w"> </span><span class="nc">Vector</span><span class="p">((</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">6</span><span class="p">),</span>
+
+<span class="nc">Example</span><span class="w"> </span><span class="n">of</span><span class="w"> </span><span class="n">scalar</span><span class="w"> </span><span class="n">product</span><span class="w"> </span><span class="n">function</span><span class="p">:</span><span class="w"> </span><span class="n">sum</span><span class="w"> </span><span class="n">xi</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">yi</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">scalarProduct</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Vector</span><span class="p">[</span><span class="nc">Double</span><span class="p">],</span><span class="w"> </span><span class="n">ys</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Vector</span><span class="p">[</span><span class="nc">Double</span><span class="p">]):</span><span class="w"> </span><span class="nc">Double</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="n">zip</span><span class="w"> </span><span class="n">ys</span><span class="p">).</span><span class="n">map</span><span class="p">(</span><span class="n">xy</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">xy</span><span class="p">.</span><span class="n">_1</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">xy</span><span class="p">.</span><span class="n">_2</span><span class="p">).</span><span class="n">sum</span><span class="w">     </span>
+
+<span class="n">scalarProduct</span><span class="p">(</span><span class="nc">Vector</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">),</span><span class="nc">Vector</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">))</span><span class="w"> </span>
+
+<span class="c1">// compute if n is prime: if only divisors of n is 1 and n</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">isPrime</span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span>
+<span class="w">   </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="n">forall</span><span class="w"> </span><span class="p">(</span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span>
+</code></pre></div>
+<h4 id="getting-a-dictionary-of-word">Getting a dictionary of word<a class="headerlink" href="#getting-a-dictionary-of-word" title="Permanent link">&para;</a></h4>
+<p>The following will get each word (one per line in the input stream), transform it to a list and then filter out any word that does not contain a letter.  Filter apply a function to each member of the collection, forall apply for each element of the list a function f and return the matching elements.</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">words</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">in</span><span class="p">.</span><span class="n">getLines</span><span class="p">.</span><span class="n">toList</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="p">(</span><span class="n">word</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="n">forall</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">c</span><span class="p">.</span><span class="n">isLetter</span><span class="p">))</span>
+</code></pre></div>
+<h4 id="set">Set<a class="headerlink" href="#set" title="Permanent link">&para;</a></h4>
+<p>Is a sequence that does not have duplicate elements, elements are unordered, it includes the operation contains</p>
+<div class="highlight"><pre><span></span><code><span class="w">  </span><span class="c1">// return all the ways to encode a number to a set of strings</span>
+<span class="w">  </span><span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span><span class="n">number</span><span class="p">:</span><span class="w"> </span><span class="nc">String</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Set</span><span class="p">[</span><span class="nc">List</span><span class="p">[</span><span class="nc">String</span><span class="p">]]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">number</span><span class="p">.</span><span class="n">isEmpty</span><span class="p">)</span><span class="w"> </span><span class="nc">Set</span><span class="p">(</span><span class="nc">List</span><span class="p">())</span>
+<span class="w">     </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">       </span><span class="k">for</span><span class="w"> </span><span class="p">{</span>
+<span class="w">          </span><span class="n">split</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">number</span><span class="p">.</span><span class="n">length</span><span class="w">                      </span><span class="c1">// from 1 to length</span>
+<span class="w">          </span><span class="n">word</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">wordsForNum</span><span class="p">(</span><span class="n">number</span><span class="w"> </span><span class="n">take</span><span class="w"> </span><span class="n">split</span><span class="p">)</span><span class="w">           </span><span class="c1">// cut the string number from 0 to split</span>
+<span class="w">          </span><span class="n">rest</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">encode</span><span class="p">(</span><span class="n">number</span><span class="w"> </span><span class="n">drop</span><span class="w"> </span><span class="n">split</span><span class="p">)</span><span class="w">                </span><span class="c1">// recursion on the rest of the number string</span>
+<span class="w">       </span><span class="p">}</span><span class="w"> </span><span class="k">yield</span><span class="w"> </span><span class="n">word</span><span class="w"> </span><span class="o">::</span><span class="w"> </span><span class="n">rest</span>
+<span class="w">       </span><span class="p">}.</span><span class="n">toSet</span>
+<span class="c1">// returns  Set[List[String]]  ... List(Scala, is, fun), List(sack, bird, to)</span>
+</code></pre></div>
+<p>Following code also illustrates that a function can be assigned to a variable. it is a map of digit strings to the words that represent them. words is list of words of a given dictionary</p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">wordsForNum</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Map</span><span class="w"> </span><span class="p">[</span><span class="nc">String</span><span class="p">,</span><span class="nc">Seq</span><span class="p">[</span><span class="nc">String</span><span class="p">]]</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="n">words</span><span class="w"> </span><span class="n">groupBy</span><span class="w"> </span><span class="n">wordCode</span><span class="w"> </span><span class="n">withDefaultValue</span><span class="w"> </span><span class="nc">Seq</span><span class="p">()</span>
+
+<span class="c1">// wordsForNum  : Map[String,Seq[String]] = Map(63972278 -&gt; List(newscast),37638427 -&gt; List(cybernetics)</span>
+</code></pre></div>
+<h4 id="map">Map<a class="headerlink" href="#map" title="Permanent link">&para;</a></h4>
+<p>maps are iterable and functional.</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="kd">val</span><span class="w"> </span><span class="n">roman</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Map</span><span class="p">(</span><span class="w"> </span><span class="s">&quot;I&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;II&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">,</span><span class="w"> </span><span class="s">&quot;V&quot;</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="mi">5</span><span class="w"> </span><span class="p">)</span><span class="w">   </span><span class="c1">//&gt; roman  : scala.collection.immutable.Map[String,Int] = Map(I -&gt; 1, II -&gt; 2, V</span>
+<span class="w">                                                  </span><span class="c1">//|  -&gt; 5)</span>
+<span class="w"> </span><span class="n">roman</span><span class="p">(</span><span class="s">&quot;V&quot;</span><span class="p">)</span><span class="w">                                       </span><span class="c1">//&gt; res5: Int = 5</span>
+<span class="w"> </span><span class="n">roman</span><span class="w"> </span><span class="n">get</span><span class="w"> </span><span class="p">(</span><span class="s">&quot;II&quot;</span><span class="p">)</span><span class="w">                                 </span><span class="c1">//&gt; res6: Option[Int] = Some(2)</span>
+</code></pre></div>
+<p>The Some is a class extending the trait Option type and takes a unique value. When a map does not contains a key it returns None which is declared as:</p>
+<div class="highlight"><pre><span></span><code><span class="k">object</span><span class="w"> </span><span class="nc">None</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nc">Option</span><span class="p">[</span><span class="nc">Nothing</span><span class="p">]</span>
+
+<span class="n">veggie</span><span class="w"> </span><span class="n">groupBy</span><span class="w"> </span><span class="p">(</span><span class="n">_</span><span class="p">.</span><span class="n">head</span><span class="p">)</span><span class="w">     </span><span class="o">&gt;</span><span class="w"> </span><span class="n">res8</span><span class="p">:</span><span class="w"> </span><span class="n">scala</span><span class="p">.</span><span class="n">collection</span><span class="p">.</span><span class="n">immutable</span><span class="p">.</span><span class="nc">Map</span><span class="p">[</span><span class="nc">Char</span><span class="p">,</span><span class="nc">List</span><span class="p">[</span><span class="nc">String</span><span class="p">]]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Map</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">brocoli</span><span class="p">),</span><span class="w"> </span><span class="n">t</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">tom</span><span class="p">),</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">carrot</span><span class="p">),</span><span class="w"> </span><span class="n">o</span><span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="n">olive</span><span class="p">))</span>
+
+<span class="c1">// mapValues Transforms a map by applying a function to every retrieved value</span>
+<span class="n">veggie</span><span class="p">.</span><span class="n">groupBy</span><span class="p">(</span><span class="n">_</span><span class="p">.</span><span class="n">head</span><span class="p">).</span><span class="n">mapValues</span><span class="p">(</span><span class="n">_</span><span class="p">.</span><span class="n">length</span><span class="p">)</span>
+</code></pre></div>
+<p>maps were partial functions this means that applying a map to a key value could lead to an exception if the key is not stored in the map. There is a function to set a default value if the key is not present</p>
+<div class="highlight"><pre><span></span><code><span class="kd">val</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">veggie</span><span class="w"> </span><span class="n">withDefaultValue</span><span class="w"> </span><span class="s">&quot;Unknown&quot;</span>
+<span class="n">c</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">)</span><span class="w">       </span><span class="c1">// returns Unknown</span>
+</code></pre></div>
+<h4 id="stream">Stream<a class="headerlink" href="#stream" title="Permanent link">&para;</a></h4>
+<p>Similar to lists but their tail is evaluate only on demand. they are defined from a constant <code>Stream.empty</code> and a constructor <code>Stream.cons</code>. The following example illustrates that the interpreter does not build the full Stream</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="nc">Stream</span><span class="p">.</span><span class="n">cons</span><span class="p">(</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="nc">Stream</span><span class="p">.</span><span class="n">cons</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="p">,</span><span class="nc">Stream</span><span class="p">.</span><span class="nc">Empty</span><span class="p">))</span><span class="w">      </span><span class="c1">//&gt; res0: scala.collection.immutable.Stream.Cons[Int] = Stream(1, ?)</span>
+<span class="w"> </span><span class="nc">Stream</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="w"> </span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w">                                 </span><span class="c1">//&gt; res1: scala.collection.immutable.Stream[Int] = Stream(1, ?)</span>
+</code></pre></div>
+<p>Example of interesting use case. Compute the prime number from 1000 to 10000 but takes the second prime only. With a List the approach will compute all the prime while with Stream only the 2 first elements.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">isPrime</span><span class="p">(</span><span class="n">i</span><span class="p">:</span><span class="w"> </span><span class="nc">Int</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="nc">Boolean</span><span class="w"> </span><span class="o">=</span>
+<span class="w">    </span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="n">until</span><span class="w"> </span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="n">forall</span><span class="w"> </span><span class="p">(</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=&gt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">%</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w">         </span><span class="c1">//&gt; isPrime: (i: Int)Boolean</span>
+<span class="w">  </span><span class="p">((</span><span class="mi">1000</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="mi">10000</span><span class="p">).</span><span class="n">toStream</span><span class="w"> </span><span class="n">filter</span><span class="w"> </span><span class="n">isPrime</span><span class="p">)(</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w">   </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">1013</span>
+
+<span class="c1">// :: is not producing a Stream but..</span>
+<span class="n">x</span><span class="w"> </span><span class="o">#::</span><span class="w"> </span><span class="n">xs</span><span class="w">  </span><span class="o">==</span><span class="w"> </span><span class="nc">Stream</span><span class="p">.</span><span class="n">cons</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">xs</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="scala-build-test">Scala Build Test<a class="headerlink" href="#scala-build-test" title="Permanent link">&para;</a></h3>
+<p>Using Scala Build Test. First start it in the folder with the project sub-folder, and eclipse .project</p>
+<div class="highlight"><pre><span></span><code>&gt;<span class="w"> </span>sbt
+&gt;styleCheck
+&gt;compile
+&gt;test
+&gt;run
+&gt;submit<span class="w"> </span>jerome.boyer@gmail.com<span class="w">  </span>&lt;pwd&gt;<span class="w">  </span>5Tz7bNHph7
+&gt;console
+scala<span class="w"> </span>&gt;
+</code></pre></div>
+<h3 id="scala-program">Scala program<a class="headerlink" href="#scala-program" title="Permanent link">&para;</a></h3>
+<p>To run a Scala program, you must supply the name of a standalone singleton object with a main method that takes one parameter, an Array[String], and has a result type of Unit</p>
+<div class="highlight"><pre><span></span><code><span class="k">object</span><span class="w"> </span><span class="nc">ThisIsAnApp</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="n">args</span><span class="p">:</span><span class="w"> </span><span class="nc">Array</span><span class="p">[</span><span class="nc">String</span><span class="p">])</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">args</span><span class="p">)</span>
+<span class="w">          </span><span class="n">println</span><span class="p">(</span><span class="n">arg</span><span class="w"> </span><span class="o">+</span><span class="s">&quot;: &quot;</span><span class="o">+</span><span class="w"> </span><span class="n">calculate</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span>
+<span class="w">      </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>Scala provides a trait, scala.Application, to run an application without main function</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span><span class="k">object</span><span class="w"> </span><span class="nc">AnotherApp</span><span class="w"> </span><span class="k">extends</span><span class="w"> </span><span class="nc">Application</span><span class="w"> </span><span class="p">{</span>
+
+<span class="w">      </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="n">season</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nc">List</span><span class="p">(</span><span class="s">&quot;fall&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;winter&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;spring&quot;</span><span class="p">))</span>
+<span class="w">        </span><span class="n">println</span><span class="p">(</span><span class="n">season</span><span class="w"> </span><span class="o">+</span><span class="s">&quot;: &quot;</span><span class="o">+</span><span class="w"> </span><span class="n">calculate</span><span class="p">(</span><span class="n">season</span><span class="p">))</span>
+<span class="w"> </span><span class="p">}</span>
+<span class="w"> </span><span class="err">``</span><span class="n">`</span>
+
+<span class="n"> The code between the curly braces is collected into a primary constructor of the singleton object, and is executed when the class is initialized</span>
+
+<span class="n">compile:</span>
+
+<span class="n">`</span><span class="err">``</span><span class="n">shell</span>
+<span class="n">scalac</span><span class="w">  </span><span class="o">-</span><span class="n">d</span><span class="w"> </span><span class="n">target</span><span class="o">/</span><span class="n">scala</span><span class="o">-</span><span class="mf">2.10</span><span class="o">/</span><span class="n">classes</span>
+</code></pre></div>
+<p>or use sbt &gt; compile</p>
+<div class="highlight"><pre><span></span><code><span class="c1"># run unit test in sbt</span>
+&gt;<span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
+<p>execute a program: <code>scala</code></p>
+<h2 id="integration-with-java">Integration with java<a class="headerlink" href="#integration-with-java" title="Permanent link">&para;</a></h2>
+<p>scala can access java classes, extends java class and implement java interface. All classes from the java.lang package are imported by default, while others need to be imported explicitly.</p>
+<h2 id="further-readings">Further Readings<a class="headerlink" href="#further-readings" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="http://docs.scala-lang.org/cheatsheets/">Cheat sheets</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  </body>
+</html>

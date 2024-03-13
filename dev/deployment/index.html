@@ -1,0 +1,817 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../">
+      
+      
+        <link rel="next" href="../python/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.13">
+    
+    
+      
+        <title>Deployments - Spark studies</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.7e359304.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#deployment-options" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Spark studies" class="md-header__button md-logo" aria-label="Spark studies" data-md-component="logo">
+      
+  <img src="../../images/apache_spark_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Spark studies
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Deployments
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/jbcodeforce/spark-studies" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Spark studies" class="md-nav__button md-logo" aria-label="Spark studies" data-md-component="logo">
+      
+  <img src="../../images/apache_spark_logo.png" alt="logo">
+
+    </a>
+    Spark studies
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/jbcodeforce/spark-studies" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2023 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Develop with Spark
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Develop with Spark
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Deployments
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Deployments
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-locally-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run locally with Docker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run locally with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smoke-test-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Smoke test the cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spark-and-delta-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spark and Delta Lake
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-on-k8s-or-openshift-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation on k8s or openshift cluster
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../python/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    PySpark
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../streaming/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Streaming
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../examples/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Examples
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../scala_summary/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scala summary
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://jbcodeforce.github.io/techno/databricks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Databricks
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../compendium/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Compendium
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="https://jbcodeforce.github.io" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Return to main
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#run-locally-with-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Run locally with Docker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Run locally with Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#smoke-test-the-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Smoke test the cluster
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#spark-and-delta-lake" class="md-nav__link">
+    <span class="md-ellipsis">
+      Spark and Delta Lake
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installation-on-k8s-or-openshift-cluster" class="md-nav__link">
+    <span class="md-ellipsis">
+      Installation on k8s or openshift cluster
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+  
+
+
+<h1 id="deployment-options">Deployment options<a class="headerlink" href="#deployment-options" title="Permanent link">&para;</a></h1>
+<div class="admonition -">
+<p class="admonition-title">info</p>
+<p>Updated 2/17/2023</p>
+</div>
+<h2 id="run-locally-with-docker">Run locally with Docker<a class="headerlink" href="#run-locally-with-docker" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Build the image: The Dockerfile, in this repository, is using a OpenJdk base image and install Spark 3.3.1. The command to build the images:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-t<span class="w"> </span>jbcodeforce/spark<span class="w"> </span>.
+</code></pre></div>
+<p>(change the Spark version in the Dockerfile if there is a <a href="http://apache.mirror.anlx.net/spark/">new release</a>)</p>
+</li>
+<li>
+<p>Start the container with docker compose. The docker compose file is in the root directory of this repository. It uses the two scripts (start-master.sh and start-worker.sh) to start the master or worker automatically. The environment variables to parameterize the WEB UI port, master node URL, and master port are set in the docker compose file. Start the cluster with 3 workers.</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="w">    </span>docker-compose<span class="w"> </span>up<span class="w"> </span>--scale<span class="w"> </span>spark-worker<span class="o">=</span><span class="m">3</span>
+
+<span class="w">    </span>spark-master<span class="w">    </span><span class="p">|</span><span class="w"> </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">22</span>:48:22<span class="w"> </span>INFO<span class="w"> </span>Master:<span class="w"> </span>Registering<span class="w"> </span>worker<span class="w"> </span><span class="m">172</span>.19.0.4:39193<span class="w"> </span>with<span class="w"> </span><span class="m">3</span><span class="w"> </span>cores,<span class="w"> </span><span class="m">4</span>.8<span class="w"> </span>GB<span class="w"> </span>RAM
+<span class="w">    </span>spark-master<span class="w">    </span><span class="p">|</span><span class="w"> </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">22</span>:48:22<span class="w"> </span>INFO<span class="w"> </span>Master:<span class="w"> </span>Registering<span class="w"> </span>worker<span class="w"> </span><span class="m">172</span>.19.0.3:39161<span class="w"> </span>with<span class="w"> </span><span class="m">3</span><span class="w"> </span>cores,<span class="w"> </span><span class="m">4</span>.8<span class="w"> </span>GB<span class="w"> </span>RAM
+<span class="w">    </span>spark-master<span class="w">    </span><span class="p">|</span><span class="w"> </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">22</span>:48:22<span class="w"> </span>INFO<span class="w"> </span>Master:<span class="w"> </span>Registering<span class="w"> </span>worker<span class="w"> </span><span class="m">172</span>.19.0.5:43775<span class="w"> </span>with<span class="w"> </span><span class="m">3</span><span class="w"> </span>cores,<span class="w"> </span><span class="m">4</span>.8<span class="w"> </span>GB<span class="w"> </span>RAM
+<span class="w">    </span>spark-worker_1<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">22</span>:48:22<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Successfully<span class="w"> </span>registered<span class="w"> </span>with<span class="w"> </span>master<span class="w"> </span>spark://spark-master:7077
+<span class="w">    </span>spark-worker_3<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">22</span>:48:22<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Successfully<span class="w"> </span>registered<span class="w"> </span>with<span class="w"> </span>master<span class="w"> </span>spark://spark-master:7077
+<span class="w">    </span>spark-worker_2<span class="w">  </span><span class="p">|</span><span class="w"> </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">22</span>:48:22<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Successfully<span class="w"> </span>registered<span class="w"> </span>with<span class="w"> </span>master<span class="w"> </span>spark://spark-master:7077
+</code></pre></div>
+<p>From there we should be able to run the different examples by starting another container on the same network:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--network<span class="w"> </span>spark-network<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/home<span class="w"> </span>jbcodeforce/spark<span class="w"> </span>bash
+</code></pre></div>
+<details class="- example">
+<summary>Start with docker without docker compose</summary>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>spark-master<span class="w"> </span>--hostname<span class="w"> </span>spark-master<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/app<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-p<span class="w"> </span><span class="m">7077</span>:7077<span class="w"> </span>-p<span class="w"> </span><span class="m">8085</span>:8085<span class="w"> </span>--network<span class="w"> </span>spark_network<span class="w"> </span>jbcodeforce/spark<span class="w"> </span>bash
+</code></pre></div>
+<p>Start the Spark Master node. Within the container run:</p>
+<p><div class="highlight"><pre><span></span><code>/spark/spark-3.3.2-bin-hadoop3/bin/spark-class<span class="w"> </span>org.apache.spark.deploy.master.Master<span class="w"> </span>--ip<span class="w"> </span>spark-master<span class="w"> </span>--port<span class="w"> </span><span class="m">7077</span><span class="w"> </span>--webui-port<span class="w"> </span><span class="m">8085</span>
+....
+<span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:24:56<span class="w"> </span>INFO<span class="w"> </span>Utils:<span class="w"> </span>Successfully<span class="w"> </span>started<span class="w"> </span>service<span class="w"> </span><span class="s1">&#39;MasterUI&#39;</span><span class="w"> </span>on<span class="w"> </span>port<span class="w"> </span><span class="m">8085</span>.
+<span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:24:56<span class="w"> </span>INFO<span class="w"> </span>MasterWebUI:<span class="w"> </span>Bound<span class="w"> </span>MasterWebUI<span class="w"> </span>to<span class="w"> </span><span class="m">0</span>.0.0.0,<span class="w"> </span>and<span class="w"> </span>started<span class="w"> </span>at<span class="w"> </span>http://a63a4db062fb:8085
+<span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:24:56<span class="w"> </span>INFO<span class="w"> </span>Master:<span class="w"> </span>I<span class="w"> </span>have<span class="w"> </span>been<span class="w"> </span>elected<span class="w"> </span>leader!<span class="w"> </span>New<span class="w"> </span>state:<span class="w"> </span>ALIVE
+</code></pre></div>
+Start a worker node, as a separate docker container</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>spark-worker<span class="w"> </span>--hostname<span class="w"> </span>spark-worker<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>--network<span class="w"> </span>spark_network<span class="w"> </span>jbcodeforce/spark<span class="w"> </span>bash
+</code></pre></div>
+<p>then within the bash shell:</p>
+<div class="highlight"><pre><span></span><code>/spark/spark-3.3.2-bin-hadoop3/bin/spark-class<span class="w"> </span>org.apache.spark.deploy.worker.Worker<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--webui-port<span class="w"> </span><span class="m">8085</span><span class="w"> </span>spark://spark-master:7077
+
+<span class="w">    </span>...
+<span class="w">    </span>INFO<span class="w"> </span>Utils:<span class="w"> </span>Successfully<span class="w"> </span>started<span class="w"> </span>service<span class="w"> </span><span class="s1">&#39;sparkWorker&#39;</span><span class="w"> </span>on<span class="w"> </span>port<span class="w"> </span><span class="m">45589</span>.
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:58<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Starting<span class="w"> </span>Spark<span class="w"> </span>worker<span class="w"> </span><span class="m">172</span>.18.0.3:45589<span class="w"> </span>with<span class="w"> </span><span class="m">3</span><span class="w"> </span>cores,<span class="w"> </span><span class="m">4</span>.8<span class="w"> </span>GB<span class="w"> </span>RAM
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:58<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Running<span class="w"> </span>Spark<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.4.4
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:58<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Spark<span class="w"> </span>home:<span class="w"> </span>/spark
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:58<span class="w"> </span>INFO<span class="w"> </span>Utils:<span class="w"> </span>Successfully<span class="w"> </span>started<span class="w"> </span>service<span class="w"> </span><span class="s1">&#39;WorkerUI&#39;</span><span class="w"> </span>on<span class="w"> </span>port<span class="w"> </span><span class="m">8085</span>.
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:58<span class="w"> </span>INFO<span class="w"> </span>WorkerWebUI:<span class="w"> </span>Bound<span class="w"> </span>WorkerWebUI<span class="w"> </span>to<span class="w"> </span><span class="m">0</span>.0.0.0,<span class="w"> </span>and<span class="w"> </span>started<span class="w"> </span>at<span class="w"> </span>http://spark-worker:8085
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:58<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Connecting<span class="w"> </span>to<span class="w"> </span>master<span class="w"> </span>spark-master:7077...
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:58<span class="w"> </span>INFO<span class="w"> </span>TransportClientFactory:<span class="w"> </span>Successfully<span class="w"> </span>created<span class="w"> </span>connection<span class="w"> </span>to<span class="w"> </span>spark-master/172.18.0.2:7077<span class="w"> </span>after<span class="w"> </span><span class="m">75</span><span class="w"> </span>ms<span class="w"> </span><span class="o">(</span><span class="m">0</span><span class="w"> </span>ms<span class="w"> </span>spent<span class="w"> </span><span class="k">in</span><span class="w"> </span>bootstraps<span class="o">)</span>
+<span class="w">    </span><span class="m">19</span>/12/31<span class="w"> </span><span class="m">21</span>:39:59<span class="w"> </span>INFO<span class="w"> </span>Worker:<span class="w"> </span>Successfully<span class="w"> </span>registered<span class="w"> </span>with<span class="w"> </span>master<span class="w"> </span>spark://spark-master:7077
+</code></pre></div>
+</details>
+<ul>
+<li>
+<p>Validate the installation, use the <code>spark-shell</code> inside the docker container as:</p>
+<div class="highlight"><pre><span></span><code>bash-4.4#<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/app
+bash-4.4#<span class="w"> </span>spark-shell
+
+Using<span class="w"> </span>Scala<span class="w"> </span>version<span class="w"> </span><span class="m">2</span>.12.15<span class="w"> </span><span class="o">(</span>OpenJDK<span class="w"> </span><span class="m">64</span>-Bit<span class="w"> </span>Server<span class="w"> </span>VM,<span class="w"> </span>Java<span class="w"> </span><span class="m">17</span>.0.6<span class="o">)</span>
+Type<span class="w"> </span><span class="k">in</span><span class="w"> </span>expressions<span class="w"> </span>to<span class="w"> </span>have<span class="w"> </span>them<span class="w"> </span>evaluated.
+Type<span class="w"> </span>:help<span class="w"> </span><span class="k">for</span><span class="w"> </span>more<span class="w"> </span>information.
+
+scala&gt;<span class="w"> </span>val<span class="w"> </span><span class="nv">rdd</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>sc.textFile<span class="o">(</span><span class="s2">&quot;README.md&quot;</span><span class="o">)</span>
+rdd:<span class="w"> </span>org.apache.spark.rdd.RDD<span class="o">[</span>String<span class="o">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>README.md<span class="w"> </span>MapPartitionsRDD<span class="o">[</span><span class="m">1</span><span class="o">]</span><span class="w"> </span>at<span class="w"> </span>textFile<span class="w"> </span>at<span class="w"> </span>&lt;console&gt;:24
+scala&gt;<span class="w"> </span>rdd.count<span class="o">()</span>
+</code></pre></div>
+</li>
+<li>
+<p>Access the Spark console</p>
+<p>Simply go to: <a href="http://localhost:8085/">http://localhost:8085/</a></p>
+<p>On the Spark console we can see a new worker was added:</p>
+<p><img alt="Spark console" src="../images/spark-console.png" /></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The docker image includes one script to start the master and one to start the workers. The docker compose file below uses those commands to propose a simple spark cluster with one worker and one master.
+ See <a href="#using-docker-compose">below</a>.</p>
+</div>
+</li>
+</ul>
+<h3 id="smoke-test-the-cluster">Smoke test the cluster<a class="headerlink" href="#smoke-test-the-cluster" title="Permanent link">&para;</a></h3>
+<p>Start a 3nd container instance to run the <code>spark-submit</code> command to compute the value of Pi:</p>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>--rm<span class="w"> </span>-it<span class="w"> </span>--name<span class="w"> </span>spark-client<span class="w"> </span>--hostname<span class="w"> </span>spark-client<span class="w"> </span><span class="se">\</span>
+<span class="w">            </span>--network<span class="w"> </span>spark_network<span class="w"> </span>jbcodeforce/spark<span class="w"> </span>bash
+
+/spark/spark-3.3.2-bin-hadoop3/bin/spark-submit<span class="w"> </span>--master<span class="w"> </span>spark://spark-master:7077<span class="w"> </span>--class<span class="w">     </span>org.apache.spark.examples.SparkPi<span class="w">  </span>/spark/spark-3.3.2-bin-hadoop3/examples/jars/spark-examples_2.12-3.3.2.jar<span class="w"> </span><span class="m">1000</span>
+</code></pre></div>
+<h2 id="spark-and-delta-lake">Spark and Delta Lake<a class="headerlink" href="#spark-and-delta-lake" title="Permanent link">&para;</a></h2>
+<p>The dockerfile named <code>Dockerfile-deltalake</code> build a Spark with Delta Lake extension so we can use the API to save and load data with transaction support, schema validation.</p>
+<ul>
+<li>Build the image</li>
+</ul>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>build<span class="w"> </span>-f<span class="w"> </span>Dockerfile-deltalake<span class="w"> </span>-t<span class="w"> </span>jbcodeforce/spark-delta<span class="w"> </span>.
+</code></pre></div>
+<ul>
+<li>Run the image</li>
+</ul>
+<div class="highlight"><pre><span></span><code>docker<span class="w"> </span>run<span class="w"> </span>-p<span class="w"> </span><span class="m">4040</span>:4040<span class="w"> </span>-v<span class="w"> </span><span class="k">$(</span><span class="nb">pwd</span><span class="k">)</span>:/app<span class="w"> </span>jbcodeforce/spark-delta
+</code></pre></div>
+<ul>
+<li>If you need to update the version see the <a href="https://docs.delta.io/latest/releases.html">delta-spark compatibility list</a></li>
+</ul>
+<h2 id="installation-on-k8s-or-openshift-cluster">Installation on k8s or openshift cluster<a class="headerlink" href="#installation-on-k8s-or-openshift-cluster" title="Permanent link">&para;</a></h2>
+<p>The spark driver runs as pod. The driver creates executors, which are also running within Kubernetes pods, connects to them and then executes application code.
+The driver and executor pod scheduling is handled by Kubernetes.</p>
+<p>See this <a href="https://jbcodeforce.github.io/openshift-studies/spark-on-os/#spark-on-openshift-using-operator">spark openshift deployment</a> study.</p>
+<p>The spark <a href="https://spark.apache.org/docs/latest/running-on-kubernetes.html">product documentation</a> or use a <a href="https://jbcodeforce.github.io/openshift-studies/spark-on-os/">Spark operator</a>. The basic steps are:</p>
+<ol>
+<li>Use a namespace like <code>jb-sparks</code>. Modify the cluster and operator yaml files to use this namespace.</li>
+<li>
+<p>Start the operator if it's not running</p>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>k8s-operators/operator.yaml
+</code></pre></div>
+</li>
+<li>
+<p>Add cluster: edit the file <code>k8s-operators/cluster.yaml</code> to configure your number of workers</p>
+<div class="highlight"><pre><span></span><code>oc<span class="w"> </span>apply<span class="w"> </span>-f<span class="w"> </span>k8s-operators/cluster.yaml
+</code></pre></div>
+</li>
+<li>
+<p>To verify the cluster runs do the following command on one of the worker pod to start a spark shell environment:</p>
+<div class="highlight"><pre><span></span><code><span class="w"> </span>oc<span class="w"> </span>get<span class="w"> </span>pods
+<span class="w"> </span><span class="c1"># select one of the work pod</span>
+<span class="w"> </span>oc<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-ti<span class="w"> </span>my-spark-cluster-w-5pcqw<span class="w">  </span>bash
+<span class="w"> </span>bash-4.2$<span class="w"> </span>spark-shell
+</code></pre></div>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.b8dbb3d2.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8d2eff1.min.js"></script>
+      
+    
+  </body>
+</html>
